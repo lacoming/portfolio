@@ -6,6 +6,7 @@ import { routing, type Locale } from "@/i18n/routing";
 import { profile } from "@/content/profile";
 import { t } from "@/lib/i18n";
 import { LocaleSwitcher } from "@/components/locale-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -47,7 +48,10 @@ export default async function LocaleLayout({
           <span className="text-sm font-medium tracking-tight">
             {t(profile.name, locale)}
           </span>
-          <LocaleSwitcher locale={locale} />
+          <div className="flex items-center gap-1">
+            <LocaleSwitcher locale={locale} />
+            <ThemeToggle />
+          </div>
         </div>
       </header>
       <main className="mx-auto max-w-5xl px-6 py-20 sm:px-8">
