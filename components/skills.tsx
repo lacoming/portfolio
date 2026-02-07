@@ -14,7 +14,7 @@ export function Skills({ locale }: { locale: Locale }) {
             {group.items.map((item) => (
               <span
                 key={item}
-                className="rounded-full border border-border/60 px-3 py-1 text-xs text-muted-foreground"
+                className="glass-pill rounded-full px-3 py-1 text-xs"
               >
                 {item}
               </span>

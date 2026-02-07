@@ -27,9 +27,9 @@ export function Hero({ locale }: { locale: Locale }) {
         {profile.links.map((link) => (
           <Button
             key={link.href}
-            variant="outline"
+            variant="ghost"
             size="sm"
-            className="rounded-full text-xs"
+            className="glass-interactive rounded-full border-0 bg-transparent text-xs hover:bg-transparent hover:text-inherit"
             asChild
           >
             <a href={link.href} target="_blank" rel="noopener noreferrer">

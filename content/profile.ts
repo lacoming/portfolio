@@ -18,6 +18,7 @@ export type Project = {
   subtitle: I18nText;
   role: I18nText;
   period?: string;
+  image?: string;
   stack: string[];
   tags: Array<"Fullstack" | "Frontend" | "Backend" | "SSR/SEO" | "Fintech/Data" | "DevOps" | "UI/UX">;
   bullets: I18nText[];
@@ -73,31 +74,31 @@ export const profile = {
 
   highlights: [
     {
-      title: { ru: "Full-stack до прода", en: "Full-stack to production" },
+      title: { ru: "Полный цикл разработки", en: "Full-cycle development" },
       description: {
-        ru: "Фронтенд + бэкенд + PostgreSQL + Docker. Умею доводить фичи до релиза и поддерживать дальше.",
-        en: "Frontend + backend + PostgreSQL + Docker. I ship features to production and maintain them."
+        ru: "Беру на себя весь путь — от интерфейса до серверной логики и инфраструктуры. Довожу задачи до рабочего продукта и сопровождаю после запуска.",
+        en: "I own the entire path — from interface to server logic and infrastructure. I deliver working products and provide support after launch."
       }
     },
     {
-      title: { ru: "SSR и SEO-миграции", en: "SSR & SEO migrations" },
+      title: { ru: "SEO и миграция сайтов", en: "SEO & site migrations" },
       description: {
-        ru: "Редиректы, мета, canonical, sitemap/robots, контроль индексации и перенос с Tilda/legacy на единый SSR-фронт.",
-        en: "Redirects, meta, canonical, sitemap/robots, index control, and migrations from Tilda/legacy to a unified SSR frontend."
+        ru: "Переношу сайты с конструкторов и устаревших платформ на современные решения — без потери позиций в поисковой выдаче.",
+        en: "I migrate sites from page builders and legacy platforms to modern stacks — without losing search rankings."
       }
     },
     {
-      title: { ru: "Fintech/Data пайплайны", en: "Fintech/Data pipelines" },
+      title: { ru: "Интеграция данных", en: "Data integration" },
       description: {
-        ru: "Сбор → нормализация → БД → UI. Интеграции с разными источниками и стабильная доставка данных в продукт.",
-        en: "Collect → normalize → store → present. Integrations across sources and reliable data delivery."
+        ru: "Собираю данные из разных источников, привожу к единому формату и надёжно доставляю в продукт — от базы данных до интерфейса.",
+        en: "I collect data from multiple sources, unify it, and reliably deliver it into your product — from database to interface."
       }
     },
     {
-      title: { ru: "Аккуратный UI и вкус", en: "Polished UI & taste" },
+      title: { ru: "Внимание к деталям", en: "Attention to detail" },
       description: {
-        ru: "Minimal UI, типографика, анимации без шума, Pixel Perfect по макетам.",
-        en: "Minimal UI, typography, subtle motion, and pixel-perfect implementation."
+        ru: "Чистый интерфейс, выверенная типографика и плавные анимации. Точная реализация по макетам — без компромиссов.",
+        en: "Clean interface, refined typography, and smooth animations. Precise implementation from design mockups — no compromises."
       }
     }
   ] as Highlight[],
@@ -107,10 +108,11 @@ export const profile = {
       id: "tokeon-site",
       title: { ru: "Токеон — официальный сайт", en: "Tokeon — Official Website" },
       subtitle: {
-        ru: "SSR + SEO-миграции, интеграция с API, прод-выкаты",
-        en: "SSR + SEO migrations, API integration, production releases"
+        ru: "Корпоративный сайт финтех-платформы для работы с цифровыми финансовыми активами",
+        en: "Corporate website for a fintech platform focused on digital financial assets"
       },
       role: { ru: "Frontend-разработчик (команда/прод)", en: "Frontend Developer (team/production)" },
+      image: "/projects/tokeon-site.png",
       stack: ["TypeScript", "Nuxt/Vue (SSR)", "REST API", "HTML/CSS", "Git"],
       tags: ["Frontend", "SSR/SEO", "UI/UX"],
       bullets: [
@@ -135,11 +137,12 @@ export const profile = {
       id: "tokeon-bot",
       title: { ru: "Токеон — Telegram-бот", en: "Tokeon — Telegram Bot" },
       subtitle: {
-        ru: "Бизнес-логика, хранилище, фоновые задачи и рассылки",
-        en: "Business logic, storage, background jobs, and notifications"
+        ru: "Бот для уведомлений о новых выпусках с калькулятором доходности и ИИ-помощником",
+        en: "Bot for new issuance alerts with a yield calculator and AI assistant"
       },
       role: { ru: "Разработчик (в команде)", en: "Developer (team)" },
       period: "09.2024–01.2025",
+      image: "/projects/tokeon-bot.png",
       stack: ["Node.js", "Telegraf", "PostgreSQL", "SQL", "Docker"],
       tags: ["Backend", "Fullstack", "DevOps"],
       bullets: [
@@ -161,15 +164,16 @@ export const profile = {
       ]
     },
     {
-      id: "cfa-radar-app",
+      id: "cfa-radar",
       title: { ru: "CFA Radar", en: "CFA Radar" },
       subtitle: {
-        ru: "Продукт и интерфейс: карточки, фильтры, SSR/SEO, типизация",
-        en: "Product & UI: cards, filters, SSR/SEO, strong typing"
+        ru: "Открытый сервис мониторинга активных выпусков ЦФА популярных платформ",
+        en: "Open monitoring service for active CFA issuances across popular platforms"
       },
-      role: { ru: "Автор и разработчик (product/dev)", en: "Creator & Developer (product/dev)" },
+      role: { ru: "Автор и разработчик", en: "Creator & Developer" },
       period: "05.2025–09.2025",
-      stack: ["React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "Docker"],
+      image: "/projects/cfa-radar.png",
+      stack: ["React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "SQL", "Docker", "cron/scheduler"],
       tags: ["Fullstack", "Fintech/Data", "SSR/SEO", "DevOps", "UI/UX"],
       bullets: [
         {
@@ -181,79 +185,27 @@ export const profile = {
           en: "Implemented SSR/SEO page structure and strict TypeScript data typing."
         },
         {
-          ru: "Поднял пайплайн данных (сбор → нормализация → БД), окружение и деплой через Docker.",
-          en: "Shipped the data pipeline (collect → normalize → DB) and Dockerized env/deploy."
+          ru: "Поднял пайплайн данных (сбор → нормализация → БД) с cron-планировщиком, повторными попытками и контролем статусов.",
+          en: "Shipped the data pipeline (collect → normalize → DB) with a cron scheduler, retries, and status control."
+        },
+        {
+          ru: "Спроектировал модель данных под этапы выпусков и фильтрацию по состояниям.",
+          en: "Designed a data model for issuance lifecycle and state filtering."
         }
       ],
       links: [
         { label: { ru: "GitHub", en: "GitHub" }, href: "https://github.com/lacoming/cfa-radar" }
-      ]
-    },
-    {
-      id: "cfa-radar-parser",
-      title: { ru: "CFA Radar — парсинг и планировщик", en: "CFA Radar — Parsing & Scheduler" },
-      subtitle: {
-        ru: "Сбор данных, cron-задачи, БД-модель статусов и уведомления",
-        en: "Data collection, cron jobs, DB status model and notifications"
-      },
-      role: { ru: "Автор и разработчик", en: "Creator & Developer" },
-      stack: ["Node.js", "PostgreSQL", "SQL", "Docker", "cron/scheduler"],
-      tags: ["Backend", "Fintech/Data", "DevOps"],
-      bullets: [
-        {
-          ru: "Оркестрация задач по расписанию: повторные попытки, устойчивость к сбоям, контроль статусов.",
-          en: "Scheduled orchestration: retries, failure resilience, and status control."
-        },
-        {
-          ru: "Модель данных под этапы выпусков и фильтрацию по состояниям (например, ‘идёт сбор заявок’).",
-          en: "Data model for issuance lifecycle and state filtering (e.g., ‘subscription open’)."
-        },
-        {
-          ru: "Подготовка окружения через Docker для воспроизводимого запуска.",
-          en: "Dockerized environment for reproducible execution."
-        }
-      ],
-      links: [
-        { label: { ru: "GitHub", en: "GitHub" }, href: "https://github.com/lacoming/cfa-radar" }
-      ]
-    },
-    {
-      id: "terskarabian",
-      title: { ru: "Официальный сайт конного завода", en: "Horse Stud — Official Website" },
-      subtitle: {
-        ru: "Сайт под ключ: адаптив, Pixel Perfect, SEO-база",
-        en: "Turnkey website: responsive, pixel-perfect, SEO basics"
-      },
-      role: { ru: "Frontend-разработчик (проектная работа)", en: "Frontend Developer (contract)" },
-      period: "10.2024–04.2025",
-      stack: ["HTML5", "CSS3", "JavaScript", "Git", "Figma", "Basic SEO"],
-      tags: ["Frontend", "UI/UX", "SSR/SEO"],
-      bullets: [
-        {
-          ru: "Сделал сайт под ключ: адаптив, Pixel Perfect по Figma, кроссбраузерность.",
-          en: "Delivered a turnkey site: responsive, pixel-perfect to Figma, cross-browser."
-        },
-        {
-          ru: "Подготовил базовое SEO: структура, мета, оптимизация изображений.",
-          en: "Handled SEO basics: structure, meta, image optimization."
-        },
-        {
-          ru: "Подготовил проект к поддержке: структура и инструкция по запуску/обновлениям.",
-          en: "Prepared the project for maintenance: structure and run/update docs."
-        }
-      ],
-      links: [
-        { label: { ru: "Сайт", en: "Website" }, href: "https://terskarabian.com/" }
       ]
     },
     {
       id: "art",
       title: { ru: "Art — сайт для музыкальной группы", en: "Art — Music Band Website" },
       subtitle: {
-        ru: "Nuxt/Vue + Strapi CMS: контент, анимации, адаптив, оптимизация",
-        en: "Nuxt/Vue + Strapi CMS: content, motion, responsive layout, optimization"
+        ru: "Промо-сайт музыкальной группы: медиа, события, история",
+        en: "Promo website for a music band: media, events, story"
       },
       role: { ru: "Frontend-разработчик", en: "Frontend Developer" },
+      image: "/projects/art.png",
       stack: ["Nuxt/Vue (SSR)", "TypeScript", "Strapi", "HTML/CSS", "Git"],
       tags: ["Frontend", "UI/UX"],
       bullets: [
@@ -275,13 +227,44 @@ export const profile = {
       ]
     },
     {
+      id: "terskarabian",
+      title: { ru: "Официальный сайт конного завода", en: "Horse Stud — Official Website" },
+      subtitle: {
+        ru: "Представительский сайт конного завода с каталогом и историей",
+        en: "Showcase website for a horse stud with catalog and history"
+      },
+      role: { ru: "Frontend-разработчик (проектная работа)", en: "Frontend Developer (contract)" },
+      period: "10.2024–04.2025",
+      image: "/projects/tersk.png",
+      stack: ["HTML5", "CSS3", "JavaScript", "Git", "Figma", "Basic SEO"],
+      tags: ["Frontend", "UI/UX", "SSR/SEO"],
+      bullets: [
+        {
+          ru: "Сделал сайт под ключ: адаптив, Pixel Perfect по Figma, кроссбраузерность.",
+          en: "Delivered a turnkey site: responsive, pixel-perfect to Figma, cross-browser."
+        },
+        {
+          ru: "Подготовил базовое SEO: структура, мета, оптимизация изображений.",
+          en: "Handled SEO basics: structure, meta, image optimization."
+        },
+        {
+          ru: "Подготовил проект к поддержке: структура и инструкция по запуску/обновлениям.",
+          en: "Prepared the project for maintenance: structure and run/update docs."
+        }
+      ],
+      links: [
+        { label: { ru: "Сайт", en: "Website" }, href: "https://terskarabian.com/" }
+      ]
+    },
+    {
       id: "demonslayer",
       title: { ru: "DemonSlayer — обучение React", en: "DemonSlayer — React Learning Site" },
       subtitle: {
-        ru: "Next.js App Router + Prisma/SQLite: учебный продукт с анимациями",
-        en: "Next.js App Router + Prisma/SQLite: a learning product with motion"
+        ru: "Интерактивная платформа для изучения React и фронтенд-разработки с ИИ-собеседованиями",
+        en: "Interactive platform for learning React and frontend development with AI mock interviews"
       },
       role: { ru: "Автор и разработчик", en: "Creator & Developer" },
+      image: "/projects/demon.png",
       stack: [
         "Next.js 14+ (App Router)",
         "TypeScript",

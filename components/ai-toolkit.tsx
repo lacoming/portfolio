@@ -25,10 +25,10 @@ export function AIToolkit({ locale }: { locale: Locale }) {
         {profile.ai.tools.map((tool) => (
           <div
             key={tool.name}
-            className="rounded-[14px] border border-border/40 bg-muted/30 px-5 py-3"
+            className="glass rounded-[14px] border-0 px-5 py-3"
           >
             <p className="text-sm font-medium">{tool.name}</p>
-            <p className="mt-1 text-xs text-muted-foreground">
+            <p className="mt-1 text-xs opacity-60">
               {t(tool.note, locale)}
             </p>
           </div>

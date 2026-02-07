@@ -19,7 +19,7 @@ export function LocaleSwitcher({ locale }: { locale: Locale }) {
       variant="ghost"
       size="sm"
       onClick={handleSwitch}
-      className="rounded-full text-xs font-medium"
+      className="glass-interactive rounded-full border-0 bg-transparent text-xs font-medium hover:bg-transparent hover:text-inherit"
       aria-label={`Switch to ${next.toUpperCase()}`}
     >
       {locale === "ru" ? "EN" : "RU"}

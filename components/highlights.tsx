@@ -8,12 +8,12 @@ export function Highlights({ locale }: { locale: Locale }) {
       {profile.highlights.map((h, i) => (
         <div
           key={i}
-          className="rounded-[16px] border border-border/40 bg-muted/30 px-6 py-5"
+          className="glass rounded-[16px] border-0 px-6 py-5"
         >
           <h3 className="text-sm font-semibold tracking-tight">
             {t(h.title, locale)}
           </h3>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-2 text-sm leading-relaxed opacity-60">
             {t(h.description, locale)}
           </p>
         </div>

@@ -17,7 +17,7 @@ export function ThemeToggle() {
       <Button
         variant="ghost"
         size="sm"
-        className="h-8 w-8 rounded-full p-0"
+        className="glass-interactive h-8 w-8 rounded-full border-0 bg-transparent p-0 hover:bg-transparent hover:text-inherit"
         aria-label="Toggle theme"
       >
         <span className="h-4 w-4" />
@@ -31,7 +31,7 @@ export function ThemeToggle() {
     <Button
       variant="ghost"
       size="sm"
-      className="h-8 w-8 rounded-full p-0"
+      className="glass-interactive h-8 w-8 rounded-full border-0 bg-transparent p-0 hover:bg-transparent hover:text-inherit"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
     >
