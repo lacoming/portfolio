@@ -22,34 +22,34 @@ export function ProjectCard({
   const hasImage = !!project.image;
 
   const card = (
-    <Card className={`glass relative flex h-[220px] flex-col overflow-hidden rounded-[18px] border-0 bg-transparent shadow-none transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-white/5 sm:h-[250px] ${hasImage ? "glass-image" : ""}`}>
+    <Card className={`group glass relative flex h-[220px] flex-col overflow-hidden rounded-[18px] border-0 bg-transparent shadow-none transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-white/5 sm:h-[250px] ${hasImage ? "glass-image" : ""}`}>
       {hasImage && (
         <>
           <Image
             src={project.image!}
             alt=""
             fill
-            className="object-cover"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 50vw"
           />
           {/* Dark theme: dark gradient overlay */}
-          <div className="absolute inset-0 hidden bg-gradient-to-t from-black/90 via-black/70 to-black/40 dark:block" />
+          <div className="absolute inset-0 hidden bg-gradient-to-t from-black/90 via-black/70 to-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:block" />
           {/* Light theme: frosted white glass overlay */}
-          <div className="absolute inset-0 bg-white/60 backdrop-blur-sm dark:hidden" />
+          <div className="absolute inset-0 bg-white/60 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100 dark:hidden" />
         </>
       )}
 
       <CardHeader className="relative z-10 gap-2 pb-4">
-        <CardTitle className="text-lg leading-snug">
+        <CardTitle className="text-lg leading-snug -translate-y-[200%] transition-transform duration-500 ease-out group-hover:translate-y-0">
           {t(project.title, locale)}
         </CardTitle>
-        <CardDescription className={`leading-relaxed ${hasImage ? "dark:text-white/70 text-black/60" : "opacity-65"}`}>
+        <CardDescription className={`leading-relaxed -translate-x-[120%] transition-transform duration-500 ease-out delay-75 group-hover:translate-x-0 ${hasImage ? "dark:text-white/70 text-black/60" : "opacity-65"}`}>
           {t(project.subtitle, locale)}
         </CardDescription>
       </CardHeader>
 
       <CardContent className="relative z-10 mt-auto flex flex-col gap-2 pb-5">
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1.5 translate-x-[120%] transition-transform duration-500 ease-out delay-100 group-hover:translate-x-0">
           {project.tags.map((tag) => (
             <Badge
               key={tag}
@@ -61,7 +61,7 @@ export function ProjectCard({
           ))}
         </div>
 
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1.5 translate-y-[200%] transition-transform duration-500 ease-out delay-150 group-hover:translate-y-0">
           {project.stack.map((tech) => (
             <span
               key={tech}
