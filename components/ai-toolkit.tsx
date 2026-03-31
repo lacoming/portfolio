@@ -5,7 +5,7 @@ import type { Locale } from "@/i18n/routing";
 export function AIToolkit({ locale }: { locale: Locale }) {
   return (
     <div className="space-y-6">
-      <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
+      <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
         {t(profile.ai.intro, locale)}
       </p>
 
@@ -21,11 +21,11 @@ export function AIToolkit({ locale }: { locale: Locale }) {
         ))}
       </ul>
 
-      <div className="flex flex-wrap gap-4">
+      <div className="grid gap-3 sm:grid-cols-2">
         {profile.ai.tools.map((tool) => (
           <div
             key={tool.name}
-            className="glass rounded-[14px] border-0 px-5 py-3"
+            className="glass rounded-[14px] border-0 px-5 py-4"
           >
             <p className="text-sm font-medium">{tool.name}</p>
             <p className="mt-1 text-xs opacity-60">

@@ -23,6 +23,10 @@ export default async function HomePage({
 
       <Highlights locale={locale} />
 
+      <Section title={t(profile.ai.title, locale)}>
+        <AIToolkit locale={locale} />
+      </Section>
+
       <Section title={t(profile.ctaSecondary, locale)}>
         <div className="grid gap-6 sm:grid-cols-2">
           {profile.projects.map((project) => (
@@ -31,16 +35,12 @@ export default async function HomePage({
         </div>
       </Section>
 
-      <Section title={t(profile.workflow.title, locale)}>
-        <Workflow locale={locale} />
-      </Section>
-
-      <Section title={t(profile.ai.title, locale)}>
-        <AIToolkit locale={locale} />
-      </Section>
-
       <Section title={t(profile.skillsTitle, locale)}>
         <Skills locale={locale} />
+      </Section>
+
+      <Section title={t(profile.workflow.title, locale)}>
+        <Workflow locale={locale} />
       </Section>
     </div>
   );

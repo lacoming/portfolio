@@ -12,6 +12,11 @@ export type Highlight = {
   description: I18nText;
 };
 
+export type Stat = {
+  value: string;
+  label: I18nText;
+};
+
 export type Project = {
   id: string;
   title: I18nText;
@@ -20,7 +25,7 @@ export type Project = {
   period?: string;
   image?: string;
   stack: string[];
-  tags: Array<"Fullstack" | "Frontend" | "Backend" | "SSR/SEO" | "Fintech/Data" | "DevOps" | "UI/UX">;
+  tags: Array<"Fullstack" | "Frontend" | "Backend" | "SSR/SEO" | "Fintech/Data" | "DevOps" | "UI/UX" | "Mobile" | "AI/Automation">;
   bullets: I18nText[];
   links: Array<{ label: I18nText; href: string }>;
 };
@@ -41,13 +46,32 @@ export const profile = {
   location: { ru: "Санкт-Петербург, РФ", en: "Saint Petersburg, Russia" } as I18nText,
 
   tagline: {
-    ru: "Делаю быстрые и понятные веб-продукты: SSR/SEO, интеграции, базы данных и аккуратный UI.",
-    en: "I build fast, maintainable web products: SSR/SEO, integrations, databases, and polished UI."
+    ru: "Создаю веб-продукты, мобильные приложения и AI-автоматизации — от идеи до работающего сервиса. На меня работает собственный AI-офис.",
+    en: "I build web products, mobile apps, and AI automations — from idea to working service. Powered by my own AI office."
   } as I18nText,
 
-  ctaPrimary: { ru: "Связаться", en: "Contact" } as I18nText,
+  ctaPrimary: { ru: "Связаться", en: "Get in touch" } as I18nText,
   ctaSecondary: { ru: "Проекты", en: "Projects" } as I18nText,
   skillsTitle: { ru: "Навыки", en: "Skills" } as I18nText,
+
+  stats: [
+    {
+      value: "15+",
+      label: { ru: "проектов", en: "projects" }
+    },
+    {
+      value: "3+",
+      label: { ru: "года опыта", en: "years experience" }
+    },
+    {
+      value: "5",
+      label: { ru: "стеков", en: "tech stacks" }
+    },
+    {
+      value: "24/7",
+      label: { ru: "AI-офис", en: "AI office" }
+    }
+  ] as Stat[],
 
   links: [
     {
@@ -74,59 +98,312 @@ export const profile = {
 
   highlights: [
     {
-      title: { ru: "Полный цикл разработки", en: "Full-cycle development" },
+      title: { ru: "Полный цикл: идея → продукт", en: "Full cycle: idea → product" },
       description: {
-        ru: "Беру на себя весь путь — от интерфейса до серверной логики и инфраструктуры. Довожу задачи до рабочего продукта и сопровождаю после запуска.",
-        en: "I own the entire path — from interface to server logic and infrastructure. I deliver working products and provide support after launch."
+        ru: "Беру задачу от концепции до работающего сервиса — фронтенд, бэкенд, база данных, деплой. Не нужна команда из пяти человек.",
+        en: "I take a task from concept to working service — frontend, backend, database, deploy. No need for a team of five."
       }
     },
     {
-      title: { ru: "SEO и миграция сайтов", en: "SEO & site migrations" },
+      title: { ru: "AI-усиленная разработка", en: "AI-augmented development" },
       description: {
-        ru: "Переношу сайты с конструкторов и устаревших платформ на современные решения — без потери позиций в поисковой выдаче.",
-        en: "I migrate sites from page builders and legacy platforms to modern stacks — without losing search rankings."
+        ru: "Построил собственный AI-офис: агенты для code review, тестирования, документации и автоматизации. Это ускоряет работу в разы.",
+        en: "Built my own AI office: agents for code review, testing, documentation, and automation. This multiplies my output."
       }
     },
     {
-      title: { ru: "Интеграция данных", en: "Data integration" },
+      title: { ru: "Web + Mobile + Автоматизации", en: "Web + Mobile + Automations" },
       description: {
-        ru: "Собираю данные из разных источников, привожу к единому формату и надёжно доставляю в продукт — от базы данных до интерфейса.",
-        en: "I collect data from multiple sources, unify it, and reliably deliver it into your product — from database to interface."
+        ru: "Next.js, React, Vue, Flutter, n8n — выбираю инструмент под задачу. Не привязан к одному стеку.",
+        en: "Next.js, React, Vue, Flutter, n8n — I pick the right tool for the job. Not locked into one stack."
       }
     },
     {
-      title: { ru: "Внимание к деталям", en: "Attention to detail" },
+      title: { ru: "Качество без компромиссов", en: "Quality without compromise" },
       description: {
-        ru: "Чистый интерфейс, выверенная типографика и плавные анимации. Точная реализация по макетам — без компромиссов.",
-        en: "Clean interface, refined typography, and smooth animations. Precise implementation from design mockups — no compromises."
+        ru: "Строгая типизация, чистый UI, SEO, тесты, мониторинг. Делаю так, чтобы продукт жил долго и не ломался.",
+        en: "Strict typing, clean UI, SEO, tests, monitoring. I build products that last and don't break."
       }
     }
   ] as Highlight[],
 
   projects: [
     {
+      id: "openclaw",
+      image: "/projects/ai-office.png",
+      title: { ru: "OpenClaw — персональный AI-офис", en: "OpenClaw — Personal AI Office" },
+      subtitle: {
+        ru: "Командный центр с оркестратором агентов, пиксельным офисом и автоматизацией фриланса",
+        en: "Command center with agent orchestrator, pixel office UI, and freelance automation"
+      },
+      role: { ru: "Автор и разработчик", en: "Creator & Developer" },
+      period: "03.2026",
+      stack: ["React 19", "TypeScript", "PixiJS 8", "Vite", "FastAPI", "Anthropic API", "WebSocket", "Docker"],
+      tags: ["Fullstack", "AI", "Automation"],
+      bullets: [
+        {
+          ru: "LLM-оркестратор маршрутизирует задачи по отделам агентов: продажи, клиенты, архитектура, финансы, разработка.",
+          en: "LLM orchestrator routes tasks across agent departments: sales, clients, architecture, finance, development."
+        },
+        {
+          ru: "Пиксельный офис на PixiJS — визуализация работы агентов в реальном времени через WebSocket.",
+          en: "Pixel office on PixiJS — real-time agent activity visualization via WebSocket."
+        },
+        {
+          ru: "Интеграция с gstack (28 Claude Code скиллов) для полного цикла разработки: plan → build → review → QA → ship.",
+          en: "Integration with gstack (28 Claude Code skills) for full dev cycle: plan → build → review → QA → ship."
+        }
+      ],
+      links: []
+    },
+    {
+      id: "n8n-orchestrator",
+      image: "/projects/n8n.png",
+      title: { ru: "AI-офис — n8n Orchestrator", en: "AI Office — n8n Orchestrator" },
+      subtitle: {
+        ru: "Модульная AI/автоматизация: orchestrator + worker, PostgreSQL, JSON-контракты, retry, logging",
+        en: "Modular AI/automation: orchestrator + worker, PostgreSQL, JSON contracts, retry, logging"
+      },
+      role: { ru: "Автор и архитектор", en: "Creator & Architect" },
+      period: "03.2026",
+      stack: ["n8n", "PostgreSQL", "Supabase", "JSON Contracts", "AI Agents"],
+      tags: ["AI/Automation", "Backend", "DevOps"],
+      bullets: [
+        {
+          ru: "Спроектировал архитектуру orchestrator/worker с разделением ответственности и независимым тестированием.",
+          en: "Designed orchestrator/worker architecture with separation of concerns and independent testing."
+        },
+        {
+          ru: "Реализовал session state в PostgreSQL, структурированные JSON-контракты и error handling с retry.",
+          en: "Implemented session state in PostgreSQL, structured JSON contracts, and error handling with retry."
+        },
+        {
+          ru: "Система принимает запросы на естественном языке, парсит параметры и выполняет бизнес-логику автоматически.",
+          en: "The system accepts natural language requests, parses parameters, and executes business logic automatically."
+        }
+      ],
+      links: [
+        { label: { ru: "GitHub", en: "GitHub" }, href: "https://github.com/lacoming/n8n-mini-orchestrator" }
+      ]
+    },
+    {
+      id: "sport-scout",
+      image: "/projects/sport-scout.png",
+      title: { ru: "Sport Scout — платформа скаутинга", en: "Sport Scout — Scouting Platform" },
+      subtitle: {
+        ru: "Платформа для спортивного скаутинга с аналитикой, кастомными SVG-графиками и Docker-деплоем",
+        en: "Sports scouting platform with analytics, custom SVG charts, and Docker deployment"
+      },
+      role: { ru: "Автор и разработчик", en: "Creator & Developer" },
+      period: "03.2026",
+      stack: ["React", "TypeScript", "Vite", "SVG", "Docker", "Nginx"],
+      tags: ["Fullstack", "Frontend", "DevOps", "UI/UX"],
+      bullets: [
+        {
+          ru: "Разработал интерактивные SVG-компоненты для визуализации данных без сторонних библиотек графиков.",
+          en: "Developed interactive SVG components for data visualization without any charting libraries."
+        },
+        {
+          ru: "Настроил Docker + Nginx для продакшен-деплоя и Vercel для демо-версии.",
+          en: "Configured Docker + Nginx for production deployment and Vercel for demo."
+        },
+        {
+          ru: "Строгая типизация данных, модульная архитектура компонентов.",
+          en: "Strict data typing, modular component architecture."
+        }
+      ],
+      links: [
+        { label: { ru: "GitHub", en: "GitHub" }, href: "https://github.com/lacoming/sport-scout" },
+        { label: { ru: "Demo", en: "Demo" }, href: "https://github.com/lacoming/web-sport-scout-demo" }
+      ]
+    },
+    {
+      id: "mini-booking",
+      image: "/projects/hotel-booking.png",
+      title: { ru: "Mini Booking — система бронирования", en: "Mini Booking — Hotel Booking System" },
+      subtitle: {
+        ru: "Бронирование номеров с GraphQL API, защитой от пересечений и мульти-клиентами: Web + Flutter",
+        en: "Room booking with GraphQL API, overlap protection, and multi-client: Web + Flutter"
+      },
+      role: { ru: "Автор и разработчик", en: "Creator & Developer" },
+      period: "02.2026",
+      stack: ["Node.js", "TypeScript", "Apollo GraphQL", "PostgreSQL", "Prisma", "React", "Flutter/Dart", "Docker"],
+      tags: ["Fullstack", "Backend", "Mobile"],
+      bullets: [
+        {
+          ru: "Реализовал GraphQL API с Apollo Server, Prisma ORM и защитой от race condition через Serializable-транзакции.",
+          en: "Built GraphQL API with Apollo Server, Prisma ORM, and race condition protection via Serializable transactions."
+        },
+        {
+          ru: "Три клиента: React Web, Flutter Web, Flutter Desktop — единый бэкенд.",
+          en: "Three clients: React Web, Flutter Web, Flutter Desktop — single backend."
+        },
+        {
+          ru: "DB exclusion constraint (daterange + btree_gist) для гарантии непересечения бронирований.",
+          en: "DB exclusion constraint (daterange + btree_gist) guarantees no booking overlaps."
+        }
+      ],
+      links: [
+        { label: { ru: "GitHub", en: "GitHub" }, href: "https://github.com/lacoming/hotelBooking" }
+      ]
+    },
+    {
+      id: "bitrix24-warehouse",
+      image: "/projects/bitrix24-warehouse.png",
+      title: { ru: "Bitrix24 Warehouse GUI", en: "Bitrix24 Warehouse GUI" },
+      subtitle: {
+        ru: "Кастомный GUI для виртуального склада Битрикс24 с ролевой моделью и экспортом в Excel",
+        en: "Custom GUI for Bitrix24 virtual warehouse with role-based access and Excel export"
+      },
+      role: { ru: "Автор и разработчик", en: "Creator & Developer" },
+      period: "03.2026",
+      stack: ["Vue", "TypeScript", "Vite", "Bitrix24 REST API", "HTML"],
+      tags: ["Frontend", "Enterprise"],
+      bullets: [
+        {
+          ru: "Кастомная таблица с фильтрацией, сортировкой и редактированием ячеек, заменяющая стандартный интерфейс Битрикс24.",
+          en: "Custom table with filtering, sorting, and cell editing, replacing the standard Bitrix24 interface."
+        },
+        {
+          ru: "Ролевая модель доступа, история изменений и экспорт данных в Excel.",
+          en: "Role-based access model, change history, and Excel data export."
+        }
+      ],
+      links: [
+        { label: { ru: "GitHub", en: "GitHub" }, href: "https://github.com/lacoming/bitrix24-warehouse-gui" }
+      ]
+    },
+    {
+      id: "web-landscape-2d",
+      image: "/projects/dark.png",
+      title: { ru: "Конструктор дорожек из плитки", en: "Tile Path Constructor" },
+      subtitle: {
+        ru: "Интерактивный 2D-конструктор дорожек из модульных плит с экспортом в DXF/PDF",
+        en: "Interactive 2D tile path designer with DXF/PDF export"
+      },
+      role: { ru: "Автор и разработчик", en: "Creator & Developer" },
+      period: "03.2026",
+      stack: ["Next.js", "TypeScript", "Tailwind CSS", "Konva.js", "Python", "FastAPI", "Supabase", "Docker"],
+      tags: ["Fullstack", "Frontend", "Backend"],
+      bullets: [
+        {
+          ru: "Интерактивный Canvas-редактор на Konva.js: размещение объектов, проектирование дорожек из плиток разных форм.",
+          en: "Interactive Canvas editor with Konva.js: object placement, path design with various tile shapes."
+        },
+        {
+          ru: "Python-бэкенд (FastAPI) для генерации DXF-чертежей и PDF-экспорта готового проекта.",
+          en: "Python backend (FastAPI) for DXF drawing generation and PDF export of finished projects."
+        }
+      ],
+      links: [
+        { label: { ru: "GitHub", en: "GitHub" }, href: "https://github.com/lacoming/web_landscape-2D" }
+      ]
+    },
+    {
+      id: "parser-nb-bet",
+      image: "/projects/parser-nb-bet.png",
+      title: { ru: "NB-Bet Parser", en: "NB-Bet Parser" },
+      subtitle: {
+        ru: "Автоматический парсер спортивных матчей с фильтрацией по лигам и Telegram-уведомлениями",
+        en: "Automated sports match parser with league filtering and Telegram notifications"
+      },
+      role: { ru: "Автор и разработчик", en: "Creator & Developer" },
+      period: "03.2026",
+      stack: ["Python", "Requests", "BeautifulSoup", "Tkinter", "Telegram API", "VK API", "Excel"],
+      tags: ["Backend", "Automation", "Desktop"],
+      bullets: [
+        {
+          ru: "Парсинг матчей через JSON API, автоматическая фильтрация по лигам и принятие решений по ставкам.",
+          en: "Match parsing via JSON API, automatic league filtering, and automated betting decisions."
+        },
+        {
+          ru: "Интеграция с kushvsporte.ru, уведомления в Telegram и VK, экспорт результатов в Excel.",
+          en: "Integration with kushvsporte.ru, Telegram & VK notifications, Excel results export."
+        }
+      ],
+      links: [
+        { label: { ru: "GitHub", en: "GitHub" }, href: "https://github.com/lacoming/parser_nb-bet" }
+      ]
+    },
+    {
+      id: "scaner-nb-bet",
+      image: "/projects/parser-nb-bet.png",
+      title: { ru: "NB-Bet Live Scanner", en: "NB-Bet Live Scanner" },
+      subtitle: {
+        ru: "Live-сканер коэффициентов с обнаружением прогрузов и сигналами в Telegram",
+        en: "Live odds scanner with coefficient drop detection and Telegram signals"
+      },
+      role: { ru: "Автор и разработчик", en: "Creator & Developer" },
+      period: "03.2026",
+      stack: ["Python", "Playwright", "aiogram 3", "VK API", "SQLite", "Excel"],
+      tags: ["Backend", "Automation", "Parsing"],
+      bullets: [
+        {
+          ru: "Headless-браузер (Playwright) для авторизации и параллельного обхода шаблонов сканера коэффициентов.",
+          en: "Headless browser (Playwright) for authentication and parallel odds scanner template traversal."
+        },
+        {
+          ru: "Обнаружение прогрузов (падение коэффициентов), сбор live-статистики, сигналы в Telegram и VK.",
+          en: "Coefficient drop detection, live stats collection, Telegram & VK signals."
+        }
+      ],
+      links: [
+        { label: { ru: "GitHub", en: "GitHub" }, href: "https://github.com/lacoming/scaner_nb-bet" }
+      ]
+    },
+    {
+      id: "cfa-radar",
+      title: { ru: "CFA Radar", en: "CFA Radar" },
+      subtitle: {
+        ru: "Сервис мониторинга активных выпусков ЦФА с калькулятором доходности",
+        en: "Monitoring service for active CFA issuances with yield calculator"
+      },
+      role: { ru: "Автор и разработчик", en: "Creator & Developer" },
+      period: "05.2025–09.2025",
+      image: "/projects/cfa-radar.png",
+      stack: ["React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "Docker", "cron"],
+      tags: ["Fullstack", "Fintech/Data", "SSR/SEO", "DevOps"],
+      bullets: [
+        {
+          ru: "Пайплайн данных: сбор → нормализация → БД с cron-планировщиком и retry.",
+          en: "Data pipeline: collect → normalize → DB with cron scheduler and retry."
+        },
+        {
+          ru: "SSR/SEO-структура страниц, карточки выпусков, фильтры/сортировки.",
+          en: "SSR/SEO page structure, issuance cards, filters/sorting."
+        },
+        {
+          ru: "Строгая типизация данных на TypeScript, модель под жизненный цикл выпусков.",
+          en: "Strict TypeScript data typing, model for issuance lifecycle."
+        }
+      ],
+      links: [
+        { label: { ru: "GitHub", en: "GitHub" }, href: "https://github.com/lacoming/cfa-radar" }
+      ]
+    },
+    {
       id: "tokeon-site",
       title: { ru: "Токеон — официальный сайт", en: "Tokeon — Official Website" },
       subtitle: {
-        ru: "Корпоративный сайт финтех-платформы для работы с цифровыми финансовыми активами",
+        ru: "Корпоративный сайт финтех-платформы для цифровых финансовых активов",
         en: "Corporate website for a fintech platform focused on digital financial assets"
       },
       role: { ru: "Frontend-разработчик (команда/прод)", en: "Frontend Developer (team/production)" },
       image: "/projects/tokeon-site.png",
-      stack: ["TypeScript", "Nuxt/Vue (SSR)", "REST API", "HTML/CSS", "Git"],
+      stack: ["TypeScript", "Nuxt/Vue (SSR)", "REST API", "HTML/CSS"],
       tags: ["Frontend", "SSR/SEO", "UI/UX"],
       bullets: [
         {
-          ru: "Делал SEO-миграции на SSR: редиректы, meta, canonical, sitemap/robots, контроль индексации.",
-          en: "Delivered SSR SEO migrations: redirects, meta, canonical, sitemap/robots, index control."
+          ru: "SEO-миграции на SSR: редиректы, meta, canonical, sitemap/robots.",
+          en: "SSR SEO migrations: redirects, meta, canonical, sitemap/robots."
         },
         {
-          ru: "Переносил страницы/разделы с Tilda/legacy на единый фронтенд без временных костылей.",
-          en: "Migrated sections from Tilda/legacy to a unified frontend without temporary hacks."
+          ru: "Перенос страниц с Tilda/legacy на единый фронтенд без потери позиций.",
+          en: "Migrated sections from Tilda/legacy to unified frontend without losing rankings."
         },
         {
-          ru: "Интегрировал фронтенд с API + участвовал в прод-выкатах и post-release фиксах.",
-          en: "Integrated the frontend with APIs and handled production rollouts & post-release fixes."
+          ru: "Интеграция с API, прод-выкатки и post-release фиксы.",
+          en: "API integration, production rollouts, and post-release fixes."
         }
       ],
       links: [
@@ -137,26 +414,26 @@ export const profile = {
       id: "tokeon-bot",
       title: { ru: "Токеон — Telegram-бот", en: "Tokeon — Telegram Bot" },
       subtitle: {
-        ru: "Бот для уведомлений о новых выпусках с калькулятором доходности и ИИ-помощником",
-        en: "Bot for new issuance alerts with a yield calculator and AI assistant"
+        ru: "Бот уведомлений с калькулятором доходности и ИИ-помощником",
+        en: "Notification bot with yield calculator and AI assistant"
       },
       role: { ru: "Разработчик (в команде)", en: "Developer (team)" },
       period: "09.2024–01.2025",
       image: "/projects/tokeon-bot.png",
-      stack: ["Node.js", "Telegraf", "PostgreSQL", "SQL", "Docker"],
+      stack: ["Node.js", "Telegraf", "PostgreSQL", "Docker"],
       tags: ["Backend", "Fullstack", "DevOps"],
       bullets: [
         {
-          ru: "Реализовал сценарии, меню, уведомления, обработку ошибок и устойчивое поведение бота.",
-          en: "Implemented flows, menus, notifications, error handling, and bot reliability."
+          ru: "Сценарии, меню, уведомления, обработка ошибок и устойчивое поведение бота.",
+          en: "Flows, menus, notifications, error handling, and bot reliability."
         },
         {
-          ru: "Спроектировал хранение в PostgreSQL (таблицы/запросы) под уведомления и историю действий.",
-          en: "Designed PostgreSQL storage (tables/queries) for notifications and action history."
+          ru: "PostgreSQL-хранение для уведомлений и истории действий.",
+          en: "PostgreSQL storage for notifications and action history."
         },
         {
-          ru: "Добавил планировщик/фоновые задачи для автоматических проверок и рассылок.",
-          en: "Added a scheduler/background jobs for automated checks and outbound messages."
+          ru: "Планировщик фоновых задач для автоматических проверок и рассылок.",
+          en: "Background job scheduler for automated checks and outbound messages."
         }
       ],
       links: [
@@ -164,62 +441,75 @@ export const profile = {
       ]
     },
     {
-      id: "cfa-radar",
-      title: { ru: "CFA Radar", en: "CFA Radar" },
+      id: "limb",
+      image: "/projects/limb.png",
+      title: { ru: "Limb — игровая библиотека", en: "Limb — Game Library" },
       subtitle: {
-        ru: "Открытый сервис мониторинга активных выпусков ЦФА популярных платформ",
-        en: "Open monitoring service for active CFA issuances across popular platforms"
+        ru: "Next.js-проект с 2.5D turntable-спрайтами и управлением фреймами",
+        en: "Next.js project with 2.5D turntable sprites and frame management"
       },
       role: { ru: "Автор и разработчик", en: "Creator & Developer" },
-      period: "05.2025–09.2025",
-      image: "/projects/cfa-radar.png",
-      stack: ["React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "SQL", "Docker", "cron/scheduler"],
-      tags: ["Fullstack", "Fintech/Data", "SSR/SEO", "DevOps", "UI/UX"],
+      period: "01–02.2026",
+      stack: ["Next.js", "TypeScript", "2.5D Sprites", "Canvas"],
+      tags: ["Frontend", "UI/UX"],
       bullets: [
         {
-          ru: "Собрал интерфейс на React/Next: карточки выпусков, фильтры/сортировки, состояния loading/error/empty.",
-          en: "Built a React/Next UI: issuance cards, filters/sorting, loading/error/empty states."
+          ru: "2.5D turntable-рендеринг спрайтов с четырьмя направлениями движения.",
+          en: "2.5D turntable sprite rendering with four movement directions."
         },
         {
-          ru: "Настроил SSR/SEO-структуру страниц и строгую типизацию данных на TypeScript.",
-          en: "Implemented SSR/SEO page structure and strict TypeScript data typing."
-        },
-        {
-          ru: "Поднял пайплайн данных (сбор → нормализация → БД) с cron-планировщиком, повторными попытками и контролем статусов.",
-          en: "Shipped the data pipeline (collect → normalize → DB) with a cron scheduler, retries, and status control."
-        },
-        {
-          ru: "Спроектировал модель данных под этапы выпусков и фильтрацию по состояниям.",
-          en: "Designed a data model for issuance lifecycle and state filtering."
+          ru: "Автоматизация переименования и нормализации фреймов через CLI-скрипты.",
+          en: "Automated frame renaming and normalization via CLI scripts."
         }
       ],
       links: [
-        { label: { ru: "GitHub", en: "GitHub" }, href: "https://github.com/lacoming/cfa-radar" }
+        { label: { ru: "GitHub", en: "GitHub" }, href: "https://github.com/lacoming/limb" }
+      ]
+    },
+    {
+      id: "demonslayer",
+      title: { ru: "DemonSlayer — обучение React", en: "DemonSlayer — React Learning" },
+      subtitle: {
+        ru: "Интерактивная платформа для изучения React с ИИ-собеседованиями",
+        en: "Interactive React learning platform with AI mock interviews"
+      },
+      role: { ru: "Автор и разработчик", en: "Creator & Developer" },
+      image: "/projects/demon.png",
+      stack: ["Next.js 14+", "TypeScript", "Tailwind CSS", "Prisma", "SQLite", "shadcn/ui", "framer-motion"],
+      tags: ["Frontend", "UI/UX"],
+      bullets: [
+        {
+          ru: "Структура учебного продукта под ключевые темы React/Frontend.",
+          en: "Learning product structure around key React/Frontend topics."
+        },
+        {
+          ru: "Локальная БД через Prisma + SQLite для хранения прогресса.",
+          en: "Local database via Prisma + SQLite for progress tracking."
+        }
+      ],
+      links: [
+        { label: { ru: "GitHub", en: "GitHub" }, href: "https://github.com/lacoming/demonslayer" }
       ]
     },
     {
       id: "art",
-      title: { ru: "Art — сайт для музыкальной группы", en: "Art — Music Band Website" },
+      title: { ru: "Art — сайт музыкальной группы", en: "Art — Music Band Website" },
       subtitle: {
-        ru: "Промо-сайт музыкальной группы: медиа, события, история",
-        en: "Promo website for a music band: media, events, story"
+        ru: "Промо-сайт с CMS, медиа и событиями",
+        en: "Promo website with CMS, media, and events"
       },
       role: { ru: "Frontend-разработчик", en: "Frontend Developer" },
       image: "/projects/art.png",
-      stack: ["Nuxt/Vue (SSR)", "TypeScript", "Strapi", "HTML/CSS", "Git"],
+      stack: ["Nuxt/Vue (SSR)", "TypeScript", "Strapi CMS"],
       tags: ["Frontend", "UI/UX"],
       bullets: [
         {
-          ru: "Собрал современный сайт на Nuxt/Vue: секции, анимации, адаптив.",
-          en: "Built a modern Nuxt/Vue site: sections, motion, and responsive layout."
+          ru: "Современный сайт на Nuxt/Vue: секции, анимации, адаптив.",
+          en: "Modern Nuxt/Vue site: sections, motion, responsive layout."
         },
         {
-          ru: "Интегрировал Strapi как CMS: структура контента, получение данных, удобное расширение.",
-          en: "Integrated Strapi as a CMS: content structure, data fetching, and easy extensibility."
-        },
-        {
-          ru: "Оптимизировал ассеты и загрузку для быстрого рендера и стабильного UX.",
-          en: "Optimized assets and loading for faster rendering and a stable UX."
+          ru: "Интеграция Strapi как CMS для удобного управления контентом.",
+          en: "Integrated Strapi CMS for easy content management."
         }
       ],
       links: [
@@ -228,75 +518,28 @@ export const profile = {
     },
     {
       id: "terskarabian",
-      title: { ru: "Официальный сайт конного завода", en: "Horse Stud — Official Website" },
+      title: { ru: "Терский конный завод", en: "Tersk Horse Stud" },
       subtitle: {
-        ru: "Представительский сайт конного завода с каталогом и историей",
-        en: "Showcase website for a horse stud with catalog and history"
+        ru: "Представительский сайт конного завода с каталогом",
+        en: "Showcase website for a horse stud with catalog"
       },
-      role: { ru: "Frontend-разработчик (проектная работа)", en: "Frontend Developer (contract)" },
+      role: { ru: "Frontend-разработчик (проект)", en: "Frontend Developer (contract)" },
       period: "10.2024–04.2025",
       image: "/projects/tersk.png",
-      stack: ["HTML5", "CSS3", "JavaScript", "Git", "Figma", "Basic SEO"],
+      stack: ["HTML5", "CSS3", "JavaScript", "Figma", "SEO"],
       tags: ["Frontend", "UI/UX", "SSR/SEO"],
       bullets: [
         {
-          ru: "Сделал сайт под ключ: адаптив, Pixel Perfect по Figma, кроссбраузерность.",
-          en: "Delivered a turnkey site: responsive, pixel-perfect to Figma, cross-browser."
+          ru: "Сайт под ключ: адаптив, Pixel Perfect по Figma, кроссбраузерность.",
+          en: "Turnkey site: responsive, pixel-perfect to Figma, cross-browser."
         },
         {
-          ru: "Подготовил базовое SEO: структура, мета, оптимизация изображений.",
-          en: "Handled SEO basics: structure, meta, image optimization."
-        },
-        {
-          ru: "Подготовил проект к поддержке: структура и инструкция по запуску/обновлениям.",
-          en: "Prepared the project for maintenance: structure and run/update docs."
+          ru: "Базовое SEO: структура, мета, оптимизация изображений.",
+          en: "SEO basics: structure, meta, image optimization."
         }
       ],
       links: [
         { label: { ru: "Сайт", en: "Website" }, href: "https://terskarabian.com/" }
-      ]
-    },
-    {
-      id: "demonslayer",
-      title: { ru: "DemonSlayer — обучение React", en: "DemonSlayer — React Learning Site" },
-      subtitle: {
-        ru: "Интерактивная платформа для изучения React и фронтенд-разработки с ИИ-собеседованиями",
-        en: "Interactive platform for learning React and frontend development with AI mock interviews"
-      },
-      role: { ru: "Автор и разработчик", en: "Creator & Developer" },
-      image: "/projects/demon.png",
-      stack: [
-        "Next.js 14+ (App Router)",
-        "TypeScript",
-        "Tailwind CSS",
-        "Prisma",
-        "SQLite",
-        "shadcn/ui",
-        "framer-motion",
-        "lucide-react",
-        "Git"
-      ],
-      tags: ["Frontend", "UI/UX"],
-      bullets: [
-        {
-          ru: "Сформировал структуру учебного продукта под ключевые темы React/Frontend.",
-          en: "Designed a learning product structure around key React/Frontend topics."
-        },
-        {
-          ru: "Реализовал страницы, компоненты и навигацию на Next.js App Router.",
-          en: "Implemented pages, components, and navigation with the Next.js App Router."
-        },
-        {
-          ru: "Добавил локальную БД через Prisma + SQLite для хранения прогресса/данных.",
-          en: "Added a local database via Prisma + SQLite to store progress/data."
-        },
-        {
-          ru: "Использовал framer-motion для аккуратных анимаций и улучшения восприятия интерфейса.",
-          en: "Used framer-motion for subtle animations and improved UI feel."
-        }
-      ],
-      links: [
-        { label: { ru: "GitHub", en: "GitHub" }, href: "https://github.com/lacoming/demonslayer" }
       ]
     }
   ] as Project[],
@@ -304,19 +547,23 @@ export const profile = {
   skills: [
     {
       title: { ru: "Frontend", en: "Frontend" },
-      items: ["TypeScript", "Vue 3 / Nuxt (SSR)", "React / Next.js", "HTML5", "CSS3", "Accessibility", "Responsive UI"]
+      items: ["TypeScript", "React / Next.js", "Vue 3 / Nuxt (SSR)", "Tailwind CSS", "HTML5/CSS3", "SVG/Canvas", "Responsive UI", "Accessibility"]
     },
     {
       title: { ru: "Backend & Data", en: "Backend & Data" },
-      items: ["Node.js", "REST API", "PostgreSQL", "SQL", "Schedulers (cron)", "Data normalization"]
+      items: ["Node.js", "REST API", "GraphQL (Apollo)", "PostgreSQL", "SQLite", "Prisma", "Schedulers (cron)", "Data pipelines"]
     },
     {
-      title: { ru: "DevOps", en: "DevOps" },
-      items: ["Docker", "CI basics", "Production troubleshooting", "Release routines"]
+      title: { ru: "Mobile", en: "Mobile" },
+      items: ["Flutter / Dart", "Offline-first", "Cross-platform (Web + Desktop)"]
     },
     {
-      title: { ru: "Product & Design", en: "Product & Design" },
-      items: ["Pixel Perfect", "Figma handoff", "Minimal UI", "Motion/UI polish"]
+      title: { ru: "DevOps & Infra", en: "DevOps & Infra" },
+      items: ["Docker", "Nginx", "CI/CD", "Supabase", "Vercel", "Production monitoring"]
+    },
+    {
+      title: { ru: "AI & Автоматизация", en: "AI & Automation" },
+      items: ["n8n workflows", "AI Agents", "Claude Code", "Prompt engineering", "AI-assisted development"]
     }
   ] as SkillGroup[],
 
@@ -324,48 +571,49 @@ export const profile = {
     title: { ru: "Как работаю", en: "How I work" } as I18nText,
     bullets: [
       {
-        ru: "Сначала формулирую задачу и ограничения, потом делаю план и только затем код.",
-        en: "I clarify goals and constraints, make a plan, then implement."
+        ru: "Формулирую задачу, ограничения и метрики успеха — потом делаю план и код.",
+        en: "I define the task, constraints, and success metrics — then plan and code."
       },
       {
-        ru: "Думаю про прод: мониторинг ошибок, крайние кейсы, поддерживаемость.",
-        en: "I think production-first: edge cases, stability, maintainability."
+        ru: "AI-офис ускоряет рутину: ревью, тесты, документация — автоматизированы.",
+        en: "My AI office handles routine: reviews, tests, docs — all automated."
       },
       {
-        ru: "Люблю чистую типизацию, понятные интерфейсы данных и предсказуемые сценарии.",
-        en: "I prefer strict typing, clear data contracts, and predictable flows."
+        ru: "Думаю про прод: edge cases, мониторинг, поддерживаемость.",
+        en: "Production-first thinking: edge cases, monitoring, maintainability."
       },
       {
-        ru: "Всегда довожу до “готово”: lint/typecheck/build, проверка UX и адаптива.",
-        en: "I ship ‘done’: lint/typecheck/build plus UX and responsive checks."
+        ru: "Всегда довожу до «готово»: lint/typecheck/build + UX-проверка + адаптив.",
+        en: "I ship 'done': lint/typecheck/build + UX check + responsive."
       }
     ] as I18nText[]
   },
 
   ai: {
-    title: { ru: "AI toolkit", en: "AI toolkit" } as I18nText,
+    title: { ru: "AI-офис", en: "AI Office" } as I18nText,
     intro: {
-      ru: "Использую ИИ как часть инженерного процесса: быстрее прототипирую, ревьюю и повышаю качество.",
-      en: "I use AI as an engineering workflow: faster prototyping, review, and quality improvements."
+      ru: "Я построил собственный AI-офис — набор агентов и автоматизаций, которые работают на меня 24/7. Полноценная AI-инфраструктура, встроенная в рабочий процесс — от идеи до деплоя.",
+      en: "I built my own AI office — a set of agents and automations working for me 24/7. This isn't just 'using ChatGPT' — it's a full infrastructure for accelerating development."
     } as I18nText,
     bullets: [
       {
-        ru: "Генерация черновиков и вариантов реализации, затем ручная проверка и доводка под прод.",
-        en: "Generate implementation options, then manually validate and harden for production."
+        ru: "n8n-оркестратор: принимает задачи, парсит, маршрутизирует по воркерам, хранит состояние.",
+        en: "n8n orchestrator: receives tasks, parses, routes to workers, stores state."
       },
       {
-        ru: "Быстрое ревью кода, поиск багов, улучшение читаемости и архитектуры.",
-        en: "Fast code review, bug hunting, improving readability and architecture."
+        ru: "Автоматический code review, поиск багов, генерация тестов и документации.",
+        en: "Automated code review, bug hunting, test generation, and documentation."
       },
       {
-        ru: "Прототипирование UI/копирайта и сборка документации/инструкций.",
-        en: "Prototyping UI/copy and producing clear documentation and guides."
+        ru: "Прототипирование: от идеи до рабочего MVP за часы, не за недели.",
+        en: "Prototyping: from idea to working MVP in hours, not weeks."
       }
     ] as I18nText[],
     tools: [
-      { name: "Claude Code (Opus 4.6)", note: { ru: "Разработка в VSCode, рефакторинг, архитектура", en: "VSCode development, refactoring, architecture" } },
-      { name: "ChatGPT (GPT-5.2 Thinking)", note: { ru: "Планирование, ревью, генерация вариантов", en: "Planning, review, generating alternatives" } },
-      { name: "Cursor", note: { ru: "Быстрые правки, навигация по кодовой базе", en: "Fast edits, codebase navigation" } }
+      { name: "Claude Code (Opus 4.6)", note: { ru: "Основной инструмент разработки, рефакторинг, архитектура", en: "Primary dev tool, refactoring, architecture" } },
+      { name: "n8n Orchestrator", note: { ru: "AI-агенты, автоматизация рабочих процессов", en: "AI agents, workflow automation" } },
+      { name: "Cursor", note: { ru: "Быстрые правки, навигация по кодовой базе", en: "Fast edits, codebase navigation" } },
+      { name: "ChatGPT", note: { ru: "Планирование, ревью, генерация вариантов", en: "Planning, review, generating alternatives" } }
     ] as AITool[]
   },
 
