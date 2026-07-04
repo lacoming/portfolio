@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700;8..60,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:#F4ECDB;font-family:'Inter',system-ui,sans-serif;color:#332C4E;-webkit-font-smoothing:antialiased}
+</style>
+</helmet>
+<div style="min-height:100vh;background:radial-gradient(125% 80% at 50% -12%, #FBF7EC 0%, #F2E8D2 58%, #E8DCBF 100%);padding:clamp(28px,5vw,64px) 20px 96px">
+  <div style="max-width:1140px;margin:0 auto">
+
+    <div style="text-align:center;margin-bottom:clamp(30px,4.5vw,52px)">
+      <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 15px;border:1px solid rgba(212,167,69,0.45);border-radius:999px;font-size:11.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#9A7A23;background:rgba(212,167,69,0.12);margin-bottom:20px">
+        <span style="width:6px;height:6px;border-radius:50%;background:#D4A745"></span>Фирменный знак · обновление
+      </div>
+      <h1 style="font-family:'Source Serif 4',Georgia,serif;font-weight:700;font-size:clamp(30px,5vw,48px);line-height:1.04;letter-spacing:-0.022em;margin:0 0 16px">Новые логотипы<br>Университета закупок</h1>
+      <p style="max-width:600px;margin:0 auto;font-size:16px;line-height:1.62;color:#5C5674">Историческая «Печать» сохранена. Пять новых знаков раскрывают разные грани бренда — институцию, образование, торги, рост и признание. Каждый показан на светлом и тёмном фоне, а также в составе лого-блока.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(338px,1fr));gap:22px">
+      <sc-for list="{{ variants }}" as="v" hint-placeholder-count="6">
+        <article style="background:#fff;border:1px solid rgba(51,44,78,0.1);border-radius:20px;padding:24px;box-shadow:0 1px 2px rgba(51,44,78,0.05),0 18px 40px -22px rgba(51,44,78,0.4)">
+          <div style="display:flex;align-items:flex-start;gap:13px;margin-bottom:20px">
+            <span style="flex-shrink:0;width:32px;height:32px;border-radius:10px;background:#332C4E;color:#D4A745;font-family:'Source Serif 4',Georgia,serif;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center">{{ v.idx }}</span>
+            <div style="padding-top:1px">
+              <h3 style="margin:0 0 3px;font-family:'Source Serif 4',Georgia,serif;font-weight:700;font-size:21px;letter-spacing:-0.01em">{{ v.name }}</h3>
+              <p style="margin:0;font-size:12.5px;line-height:1.42;color:#6B6584">{{ v.concept }}</p>
+            </div>
+            <span style="margin-left:auto;flex-shrink:0;font-size:10px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:{{ v.tagColor }};background:{{ v.tagBg }};padding:4px 9px;border-radius:999px">{{ v.tag }}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px">
+            <div style="display:flex;align-items:center;justify-content:center;height:134px;border-radius:14px;background:#FBF7EE;border:1px solid rgba(51,44,78,0.08)">
+              <div style="width:76px;height:76px">{{ v.markDark }}</div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:center;height:134px;border-radius:14px;background:#272039">
+              <div style="width:76px;height:76px">{{ v.markLight }}</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:15px 17px;border-radius:14px;background:#FBF7EE;border:1px solid rgba(51,44,78,0.08)">
+            <div style="width:42px;height:42px;flex-shrink:0">{{ v.lockup }}</div>
+            <span style="display:flex;flex-direction:column;font-family:'Source Serif 4',Georgia,serif;font-weight:700;font-size:17px;line-height:1.08;letter-spacing:-0.01em;color:#332C4E">Университет закупок<small style="font-family:'Inter',sans-serif;font-size:10.5px;font-weight:500;letter-spacing:0.03em;color:#9A7A23;margin-top:4px">Учебный центр</small></span>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+
+    <p style="text-align:center;margin:clamp(34px,5vw,52px) auto 0;max-width:560px;font-size:13.5px;line-height:1.6;color:#7C7693">Выберите понравившийся знак — переключатель «Логотип» на главной уже умеет все варианты. Скажите номер или название, и я закреплю его на сайте.</p>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  logoMark(variant, tone) {
+    var dark = tone !== 'light';
+    var ink    = dark ? '#332C4E' : '#F6EFDD';   // structural color (contrasts bg)
+    var gold   = '#D4A745';                        // gold accent (constant)
+    var fill   = dark ? '#332C4E' : '#D4A745';     // filled-badge background
+    var onFill = dark ? '#D4A745' : '#2B2540';     // detail atop a filled badge
+    var line   = dark ? '#D4A745' : '#2B2540';     // hairlines over light surfaces
+    var ff = "'Source Serif 4', Georgia, serif";
+    var g;
+    switch (variant) {
+      /* ── Колонна: портик академии ───────────────────────── */
+      case 'Колонна':
+        g = '<path d="M20 5 L35.6 15.2 H4.4 Z" fill="' + gold + '"/>'
+          + '<rect x="4.8" y="15.4" width="30.4" height="2.7" rx="0.7" fill="' + ink + '"/>'
+          + '<rect x="8.2"  y="18.8" width="3.8" height="12.4" fill="' + ink + '"/>'
+          + '<rect x="14.75" y="18.8" width="3.8" height="12.4" fill="' + ink + '"/>'
+          + '<rect x="21.45" y="18.8" width="3.8" height="12.4" fill="' + ink + '"/>'
+          + '<rect x="28" y="18.8" width="3.8" height="12.4" fill="' + ink + '"/>'
+          + '<rect x="5.4" y="31.2" width="29.2" height="2.5" rx="0.6" fill="' + ink + '"/>'
+          + '<rect x="3.4" y="33.9" width="33.2" height="2.9" rx="0.8" fill="' + ink + '"/>';
+        break;
+      /* ── Книга: образование ─────────────────────────────── */
+      case 'Книга':
+        g = '<path d="M20 12.4 C14.4 9.2, 9 8.9, 4.6 10.7 V28.6 C9 26.8, 14.4 27.1, 20 30.4 Z" fill="' + ink + '"/>'
+          + '<path d="M20 12.4 C25.6 9.2, 31 8.9, 35.4 10.7 V28.6 C31 26.8, 25.6 27.1, 20 30.4 Z" fill="' + ink + '"/>'
+          + '<rect x="19.05" y="12.2" width="1.9" height="18.4" rx="0.95" fill="' + gold + '"/>'
+          + '<path d="M7.6 15 C10.8 14, 14 14.2, 16.8 15.7" stroke="' + line + '" stroke-width="1.05" fill="none" stroke-linecap="round"/>'
+          + '<path d="M7.6 19.1 C10.8 18.1, 14 18.3, 16.8 19.8" stroke="' + line + '" stroke-width="1.05" fill="none" stroke-linecap="round" opacity="0.7"/>'
+          + '<path d="M32.4 15 C29.2 14, 26 14.2, 23.2 15.7" stroke="' + line + '" stroke-width="1.05" fill="none" stroke-linecap="round"/>'
+          + '<path d="M32.4 19.1 C29.2 18.1, 26 18.3, 23.2 19.8" stroke="' + line + '" stroke-width="1.05" fill="none" stroke-linecap="round" opacity="0.7"/>';
+        break;
+      /* ── Молоток: торги и аукционы ──────────────────────── */
+      case 'Молоток':
+        g = '<g transform="rotate(-40 20 20)">'
+          +   '<rect x="7.6" y="9.4" width="24.8" height="8.6" rx="3.4" fill="' + ink + '"/>'
+          +   '<rect x="9.4" y="9.4" width="2.7" height="8.6" fill="' + gold + '"/>'
+          +   '<rect x="27.9" y="9.4" width="2.7" height="8.6" fill="' + gold + '"/>'
+          +   '<rect x="18.35" y="17.6" width="3.3" height="15.4" rx="1.65" fill="' + ink + '"/>'
+          + '</g>'
+          + '<rect x="6.2" y="32.6" width="20.4" height="3.9" rx="1.95" fill="' + gold + '"/>';
+        break;
+      /* ── Грань: рост и современность ────────────────────── */
+      case 'Грань':
+        g = '<path d="M20 3 L35.4 20 L20 37 L4.6 20 Z" fill="none" stroke="' + ink + '" stroke-width="2.2" stroke-linejoin="round"/>'
+          + '<path d="M8.6 14.6 H31.4" stroke="' + ink + '" stroke-width="1.1" opacity="0.32"/>'
+          + '<path d="M11.4 24 L20 14.4 L28.6 24" fill="none" stroke="' + gold + '" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/>'
+          + '<path d="M20 15 L20 28.4" stroke="' + gold + '" stroke-width="3.1" stroke-linecap="round"/>';
+        break;
+      /* ── Лавр: признание и качество ─────────────────────── */
+      case 'Лавр':
+        g = '<path d="M20 34.4 C13.8 33.6, 9 29, 7.4 21.2 C6.4 15.8, 8 10.8, 12.2 7" stroke="' + ink + '" stroke-width="1.4" fill="none" stroke-linecap="round"/>'
+          + '<path d="M20 34.4 C26.2 33.6, 31 29, 32.6 21.2 C33.6 15.8, 32 10.8, 27.8 7" stroke="' + ink + '" stroke-width="1.4" fill="none" stroke-linecap="round"/>'
+          + '<ellipse cx="13.2" cy="30.8" rx="3.3" ry="1.55" transform="rotate(-20 13.2 30.8)" fill="' + ink + '"/>'
+          + '<ellipse cx="9.4" cy="26.3" rx="3.5" ry="1.6" transform="rotate(-40 9.4 26.3)" fill="' + ink + '"/>'
+          + '<ellipse cx="7.3" cy="21" rx="3.6" ry="1.65" transform="rotate(-60 7.3 21)" fill="' + ink + '"/>'
+          + '<ellipse cx="7.2" cy="15.3" rx="3.5" ry="1.6" transform="rotate(-80 7.2 15.3)" fill="' + ink + '"/>'
+          + '<ellipse cx="9.5" cy="10.4" rx="3.2" ry="1.55" transform="rotate(-100 9.5 10.4)" fill="' + ink + '"/>'
+          + '<ellipse cx="13.5" cy="7" rx="2.9" ry="1.45" transform="rotate(-120 13.5 7)" fill="' + ink + '"/>'
+          + '<ellipse cx="26.8" cy="30.8" rx="3.3" ry="1.55" transform="rotate(20 26.8 30.8)" fill="' + ink + '"/>'
+          + '<ellipse cx="30.6" cy="26.3" rx="3.5" ry="1.6" transform="rotate(40 30.6 26.3)" fill="' + ink + '"/>'
+          + '<ellipse cx="32.7" cy="21" rx="3.6" ry="1.65" transform="rotate(60 32.7 21)" fill="' + ink + '"/>'
+          + '<ellipse cx="32.8" cy="15.3" rx="3.5" ry="1.6" transform="rotate(80 32.8 15.3)" fill="' + ink + '"/>'
+          + '<ellipse cx="30.5" cy="10.4" rx="3.2" ry="1.55" transform="rotate(100 30.5 10.4)" fill="' + ink + '"/>'
+          + '<ellipse cx="26.5" cy="7" rx="2.9" ry="1.45" transform="rotate(120 26.5 7)" fill="' + ink + '"/>'
+          + '<path d="M20 4 L21.35 7.5 L25.05 7.72 L22.15 10 L23.2 13.55 L20 11.45 L16.8 13.55 L17.85 10 L14.95 7.72 L18.65 7.5 Z" fill="' + gold + '"/>';
+        break;
+      /* ── Печать: историческая гербовая печать (сохранена) ── */
+      default:
+        g = '<circle cx="20" cy="20" r="19.5" fill="' + fill + '"/>'
+          + '<circle cx="20" cy="20" r="16" fill="none" stroke="' + onFill + '" stroke-width="0.6" stroke-dasharray="1.2 1.8"/>'
+          + '<circle cx="3" cy="20" r="1" fill="' + onFill + '"/>'
+          + '<circle cx="37" cy="20" r="1" fill="' + onFill + '"/>'
+          + '<text x="20" y="26" text-anchor="middle" font-family="' + ff + '" font-weight="700" font-size="15" fill="' + onFill + '" letter-spacing="-0.2">УЗ</text>';
+    }
+    return '<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:100%">' + g + '</svg>';
+  }
+  renderVals() {
+    var self = this;
+    var mk = function (variant, tone) {
+      return React.createElement('span', {
+        style: { display: 'block', width: '100%', height: '100%' },
+        dangerouslySetInnerHTML: { __html: self.logoMark(variant, tone) }
+      });
+    };
+    var defs = [
+      ['Печать', 'Классическая гербовая печать — наследие, статус и доверие', 'сохранён', '#6B6584', 'rgba(51,44,78,0.08)'],
+      ['Колонна', 'Портик академии — фундамент, институция, классика', 'новый', '#9A7A23', 'rgba(212,167,69,0.16)'],
+      ['Книга', 'Раскрытая книга — образование и знание', 'новый', '#9A7A23', 'rgba(212,167,69,0.16)'],
+      ['Молоток', 'Молоток торгов — аукционы, тендеры, закупки', 'новый', '#9A7A23', 'rgba(212,167,69,0.16)'],
+      ['Грань', 'Восходящая грань — рост, результат, современность', 'новый', '#9A7A23', 'rgba(212,167,69,0.16)'],
+      ['Лавр', 'Лавровый венок — признание, качество, аттестация', 'новый', '#9A7A23', 'rgba(212,167,69,0.16)']
+    ];
+    var variants = defs.map(function (d, i) {
+      return {
+        idx: ('0' + (i + 1)).slice(-2),
+        name: d[0], concept: d[1], tag: d[2], tagColor: d[3], tagBg: d[4],
+        markDark: mk(d[0], 'dark'), markLight: mk(d[0], 'light'), lockup: mk(d[0], 'dark')
+      };
+    });
+    return { variants: variants };
+  }
+}
+</script>
+</body>
+</html>

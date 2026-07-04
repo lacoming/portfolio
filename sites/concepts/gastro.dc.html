@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#F4EFE6;-webkit-font-smoothing:antialiased}
+@keyframes gsUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes gsSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+</style>
+</helmet>
+<div data-screen-label="Ресторан «Сад»" style="font-family:'Manrope',sans-serif;color:#23281F;background:#F4EFE6;min-height:100vh">
+
+  <header style="background:#E9ECD9;border-bottom:1px solid rgba(62,82,51,.18)">
+    <div style="display:flex;align-items:center;justify-content:space-between;max-width:1240px;margin:0 auto;padding:26px 36px">
+    <nav style="display:flex;gap:26px;font-size:13px;letter-spacing:.06em;text-transform:uppercase">
+      <a href="#menu" style="color:#23281F;opacity:.7;transition:opacity .2s" style-hover="opacity:1">Меню</a>
+      <a href="#chef" style="color:#23281F;opacity:.7;transition:opacity .2s" style-hover="opacity:1">Шеф</a>
+      <a href="#terrace" style="color:#23281F;opacity:.7;transition:opacity .2s" style-hover="opacity:1">Терраса</a>
+    </nav>
+    <a href="#" style="font-family:'Cormorant',serif;font-weight:600;font-size:30px;letter-spacing:.14em;text-transform:uppercase;color:#3E5233">Сад</a>
+    <div style="display:flex;gap:22px;align-items:center">
+      <span style="font-size:13px;opacity:.7">Пн–Вс · 12:00–24:00</span>
+      <a href="#book" style="font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#F4EFE6;background:#3E5233;padding:12px 24px;border-radius:999px;transition:background .25s" style-hover="background:#23281F">Бронь стола</a>
+    </div>
+    </div>
+  </header>
+
+  <section style="max-width:1240px;margin:0 auto;padding:70px 36px 64px;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center">
+    <div>
+      <p style="margin:0 0 18px;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#7C8A63;animation:gsUp .7s ease-out both">Сезонная кухня · собственный огород</p>
+      <h1 style="margin:0 0 26px;font-family:'Cormorant',serif;font-weight:500;font-size:76px;line-height:1.02;letter-spacing:-.01em;text-wrap:balance;animation:gsUp .7s .1s ease-out both">Ужин там,<br>где растёт <em style="color:#3E5233">укроп</em></h1>
+      <p style="margin:0 0 36px;font-size:16.5px;line-height:1.7;color:#5C6353;max-width:430px;animation:gsUp .7s .2s ease-out both">Меню меняется вместе с грядками: утром собираем, вечером подаём. Двенадцать столов, дровяная печь и терраса в яблоневом саду.</p>
+      <div style="display:flex;gap:14px;align-items:center;animation:gsUp .7s .3s ease-out both">
+        <a href="#menu" style="font-size:13.5px;letter-spacing:.06em;text-transform:uppercase;color:#F4EFE6;background:#3E5233;padding:16px 32px;border-radius:999px;transition:background .25s,transform .25s" style-hover="background:#23281F;transform:translateY(-2px)">Меню сезона</a>
+        <a href="#book" style="font-size:13.5px;letter-spacing:.06em;text-transform:uppercase;color:#23281F;padding:16px 10px;border-bottom:1px solid #23281F;transition:color .25s,border-color .25s" style-hover="color:#3E5233;border-color:#3E5233">Забронировать →</a>
+      </div>
+      <div style="display:flex;gap:0;margin-top:48px;border-top:1px solid rgba(35,40,31,.14);animation:gsUp .7s .4s ease-out both">
+        <div style="padding:18px 28px 0 0"><div style="font-family:'Cormorant',serif;font-size:30px;font-weight:600">12</div><div style="font-size:11.5px;letter-spacing:.04em;color:#5C6353;margin-top:2px">столов в зале</div></div>
+        <div style="width:1px;background:rgba(35,40,31,.14)"></div>
+        <div style="padding:18px 28px 0"><div style="font-family:'Cormorant',serif;font-size:30px;font-weight:600">40 м</div><div style="font-size:11.5px;letter-spacing:.04em;color:#5C6353;margin-top:2px">от грядки до кухни</div></div>
+        <div style="width:1px;background:rgba(35,40,31,.14)"></div>
+        <div style="padding:18px 0 0 28px"><div style="font-family:'Cormorant',serif;font-size:30px;font-weight:600">18:00</div><div style="font-size:11.5px;letter-spacing:.04em;color:#5C6353;margin-top:2px">сет от шефа</div></div>
+      </div>
+    </div>
+
+    <div style="position:relative;height:520px;animation:gsUp .9s .2s ease-out both">
+      <div style="position:absolute;inset:0;border-radius:260px 260px 18px 18px;overflow:hidden;background:#E6DECC">
+        <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?w=1000&q=78&auto=format&fit=crop" alt="Тыква из дровяной печи, крем и семечки" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s" style-hover="transform:scale(1.04)">
+      </div>
+      <div style="position:absolute;left:22px;bottom:22px;background:rgba(35,40,31,.78);color:#F4EFE6;backdrop-filter:blur(4px);padding:10px 16px;border-radius:12px;font-size:11.5px;letter-spacing:.06em">блюдо сезона · тыква из печи, козий сыр</div>
+      <div style="position:absolute;right:-14px;bottom:34px;width:120px;height:120px;animation:gsSpin 22s linear infinite">
+        <svg viewBox="0 0 120 120" style="width:100%;height:100%">
+          <defs><path id="gsCircle" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"></path></defs>
+          <circle cx="60" cy="60" r="58" fill="#3E5233"></circle>
+          <text style="font-size:12.5px;letter-spacing:.28em;fill:#F4EFE6;font-family:'Manrope',sans-serif;text-transform:uppercase"><textPath href="#gsCircle">сад · сезон · огонь · сад · сезон ·</textPath></text>
+          <circle cx="60" cy="60" r="16" fill="#F4EFE6"></circle>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="menu" style="background:#23281F;color:#F4EFE6">
+    <div style="max-width:1240px;margin:0 auto;padding:64px 36px 72px">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap">
+        <h2 style="margin:0;font-family:'Cormorant',serif;font-weight:500;font-size:46px">Сегодня в меню</h2>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button type="button" onClick="{{ setPech }}" style="font-family:'Manrope',sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;padding:11px 22px;border-radius:999px;border:1px solid rgba(244,239,230,.35);background:transparent;color:#F4EFE6;cursor:pointer;transition:all .25s;{{ pechOn }}">Из печи</button>
+          <button type="button" onClick="{{ setOgorod }}" style="font-family:'Manrope',sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;padding:11px 22px;border-radius:999px;border:1px solid rgba(244,239,230,.35);background:transparent;color:#F4EFE6;cursor:pointer;transition:all .25s;{{ ogorodOn }}">Огород</button>
+          <button type="button" onClick="{{ setDesert }}" style="font-family:'Manrope',sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;padding:11px 22px;border-radius:999px;border:1px solid rgba(244,239,230,.35);background:transparent;color:#F4EFE6;cursor:pointer;transition:all .25s;{{ desertOn }}">Десерты</button>
+          <button type="button" onClick="{{ setPogreb }}" style="font-family:'Manrope',sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;padding:11px 22px;border-radius:999px;border:1px solid rgba(244,239,230,.35);background:transparent;color:#F4EFE6;cursor:pointer;transition:all .25s;{{ pogrebOn }}">Погреб</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1.5fr .9fr;gap:56px;align-items:stretch;margin-top:38px">
+        <div style="display:flex;flex-direction:column;justify-content:center">
+          <sc-for list="{{ dishes }}" as="d" hint-placeholder-count="4">
+            <div style="display:flex;align-items:baseline;gap:18px;padding:19px 4px;border-bottom:1px solid rgba(244,239,230,.16);transition:padding-left .25s,background .25s" style-hover="padding-left:16px;background:rgba(244,239,230,.05)">
+              <span style="font-family:'Cormorant',serif;font-size:23px">{{ d.n }}</span>
+              <span style="flex:1;border-bottom:1px dotted rgba(244,239,230,.3)"></span>
+              <span style="font-size:15px;font-weight:600;white-space:nowrap">{{ d.p }}</span>
+            </div>
+          </sc-for>
+          <p style="margin:26px 4px 0;font-size:13px;color:rgba(244,239,230,.55);line-height:1.6">Меню печатаем каждое утро после обхода грядок — состав блюд может меняться в течение дня.</p>
+        </div>
+        <div style="border-radius:14px;overflow:hidden;min-height:380px;position:relative">
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=78&auto=format&fit=crop" alt="Томлёная утка с печёными яблоками из дровяной печи" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s" style-hover="transform:scale(1.04)">
+          <div style="position:absolute;left:14px;bottom:14px;background:rgba(35,40,31,.78);backdrop-filter:blur(4px);padding:9px 14px;border-radius:10px;font-size:11px;letter-spacing:.06em">утка · печёные яблоки · три часа в печи</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:88px 36px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
+    <div style="position:relative;height:540px">
+      <div style="position:absolute;left:0;top:0;width:72%;height:78%;border-radius:16px;overflow:hidden;box-shadow:0 24px 60px -30px rgba(35,40,31,.45)">
+        <img src="https://images.unsplash.com/photo-1582284540020-8acbe03f4924?w=900&q=78&auto=format&fit=crop" alt="Томаты нового урожая с наших грядок" style="width:100%;height:100%;object-fit:cover;display:block">
+      </div>
+      <div style="position:absolute;right:0;bottom:0;width:52%;height:52%;border-radius:16px;overflow:hidden;border:6px solid #F4EFE6;box-shadow:0 24px 60px -30px rgba(35,40,31,.45)">
+        <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&q=78&auto=format&fit=crop" alt="Утренний сбор овощей и зелени" style="width:100%;height:100%;object-fit:cover;display:block">
+      </div>
+      <div style="position:absolute;left:8%;bottom:6%;background:#3E5233;color:#F4EFE6;padding:14px 20px;border-radius:12px;font-size:12px;letter-spacing:.08em;text-transform:uppercase">урожай этого утра</div>
+    </div>
+    <div>
+      <p style="margin:0 0 16px;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#7C8A63">От грядки до стола</p>
+      <h2 style="margin:0 0 24px;font-family:'Cormorant',serif;font-weight:500;font-size:52px;line-height:1.06;text-wrap:balance">Сад — это шесть соток огорода за кухонной дверью</h2>
+      <p style="margin:0 0 34px;font-size:16px;line-height:1.75;color:#5C6353;max-width:460px">Сорок метров — путь, который овощи проходят от земли до тарелки. Мы не храним заготовки неделями: то, чего нет на грядке, в меню сегодня просто не будет.</p>
+      <div style="display:flex;flex-direction:column;gap:0">
+        <div style="display:flex;gap:22px;align-items:baseline;padding:16px 0;border-top:1px solid rgba(35,40,31,.14)">
+          <span style="font-family:'Cormorant',serif;font-size:22px;color:#7C8A63;min-width:36px">01</span>
+          <div><div style="font-weight:600;font-size:15.5px">Утренний обход</div><div style="font-size:13.5px;color:#5C6353;margin-top:3px">В 6:30 шеф и садовник решают, что созрело — так рождается меню дня.</div></div>
+        </div>
+        <div style="display:flex;gap:22px;align-items:baseline;padding:16px 0;border-top:1px solid rgba(35,40,31,.14)">
+          <span style="font-family:'Cormorant',serif;font-size:22px;color:#7C8A63;min-width:36px">02</span>
+          <div><div style="font-weight:600;font-size:15.5px">Огонь и дым</div><div style="font-size:13.5px;color:#5C6353;margin-top:3px">Дровяная печь на берёзе и яблоне — единственный источник жара на кухне.</div></div>
+        </div>
+        <div style="display:flex;gap:22px;align-items:baseline;padding:16px 0;border-top:1px solid rgba(35,40,31,.14);border-bottom:1px solid rgba(35,40,31,.14)">
+          <span style="font-family:'Cormorant',serif;font-size:22px;color:#7C8A63;min-width:36px">03</span>
+          <div><div style="font-weight:600;font-size:15.5px">Ничего лишнего</div><div style="font-size:13.5px;color:#5C6353;margin-top:3px">Очистки — в бульоны и чипсы, ботва — в песто, яблоневые ветки — в печь.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="chef" style="background:#EAE3D2">
+    <div style="max-width:1240px;margin:0 auto;padding:88px 36px;display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center">
+      <div style="position:relative">
+        <div style="border-radius:260px 260px 16px 16px;overflow:hidden;height:520px">
+          <img src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=900&q=78&auto=format&fit=crop" alt="Шеф Никита Сомов у дровяной печи" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s" style-hover="transform:scale(1.03)">
+        </div>
+        <div style="position:absolute;right:-16px;bottom:38px;width:150px;height:110px;border-radius:12px;overflow:hidden;border:6px solid #EAE3D2;box-shadow:0 18px 40px -18px rgba(35,40,31,.5)">
+          <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600&q=75&auto=format&fit=crop" alt="Команда кухни на подаче" style="width:100%;height:100%;object-fit:cover;display:block">
+        </div>
+      </div>
+      <div>
+        <p style="margin:0 0 16px;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#7C8A63">Кухней командует</p>
+        <h2 style="margin:0 0 26px;font-family:'Cormorant',serif;font-weight:500;font-size:50px;line-height:1.05">Никита Сомов</h2>
+        <p style="margin:0 0 26px;font-family:'Cormorant',serif;font-style:italic;font-size:26px;line-height:1.45;color:#3E5233;max-width:520px">«Половина работы шефа здесь случается не на кухне, а в шесть утра на грядках. Моё дело — не испортить то, что вырастил сад».</p>
+        <p style="margin:0 0 34px;font-size:15.5px;line-height:1.7;color:#5C6353;max-width:480px">Пятнадцать лет у плиты, из них шесть — у открытого огня. Каждый вечер в 18:00 Никита ставит сет из пяти подач: только печь, только то, что собрано сегодня.</p>
+        <div style="display:flex;gap:0;border-top:1px solid rgba(35,40,31,.16)">
+          <div style="padding:18px 28px 0 0"><div style="font-family:'Cormorant',serif;font-size:28px;font-weight:600">5 подач</div><div style="font-size:11.5px;color:#5C6353;margin-top:2px">вечерний сет</div></div>
+          <div style="width:1px;background:rgba(35,40,31,.16)"></div>
+          <div style="padding:18px 28px 0"><div style="font-family:'Cormorant',serif;font-size:28px;font-weight:600">3 200 ₽</div><div style="font-size:11.5px;color:#5C6353;margin-top:2px">сет с дегустацией</div></div>
+          <div style="width:1px;background:rgba(35,40,31,.16)"></div>
+          <div style="padding:18px 0 0 28px"><div style="font-family:'Cormorant',serif;font-size:28px;font-weight:600">4 меню</div><div style="font-size:11.5px;color:#5C6353;margin-top:2px">в год, по сезонам</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="terrace" style="max-width:1240px;margin:0 auto;padding:88px 36px 72px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:36px;flex-wrap:wrap">
+      <div>
+        <p style="margin:0 0 14px;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#7C8A63">Пространство</p>
+        <h2 style="margin:0;font-family:'Cormorant',serif;font-weight:500;font-size:48px;line-height:1.05">Зал у печи и терраса<br>в яблоневом саду</h2>
+      </div>
+      <p style="margin:0;max-width:360px;font-size:14.5px;line-height:1.7;color:#5C6353">С мая по октябрь накрываем восемь столов под яблонями. В дождь работает веранда с камином — плед принесём сами.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px">
+      <div>
+        <div style="border-radius:14px;overflow:hidden;height:340px">
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000&q=78&auto=format&fit=crop" alt="Основной зал ресторана с дровяной печью" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s" style-hover="transform:scale(1.04)">
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:12px;font-size:12px;letter-spacing:.08em;text-transform:uppercase"><span>Основной зал</span><span style="color:#7C8A63">12 столов</span></div>
+      </div>
+      <div>
+        <div style="border-radius:14px;overflow:hidden;height:340px">
+          <img src="https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=800&q=78&auto=format&fit=crop" alt="Стол на веранде, накрытый к обеду" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s" style-hover="transform:scale(1.04)">
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:12px;font-size:12px;letter-spacing:.08em;text-transform:uppercase"><span>Веранда</span><span style="color:#7C8A63">камин</span></div>
+      </div>
+      <div>
+        <div style="border-radius:14px;overflow:hidden;height:340px">
+          <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800&q=78&auto=format&fit=crop" alt="Бокалы вина на террасе среди яблонь" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s" style-hover="transform:scale(1.04)">
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:12px;font-size:12px;letter-spacing:.08em;text-transform:uppercase"><span>Терраса в саду</span><span style="color:#7C8A63">май — октябрь</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="book" style="background:#3E5233;color:#F4EFE6">
+    <div style="max-width:1240px;margin:0 auto;padding:80px 36px;display:grid;grid-template-columns:1.1fr .9fr;gap:70px;align-items:start">
+      <div>
+        <h2 style="margin:0 0 14px;font-family:'Cormorant',serif;font-weight:500;font-size:50px;line-height:1.05">Забронировать стол</h2>
+        <p style="margin:0 0 34px;font-size:15px;line-height:1.7;color:rgba(244,239,230,.75);max-width:440px">Подтверждаем бронь по СМС в течение пятнадцати минут. Столы на террасе — по погоде, предупредим накануне.</p>
+        <form onSubmit="{{ submitBook }}" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:520px">
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,239,230,.65)">Дата
+            <input type="date" required style="background:rgba(244,239,230,.1);border:1px solid rgba(244,239,230,.35);border-radius:10px;padding:13px 14px;color:#F4EFE6;font-family:'Manrope',sans-serif;font-size:14px;color-scheme:dark">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,239,230,.65)">Время
+            <select style="background:rgba(244,239,230,.1);border:1px solid rgba(244,239,230,.35);border-radius:10px;padding:13px 14px;color:#F4EFE6;font-family:'Manrope',sans-serif;font-size:14px">
+              <option>12:00</option><option>14:00</option><option>16:00</option><option>18:00 · сет шефа</option><option>19:00</option><option>20:00</option><option>21:00</option><option>22:00</option>
+            </select>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,239,230,.65)">Гостей
+            <select style="background:rgba(244,239,230,.1);border:1px solid rgba(244,239,230,.35);border-radius:10px;padding:13px 14px;color:#F4EFE6;font-family:'Manrope',sans-serif;font-size:14px">
+              <option>2</option><option>1</option><option>3</option><option>4</option><option>5</option><option>6</option><option>8 · большой стол</option>
+            </select>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,239,230,.65)">Телефон
+            <input type="tel" required placeholder="+7" style="background:rgba(244,239,230,.1);border:1px solid rgba(244,239,230,.35);border-radius:10px;padding:13px 14px;color:#F4EFE6;font-family:'Manrope',sans-serif;font-size:14px">
+          </label>
+          <button type="submit" style="grid-column:1/-1;margin-top:6px;font-family:'Manrope',sans-serif;font-size:13.5px;letter-spacing:.08em;text-transform:uppercase;color:#23281F;background:#F4EFE6;border:none;border-radius:999px;padding:17px;cursor:pointer;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-2px);box-shadow:0 14px 30px -14px rgba(0,0,0,.5)">Забронировать</button>
+          <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+            <p style="grid-column:1/-1;margin:4px 0 0;font-size:14px;color:#F4EFE6;background:rgba(244,239,230,.12);border:1px solid rgba(244,239,230,.3);border-radius:10px;padding:14px 16px">✓ Стол забронирован. Подтвердим по СМС в течение 15 минут.</p>
+          </sc-if>
+        </form>
+      </div>
+      <div style="border-left:1px solid rgba(244,239,230,.25);padding-left:56px;display:flex;flex-direction:column;gap:30px">
+        <div>
+          <div style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,239,230,.6);margin-bottom:10px">Адрес</div>
+          <div style="font-family:'Cormorant',serif;font-size:27px;line-height:1.3">1-й Голутвинский переулок, 6<br>Москва</div>
+          <div style="font-size:13.5px;color:rgba(244,239,230,.7);margin-top:8px">10 минут пешком от «Полянки», свой двор и сад</div>
+        </div>
+        <div>
+          <div style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,239,230,.6);margin-bottom:10px">Часы</div>
+          <div style="font-size:15px;line-height:1.8">Пн–Чт · 12:00–23:00<br>Пт–Вс · 12:00–24:00<br><span style="color:rgba(244,239,230,.7)">Сет шефа — ежедневно в 18:00</span></div>
+        </div>
+        <div>
+          <div style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,239,230,.6);margin-bottom:10px">Связь</div>
+          <div style="font-size:15px;line-height:1.8"><a href="tel:+74951203308" style="color:#F4EFE6">+7 (495) 120-33-08</a><br><a href="#" style="color:#F4EFE6;border-bottom:1px solid rgba(244,239,230,.4)">Телеграм @sad_msk</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="max-width:1240px;margin:0 auto;padding:34px 36px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <span style="font-family:'Cormorant',serif;font-weight:600;font-size:24px;letter-spacing:.14em;text-transform:uppercase">Сад</span>
+    <nav style="display:flex;gap:24px;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase">
+      <a href="#menu" style="color:#5C6353;transition:color .2s" style-hover="color:#23281F">Меню</a>
+      <a href="#chef" style="color:#5C6353;transition:color .2s" style-hover="color:#23281F">Шеф</a>
+      <a href="#terrace" style="color:#5C6353;transition:color .2s" style-hover="color:#23281F">Терраса</a>
+      <a href="#book" style="color:#5C6353;transition:color .2s" style-hover="color:#23281F">Бронь</a>
+    </nav>
+    <span style="font-size:12.5px;color:#5C6353">© Ресторан «Сад», 2026</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tab: 'pech', sent: false };
+
+  renderVals() {
+    const menus = {
+      pech: [
+        { n: 'Свёкла из углей, козий сыр и щавель', p: '620 ₽' },
+        { n: 'Голубцы из молодой капусты, дровяная печь', p: '890 ₽' },
+        { n: 'Цыплёнок с вертела, вишнёвый лист', p: '1 150 ₽' },
+        { n: 'Хлеб на закваске, масло с копчёной солью', p: '240 ₽' }
+      ],
+      ogorod: [
+        { n: 'Тартар из томатов с базиликовым маслом', p: '620 ₽' },
+        { n: 'Салат двенадцати трав, грядка №4', p: '580 ₽' },
+        { n: 'Молодая морковь, мёд и тмин', p: '540 ₽' },
+        { n: 'Кабачок на гриле, страчателла', p: '690 ₽' }
+      ],
+      desert: [
+        { n: 'Яблоко из сада, карамель, гречишный чай', p: '540 ₽' },
+        { n: 'Мороженое из чёрной смородины', p: '390 ₽' },
+        { n: 'Медовик на дыме', p: '480 ₽' },
+        { n: 'Сорбет из крыжовника и эстрагона', p: '360 ₽' }
+      ],
+      pogreb: [
+        { n: 'Сидр из яблок нашего сада, брют', p: '450 ₽' },
+        { n: 'Саперави квеври, бокал', p: '590 ₽' },
+        { n: 'Квас на ржаном хлебе', p: '250 ₽' },
+        { n: 'Настойка облепиха—тимьян', p: '350 ₽' }
+      ]
+    };
+    const active = 'background:#F4EFE6;color:#23281F;border-color:#F4EFE6';
+    const mk = (k) => () => this.setState({ tab: k });
+    return {
+      dishes: menus[this.state.tab],
+      setPech: mk('pech'), setOgorod: mk('ogorod'), setDesert: mk('desert'), setPogreb: mk('pogreb'),
+      pechOn: this.state.tab === 'pech' ? active : '',
+      ogorodOn: this.state.tab === 'ogorod' ? active : '',
+      desertOn: this.state.tab === 'desert' ? active : '',
+      pogrebOn: this.state.tab === 'pogreb' ? active : '',
+      sent: this.state.sent,
+      submitBook: (e) => { e.preventDefault(); this.setState({ sent: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

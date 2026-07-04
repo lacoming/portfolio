@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700;8..60,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./site.css">
+<title>Контакты учебного центра «Университет закупок» - телефоны по городам</title>
+<meta name="description" content="Контакты учебного центра по госзакупкам: телефоны в Москве, Санкт-Петербурге, Новосибирске, Екатеринбурге и других городах. Обучение по 44-ФЗ и 223-ФЗ дистанционно.">
+<style>
+.city-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.city-card { background:var(--c-surface); border:1px solid var(--c-border); border-radius:var(--r-md); padding:20px 22px; transition:border-color .2s, box-shadow .2s; }
+.city-card:hover { border-color:var(--c-border-strong); box-shadow:var(--sh-card); }
+.city-card .cn { font-family:var(--font-h); font-weight:700; font-size:17px; color:var(--c-text); }
+.city-card a.cp { display:inline-block; margin-top:8px; font-family:var(--font-h); font-weight:700; font-size:16px; color:var(--c-primary); }
+.city-card a.cp:hover { color:var(--c-accent-600); }
+.city-card .cz { font-size:12px; color:var(--c-text-muted); margin-top:6px; }
+@media (max-width:991px){ .city-grid { grid-template-columns:repeat(2,1fr); } }
+@media (max-width:520px){ .city-grid { grid-template-columns:1fr; } }
+</style>
+</helmet>
+
+<dc-import name="SiteHeader" active="contacts" hint-size="100%,140px"></dc-import>
+
+<section class="page-hero">
+  <div class="container">
+    <nav class="crumbs" aria-label="Хлебные крошки"><a href="glavnaya.dc.html">Главная</a><span class="sep">/</span><span class="cur">Контакты</span></nav>
+    <span class="eyebrow" style="display:inline-block;margin-top:18px">Связь с центром</span>
+    <h1>Контакты</h1>
+    <p class="lede">Обучение проходит дистанционно из любого города России. Звоните по местному номеру или оставьте заявку - менеджер свяжется с вами в рабочее время.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head"><span class="eyebrow">Телефоны по городам</span><h2 style="margin-top:12px">8 городов присутствия</h2></div>
+    <div class="city-grid">
+      <div class="city-card"><div class="cn">Москва</div><a href="tel:+74954813755" class="cp">+7 (495) 481-37-55</a><div class="cz">Пн-Пт, 9:00-18:00 МСК</div></div>
+      <div class="city-card"><div class="cn">Санкт-Петербург</div><a href="tel:+78123097345" class="cp">+7 (812) 309-73-45</a><div class="cz">Пн-Пт, 9:00-18:00 МСК</div></div>
+      <div class="city-card"><div class="cn">Краснодар</div><a href="tel:+78612036453" class="cp">+7 (861) 203-64-53</a><div class="cz">Пн-Пт, 9:00-18:00 МСК</div></div>
+      <div class="city-card"><div class="cn">Екатеринбург</div><a href="tel:+73433182445" class="cp">+7 (343) 318-24-45</a><div class="cz">Пн-Пт, 9:00-18:00 (МСК+2)</div></div>
+      <div class="city-card"><div class="cn">Новосибирск</div><a href="tel:+79232221759" class="cp">+7 (923) 222-17-59</a><div class="cz">Пн-Пт, 9:00-18:00 (МСК+4)</div></div>
+      <div class="city-card"><div class="cn">Красноярск</div><a href="tel:+73912046553" class="cp">+7 (391) 204-65-53</a><div class="cz">Пн-Пт, 9:00-18:00 (МСК+4)</div></div>
+      <div class="city-card"><div class="cn">Якутск</div><a href="tel:+74112251300" class="cp">+7 (4112) 25-13-00</a><div class="cz">Пн-Пт, 9:00-18:00 (МСК+6)</div></div>
+      <div class="city-card"><div class="cn">Владивосток</div><a href="tel:+74232055903" class="cp">+7 (423) 205-59-03</a><div class="cz">Пн-Пт, 9:00-18:00 (МСК+7)</div></div>
+    </div>
+    <p class="muted" style="margin-top:16px;font-size:13px">Список городов расширяется. Указанные номера будут заменены на актуальные контакты организации.</p>
+  </div>
+</section>
+
+<section class="section section--bg">
+  <div class="container">
+    <div class="layout-aside">
+      <div>
+        <div class="section-head" style="margin-bottom:24px"><span class="eyebrow">Реквизиты и связь</span><h2 style="margin-top:12px">Как с нами связаться</h2></div>
+        <div class="card" style="display:grid;gap:18px">
+          <div class="footer-contact" style="display:grid;gap:16px">
+            <div style="display:flex;gap:13px;align-items:flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent-600)" stroke-width="1.8" style="flex-shrink:0;margin-top:2px"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0118 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><div class="stack"><b style="font-family:var(--font-h);font-size:15px">Адрес</b><span class="muted" style="font-size:14px">г. Новосибирск, пр-кт Ак. Лаврентьева, 6/1 [уточняется]</span></div></div>
+            <div style="display:flex;gap:13px;align-items:flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent-600)" stroke-width="1.8" style="flex-shrink:0;margin-top:2px"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M22 6l-10 7L2 6"></path></svg><div class="stack"><b style="font-family:var(--font-h);font-size:15px">Электронная почта</b><span class="muted" style="font-size:14px">info@example.ru [уточняется]</span></div></div>
+            <div style="display:flex;gap:13px;align-items:flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent-600)" stroke-width="1.8" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><div class="stack"><b style="font-family:var(--font-h);font-size:15px">Режим работы</b><span class="muted" style="font-size:14px">Понедельник-пятница, 9:00-18:00 МСК</span></div></div>
+          </div>
+          <div class="divider"></div>
+          <div>
+            <b style="font-family:var(--font-h);font-size:15px;display:block;margin-bottom:10px">Мессенджеры</b>
+            <div class="footer-msgr" style="margin-top:0"><a href="#" data-stub title="MAX" aria-label="MAX" style="background:var(--c-primary-50)"><svg width="22" height="22" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="maxg-kon" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4185F6"></stop><stop offset=".5" stop-color="#4930E0"></stop><stop offset="1" stop-color="#964BDA"></stop></linearGradient></defs><rect x="2" y="2" width="44" height="44" rx="11" fill="url(#maxg-kon)"></rect><path fill="#fff" fill-rule="evenodd" d="M24 9.5a14.5 14.5 0 1 1 -10.6 24.4l-4.7 1.3a1.3 1.3 0 0 1 -1.6 -1.6l1.3 -4.7A14.5 14.5 0 0 1 24 9.5Zm0 7.2a7.3 7.3 0 1 0 0 14.6 7.3 7.3 0 0 0 0 -14.6Z"></path></svg></a><a href="#" data-stub title="Telegram" style="background:var(--c-primary-50);color:var(--c-primary)"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22 3L2 11l6 2 2 7 4-4 6 5 2-18z"></path></svg></a><a href="#" data-stub title="VK" style="background:var(--c-primary-50);color:var(--c-primary)">VK</a></div>
+          </div>
+          <div class="doc-ph" style="aspect-ratio:21/9;border-radius:var(--r-sm)">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0118 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span class="lbl">карта проезда</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="sticky-card">
+        <div class="form-card" style="box-shadow:var(--sh-card)">
+          <h3>Написать нам</h3>
+          <p class="form-sub">Ответим в течение рабочего дня.</p>
+          <form id="contactForm" novalidate>
+            <div class="ok-banner" id="contactOk">Спасибо! Сообщение отправлено. <em>(Демо-форма.)</em></div>
+            <div class="field"><label for="c-name">Имя</label><input type="text" id="c-name" placeholder="Как к вам обращаться" required></div>
+            <div class="field"><label for="c-phone">Телефон</label><input type="tel" id="c-phone" placeholder="+7 (___) ___-__-__" required></div>
+            <div class="field"><label for="c-msg">Сообщение <span class="hint">(необязательно)</span></label><input type="text" id="c-msg" placeholder="Коротко о вопросе"></div>
+            <label class="consent"><input type="checkbox" required><span>Согласен на <a href="politika.dc.html">обработку персональных данных</a> (ФЗ-152)</span></label>
+            <button type="submit" class="btn btn--primary">Отправить</button>
+          </form>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<dc-import name="SiteFooter" hint-size="100%,440px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  componentDidMount() {
+    if (this._init) return; this._init = true;
+    const root = document;
+    const f = root.getElementById('contactForm');
+    if (f) f.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!f.checkValidity()) { f.reportValidity(); return; }
+      root.getElementById('contactOk').classList.add('show');
+      f.querySelector('button[type=submit]').textContent = 'Отправлено ✓';
+    });
+  }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#EDEAE4;-webkit-font-smoothing:antialiased}
+@keyframes atMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes atUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+<div data-screen-label="Ателье ФОРМА" style="font-family:'Manrope',sans-serif;color:#141414;background:#EDEAE4;min-height:100vh;overflow:hidden">
+
+  <header style="display:flex;align-items:center;justify-content:space-between;padding:22px 40px;border-bottom:1px solid #141414">
+    <span style="font-family:'Tenor Sans',serif;font-size:20px;letter-spacing:.32em;text-transform:uppercase">Форма</span>
+    <nav style="display:flex;gap:28px;font-size:12px;letter-spacing:.14em;text-transform:uppercase">
+      <a href="#looks" style="color:#141414;border-bottom:1px solid transparent;transition:border-color .2s" style-hover="border-bottom:1px solid #141414">Коллекция</a>
+      <a href="#process" style="color:#141414;border-bottom:1px solid transparent;transition:border-color .2s" style-hover="border-bottom:1px solid #141414">Пошив</a>
+      <a href="#fabrics" style="color:#141414;border-bottom:1px solid transparent;transition:border-color .2s" style-hover="border-bottom:1px solid #141414">Ткани</a>
+      <a href="#book" style="color:#141414;border-bottom:1px solid transparent;transition:border-color .2s" style-hover="border-bottom:1px solid #141414">Запись</a>
+    </nav>
+    <span style="font-size:12px;letter-spacing:.1em;color:#8a8a85">Москва · SS'27</span>
+  </header>
+
+  <section style="position:relative;z-index:2;padding:56px 40px 0">
+    <h1 style="margin:0;font-family:'Tenor Sans',serif;font-size:clamp(90px,14.5vw,196px);line-height:.92;letter-spacing:.01em;text-transform:uppercase;animation:atUp .8s ease-out both">Си—<br><span style="color:#EDEAE4">лу​эт</span></h1>
+    <p style="position:absolute;right:40px;top:70px;max-width:280px;font-size:14px;line-height:1.7;color:#4a4a45;animation:atUp .8s .15s ease-out both">Ателье индивидуального пошива. Двадцать примерок в месяц, лист ожидания — три недели. Ткань выбираем вместе.</p>
+  </section>
+
+  <section style="padding:0 40px;margin-top:calc(clamp(90px,14.5vw,196px) * -0.94);animation:atUp .8s .2s ease-out both">
+    <div style="position:relative;height:min(64vh,560px);overflow:hidden">
+      <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1600&q=78&auto=format&fit=crop" alt="Кадр кампании SS'27 — костюм из коллекции «Силуэт»" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;display:block;filter:grayscale(1) contrast(1.06)">
+      <div style="position:absolute;left:0;bottom:0;background:#141414;color:#EDEAE4;padding:12px 20px;font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.1em">кампания SS'27 · «Силуэт» · кадр 04</div>
+      <div style="position:absolute;right:0;top:0;background:#EDEAE4;padding:12px 20px;font-size:11px;letter-spacing:.18em;text-transform:uppercase">каждое изделие — в одном экземпляре</div>
+    </div>
+  </section>
+
+  <section id="looks" style="display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:14px;padding:64px 40px;align-items:end">
+    <div style="animation:atUp .8s .2s ease-out both">
+      <div style="aspect-ratio:3/4;overflow:hidden;position:relative;transition:transform .35s" style-hover="transform:translateY(-8px)">
+        <img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=800&q=78&auto=format&fit=crop" alt="Лук 01 — жакет «Грань» из шерсти" style="width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.06);transition:transform .6s" style-hover="transform:scale(1.05)">
+        <span style="position:absolute;left:0;bottom:0;background:#EDEAE4;padding:8px 14px;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.08em;color:#141414">лук 01 · жакет «Грань»</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase"><span>01</span><span style="color:#8a8a85">шерсть · графит</span></div>
+    </div>
+    <div style="animation:atUp .8s .3s ease-out both">
+      <div style="aspect-ratio:3/4;overflow:hidden;position:relative;transition:transform .35s" style-hover="transform:translateY(-8px)">
+        <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=900&q=78&auto=format&fit=crop" alt="Лук 02 — платье «Ось» из шёлка, кадр кампании" style="width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.06);transition:transform .6s" style-hover="transform:scale(1.05)">
+        <span style="position:absolute;left:0;bottom:0;background:#EDEAE4;padding:8px 14px;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.08em;color:#141414">лук 02 · платье «Ось»</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase"><span>02</span><span style="color:#8a8a85">шёлк · слоновая кость</span></div>
+    </div>
+    <div style="animation:atUp .8s .4s ease-out both">
+      <div style="aspect-ratio:3/4;overflow:hidden;position:relative;transition:transform .35s" style-hover="transform:translateY(-8px)">
+        <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800&q=78&auto=format&fit=crop" alt="Лук 03 — пальто «Тень» из кашемира" style="width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.06);transition:transform .6s" style-hover="transform:scale(1.05)">
+        <span style="position:absolute;left:0;bottom:0;background:#EDEAE4;padding:8px 14px;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.08em;color:#141414">лук 03 · пальто «Тень»</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase"><span>03</span><span style="color:#8a8a85">кашемир · дым</span></div>
+    </div>
+  </section>
+
+  <div style="border-top:1px solid #141414;border-bottom:1px solid #141414;overflow:hidden;background:#141414;color:#EDEAE4">
+    <div style="display:flex;white-space:nowrap;animation:atMarquee 18s linear infinite;width:max-content">
+      <span style="font-family:'Tenor Sans',serif;font-size:15px;letter-spacing:.3em;text-transform:uppercase;padding:14px 0">&nbsp;примерка по записи — ателье форма — примерка по записи — ателье форма —&nbsp;</span>
+      <span style="font-family:'Tenor Sans',serif;font-size:15px;letter-spacing:.3em;text-transform:uppercase;padding:14px 0">&nbsp;примерка по записи — ателье форма — примерка по записи — ателье форма —&nbsp;</span>
+    </div>
+  </div>
+
+  <section id="process" style="display:grid;grid-template-columns:1.1fr .9fr;gap:56px;padding:80px 40px;align-items:start">
+    <div>
+      <p style="margin:0 0 14px;font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8a8a85">Пошив</p>
+      <h2 style="margin:0 0 40px;font-family:'Tenor Sans',serif;font-size:52px;line-height:1.04;text-transform:uppercase;letter-spacing:.02em">От мерок<br>до последнего стежка</h2>
+      <div style="display:flex;flex-direction:column">
+        <div style="display:grid;grid-template-columns:70px 1fr auto;gap:20px;align-items:baseline;padding:22px 0;border-top:1px solid #141414">
+          <span style="font-family:'Tenor Sans',serif;font-size:30px;color:#8a8a85">01</span>
+          <div><div style="font-size:15px;font-weight:600;letter-spacing:.04em;text-transform:uppercase">Консультация и мерки</div><div style="font-size:13.5px;color:#4a4a45;margin-top:5px;line-height:1.6">Сорок минут: обсуждаем силуэт, снимаем двадцать шесть мерок, считаем стоимость. Бесплатно.</div></div>
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#8a8a85">40 мин</span>
+        </div>
+        <div style="display:grid;grid-template-columns:70px 1fr auto;gap:20px;align-items:baseline;padding:22px 0;border-top:1px solid #141414">
+          <span style="font-family:'Tenor Sans',serif;font-size:30px;color:#8a8a85">02</span>
+          <div><div style="font-size:15px;font-weight:600;letter-spacing:.04em;text-transform:uppercase">Макет из бязи</div><div style="font-size:13.5px;color:#4a4a45;margin-top:5px;line-height:1.6">Строим лекала и шьём макет. Первая примерка — по нему: правим посадку до кроя основной ткани.</div></div>
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#8a8a85">неделя</span>
+        </div>
+        <div style="display:grid;grid-template-columns:70px 1fr auto;gap:20px;align-items:baseline;padding:22px 0;border-top:1px solid #141414">
+          <span style="font-family:'Tenor Sans',serif;font-size:30px;color:#8a8a85">03</span>
+          <div><div style="font-size:15px;font-weight:600;letter-spacing:.04em;text-transform:uppercase">Две примерки</div><div style="font-size:13.5px;color:#4a4a45;margin-top:5px;line-height:1.6">Изделие собирается вручную; между примерками — неделя. Сложные вещи получают третью.</div></div>
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#8a8a85">2–3 недели</span>
+        </div>
+        <div style="display:grid;grid-template-columns:70px 1fr auto;gap:20px;align-items:baseline;padding:22px 0;border-top:1px solid #141414;border-bottom:1px solid #141414">
+          <span style="font-family:'Tenor Sans',serif;font-size:30px;color:#8a8a85">04</span>
+          <div><div style="font-size:15px;font-weight:600;letter-spacing:.04em;text-transform:uppercase">Выдача</div><div style="font-size:13.5px;color:#4a4a45;margin-top:5px;line-height:1.6">Финальное отпаривание, паспорт изделия с составом и лекалами, инструкция по уходу.</div></div>
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#8a8a85">день</span>
+        </div>
+      </div>
+    </div>
+    <div style="position:relative;padding-top:14px">
+      <div style="overflow:hidden;aspect-ratio:3/4">
+        <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=900&q=78&auto=format&fit=crop" alt="Примерка жакета в ателье" style="width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.06);transition:transform .6s" style-hover="transform:scale(1.04)">
+      </div>
+      <div style="position:absolute;left:-24px;bottom:-28px;width:46%;aspect-ratio:4/5;overflow:hidden;border:8px solid #EDEAE4">
+        <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=700&q=78&auto=format&fit=crop" alt="Готовые изделия на рейле ателье" style="width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.06)">
+      </div>
+      <span style="position:absolute;right:0;bottom:-28px;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.08em;color:#8a8a85">примерка №2 · жакет «Грань»</span>
+    </div>
+  </section>
+
+  <section id="fabrics" style="border-top:1px solid #141414;padding:70px 40px 80px">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:30px;flex-wrap:wrap;margin-bottom:44px">
+      <h2 style="margin:0;font-family:'Tenor Sans',serif;font-size:52px;line-height:1;text-transform:uppercase;letter-spacing:.02em">Ткани сезона</h2>
+      <p style="margin:0;max-width:340px;font-size:13.5px;line-height:1.65;color:#4a4a45">Работаем с четырьмя фабриками напрямую. Отрез резервируем под изделие — повторов не бывает.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+      <div style="border:1px solid #141414;padding:26px 24px 22px;transition:background .3s,color .3s;cursor:default" style-hover="background:#141414;color:#EDEAE4">
+        <div style="width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#4a4a48,#2b2b29 70%);margin-bottom:60px"></div>
+        <div style="font-size:14px;letter-spacing:.1em;text-transform:uppercase">Шерсть «Графит»</div>
+        <div style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#8a8a85;margin-top:6px">Биелла, Италия · 340 г/м</div>
+      </div>
+      <div style="border:1px solid #141414;padding:26px 24px 22px;transition:background .3s,color .3s;cursor:default" style-hover="background:#141414;color:#EDEAE4">
+        <div style="width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#f4efe2,#ddd5c2 70%);margin-bottom:60px"></div>
+        <div style="font-size:14px;letter-spacing:.1em;text-transform:uppercase">Шёлк «Слоновая кость»</div>
+        <div style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#8a8a85;margin-top:6px">Комо, Италия · крепдешин</div>
+      </div>
+      <div style="border:1px solid #141414;padding:26px 24px 22px;transition:background .3s,color .3s;cursor:default" style-hover="background:#141414;color:#EDEAE4">
+        <div style="width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#c4beb4,#a29c92 70%);margin-bottom:60px"></div>
+        <div style="font-size:14px;letter-spacing:.1em;text-transform:uppercase">Кашемир «Дым»</div>
+        <div style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#8a8a85;margin-top:6px">Монголия · двухслойный</div>
+      </div>
+      <div style="border:1px solid #141414;padding:26px 24px 22px;transition:background .3s,color .3s;cursor:default" style-hover="background:#141414;color:#EDEAE4">
+        <div style="width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ded4bd,#c9bda3 70%);margin-bottom:60px"></div>
+        <div style="font-size:14px;letter-spacing:.1em;text-transform:uppercase">Лён небелёный</div>
+        <div style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#8a8a85;margin-top:6px">Кострома · плотное плетение</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#141414;color:#EDEAE4">
+    <div style="display:grid;grid-template-columns:.85fr 1.15fr;gap:64px;padding:80px 40px;align-items:center">
+      <div style="overflow:hidden;aspect-ratio:4/5">
+        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=78&auto=format&fit=crop" alt="Мария Ланг, основатель ателье «Форма»" style="width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.08);transition:transform .6s" style-hover="transform:scale(1.03)">
+      </div>
+      <div>
+        <p style="margin:0 0 22px;font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8a8a85">Основатель</p>
+        <p style="margin:0 0 28px;font-family:'Tenor Sans',serif;font-size:34px;line-height:1.3;max-width:560px">«Мода предлагает выбрать из готового. Мы делаем наоборот: сначала человек — потом вещь».</p>
+        <p style="margin:0 0 40px;font-size:14px;line-height:1.75;color:#b9b5ac;max-width:480px">Мария Ланг — конструктор одежды, пятнадцать лет в индивидуальном пошиве. Каждое изделие «Формы» она ведёт лично: от первой мерки до финального отпаривания.</p>
+        <div style="display:flex;gap:0;border-top:1px solid rgba(237,234,228,.25)">
+          <div style="padding:20px 32px 0 0"><div style="font-family:'Tenor Sans',serif;font-size:32px">20</div><div style="font-size:11.5px;letter-spacing:.06em;color:#8a8a85;margin-top:4px">примерок в месяц</div></div>
+          <div style="width:1px;background:rgba(237,234,228,.25)"></div>
+          <div style="padding:20px 32px 0"><div style="font-family:'Tenor Sans',serif;font-size:32px">3 нед.</div><div style="font-size:11.5px;letter-spacing:.06em;color:#8a8a85;margin-top:4px">лист ожидания</div></div>
+          <div style="width:1px;background:rgba(237,234,228,.25)"></div>
+          <div style="padding:20px 0 0 32px"><div style="font-family:'Tenor Sans',serif;font-size:32px">1 мастер</div><div style="font-size:11.5px;letter-spacing:.06em;color:#8a8a85;margin-top:4px">ведёт изделие целиком</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="book" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;padding:80px 40px;align-items:start;border-bottom:1px solid #141414">
+    <div>
+      <h2 style="margin:0 0 18px;font-family:'Tenor Sans',serif;font-size:52px;line-height:1.02;text-transform:uppercase;letter-spacing:.02em">Записаться<br>на примерку</h2>
+      <p style="margin:0 0 30px;font-size:14px;line-height:1.7;color:#4a4a45;max-width:380px">Первая консультация — бесплатно: снимем мерки, подберём ткань, посчитаем стоимость. Ближайшее окно — через три недели.</p>
+      <div style="display:flex;flex-direction:column;gap:14px;font-size:14px;line-height:1.6">
+        <div style="display:flex;gap:14px"><span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8a8a85;min-width:74px;padding-top:2px">Адрес</span><span>Столярный переулок, 3с2, Москва</span></div>
+        <div style="display:flex;gap:14px"><span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8a8a85;min-width:74px;padding-top:2px">Часы</span><span>Вт–Сб · 11:00–20:00, по записи</span></div>
+        <div style="display:flex;gap:14px"><span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8a8a85;min-width:74px;padding-top:2px">Связь</span><span><a href="tel:+79262148005" style="color:#141414">+7 926 214-80-05</a> · Телеграм @forma_atelier</span></div>
+      </div>
+    </div>
+    <form onSubmit="{{ submitBook }}" style="display:flex;flex-direction:column;gap:18px;padding-top:10px">
+      <label style="display:flex;flex-direction:column;gap:9px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8a8a85">Имя
+        <input type="text" required style="background:transparent;border:none;border-bottom:1px solid #141414;padding:10px 2px;font-family:'Manrope',sans-serif;font-size:15px;color:#141414;outline:none">
+      </label>
+      <label style="display:flex;flex-direction:column;gap:9px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8a8a85">Телефон
+        <input type="tel" required style="background:transparent;border:none;border-bottom:1px solid #141414;padding:10px 2px;font-family:'Manrope',sans-serif;font-size:15px;color:#141414;outline:none">
+      </label>
+      <label style="display:flex;flex-direction:column;gap:9px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8a8a85">Что шьём
+        <select style="background:transparent;border:none;border-bottom:1px solid #141414;padding:10px 0;font-family:'Manrope',sans-serif;font-size:15px;color:#141414;outline:none">
+          <option>Жакет</option><option>Платье</option><option>Пальто</option><option>Костюм</option><option>Ещё не решили</option>
+        </select>
+      </label>
+      <button type="submit" style="margin-top:16px;align-self:flex-start;font-family:'Manrope',sans-serif;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:#EDEAE4;background:#141414;border:none;padding:18px 44px;cursor:pointer;transition:letter-spacing .25s,background .25s" style-hover="letter-spacing:.28em;background:#000">Записаться на примерку</button>
+      <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+        <p style="margin:2px 0 0;font-size:13.5px;color:#141414;border:1px solid #141414;padding:14px 18px">✓ Заявка принята. Перезвоним до конца дня и предложим время.</p>
+      </sc-if>
+    </form>
+  </section>
+
+  <footer style="padding:40px 40px 30px;text-align:center">
+    <div style="font-family:'Tenor Sans',serif;font-size:clamp(80px,16vw,220px);line-height:.9;letter-spacing:.08em;text-transform:uppercase;color:#141414">Форма</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:34px;padding-top:22px;border-top:1px solid #141414;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#4a4a45;flex-wrap:wrap">
+      <span>Ателье индивидуального пошива</span>
+      <span>Столярный пер., 3с2 · Москва</span>
+      <span>© «Форма», 2026</span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { sent: false };
+  renderVals() {
+    return {
+      sent: this.state.sent,
+      submitBook: (e) => { e.preventDefault(); this.setState({ sent: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700;8..60,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./site.css">
+<title>Запрос коммерческого предложения на обучение по госзакупкам | Университет закупок</title>
+<meta name="description" content="Сформируем коммерческое предложение на обучение сотрудников по 44-ФЗ и 223-ФЗ. Договор и счёт для юридического лица, групповые условия, документы в ФИС ФРДО.">
+</helmet>
+
+<dc-import name="SiteHeader" active="courses" hint-size="100%,140px"></dc-import>
+
+<section class="apply" style="padding:clamp(48px,7vw,84px) 0">
+  <div class="container">
+    <div class="apply-grid">
+      <div class="apply-intro">
+        <nav class="crumbs" aria-label="Хлебные крошки" style="margin-bottom:18px;color:rgba(255,255,255,.7)">
+          <a href="glavnaya.dc.html" style="color:rgba(255,255,255,.7)">Главная</a><span class="sep">/</span><span class="cur" style="color:rgba(255,255,255,.92)">Запрос КП</span>
+        </nav>
+        <span class="eyebrow">Для организаций и частных лиц</span>
+        <h2>Запрос коммерческого предложения</h2>
+        <p class="lede">Подберём программу под задачи вашей организации, рассчитаем стоимость с учётом числа сотрудников и подготовим коммерческое предложение с договором и счётом.</p>
+        <ul>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>Групповые условия при обучении нескольких сотрудников</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>Договор и закрывающие документы для юрлица</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>Документы об обучении - в реестре ФИС ФРДО</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>Полностью дистанционно, без отрыва от работы</li>
+        </ul>
+        <div class="apply-callback">
+          <div class="ph"><b id="kpCityTel">+7 (923) 222-17-59</b><small>Новосибирск · 9:00-18:00 МСК</small></div>
+          <a href="kontakty.dc.html" class="btn btn--ghost-on-dark btn--sm">Все контакты</a>
+        </div>
+      </div>
+
+      <div class="form-card" id="kpForm" data-applicant="jur">
+        <h3>Запросить расчёт</h3>
+        <p class="form-sub">Заполните форму - ответим в течение рабочего дня.</p>
+        <form id="kpFormEl" novalidate>
+          <div class="ok-banner" id="kpOk">Спасибо! Запрос принят, подготовим коммерческое предложение. <em>(Демо-форма.)</em></div>
+
+          <div class="applicant-toggle" id="kpToggleWrap">
+            <label><input type="radio" name="kpApplicant" value="jur"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"></path></svg>Юридическое лицо</span></label>
+            <label><input type="radio" name="kpApplicant" value="fiz"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg>Физическое лицо</span></label>
+          </div>
+
+          <div class="field"><label for="kp-contact">Контактное лицо (ФИО)</label><input type="text" id="kp-contact" placeholder="Иванов Иван Иванович" required></div>
+          <div class="grid2">
+            <div class="field"><label for="kp-phone">Телефон</label><input type="tel" id="kp-phone" placeholder="+7 (___) ___-__-__" required></div>
+            <div class="field"><label for="kp-email">Email</label><input type="email" id="kp-email" placeholder="you@company.ru" required></div>
+          </div>
+
+          <div class="field field--jur"><label for="kp-org">Организация <span class="hint">(наименование)</span></label><input type="text" id="kp-org" placeholder="ООО «Ромашка»"></div>
+          <div class="grid2">
+            <div class="field"><label for="kp-law">Закон</label><select id="kp-law"><option>44-ФЗ</option><option>223-ФЗ</option><option>44-ФЗ и 223-ФЗ</option><option>275-ФЗ (ГОЗ)</option><option>273-ФЗ (антикоррупция)</option></select></div>
+            <div class="field field--jur"><label for="kp-count">Сотрудников на обучение</label><input type="number" id="kp-count" min="1" placeholder="например, 5"></div>
+            <div class="field field--fiz"><label for="kp-hours">Объём, часов</label><select id="kp-hours"><option>40</option><option>72</option><option>120</option><option>260</option><option>520</option></select></div>
+          </div>
+          <div class="field field--jur"><label for="kp-program">Программа / направление</label><input type="text" id="kp-program" placeholder="Контрактная система, профпереподготовка 260 ч"></div>
+          <div class="field field--fiz"><label for="kp-dir">Направление</label><input type="text" id="kp-dir" placeholder="например, повышение квалификации 44-ФЗ"></div>
+          <div class="field field--fiz"><label for="kp-budget">Желаемая стоимость <span class="hint">(необязательно)</span></label><input type="text" id="kp-budget" placeholder="ориентир по бюджету"></div>
+
+          <label class="consent"><input type="checkbox" required><span>Согласен на <a href="politika.dc.html">обработку персональных данных</a> (ФЗ-152)</span></label>
+          <button type="submit" class="btn btn--primary">Получить коммерческое предложение</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head section-head--center"><span class="eyebrow">Как мы работаем</span><h2 style="margin-top:12px">От запроса до договора - 4 шага</h2></div>
+    <div class="proc-grid">
+      <div class="proc-step"><div class="proc-top"><div class="proc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v12H4z"></path><path d="M8 20h8"></path></svg></div><span class="n">1</span></div><h3>Запрос</h3><p>Вы оставляете форму с числом сотрудников и направлением обучения.</p></div>
+      <div class="proc-step"><div class="proc-top"><div class="proc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h18v14H3z"></path><path d="M7 21h10"></path></svg></div><span class="n">2</span></div><h3>Расчёт</h3><p>Готовим коммерческое предложение и подбираем программу под задачи.</p></div>
+      <div class="proc-step"><div class="proc-top"><div class="proc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg></div><span class="n">3</span></div><h3>Договор</h3><p>Заключаем договор, выставляем счёт, согласуем сроки обучения.</p></div>
+      <div class="proc-step"><div class="proc-top"><div class="proc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"></path><path d="M9 12l2 2 4-4"></path></svg></div><span class="n">4</span></div><h3>Обучение</h3><p>Сотрудники учатся дистанционно, документы вносим в ФИС ФРДО.</p></div>
+    </div>
+  </div>
+</section>
+
+<dc-import name="SiteFooter" hint-size="100%,440px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  componentDidMount() {
+    if (this._init) return; this._init = true;
+    const root = document;
+    const card = root.getElementById('kpForm');
+    const radios = root.querySelectorAll('input[name="kpApplicant"]');
+    const apply = (val) => {
+      if (card) card.dataset.applicant = val;
+      radios.forEach((r) => { r.checked = (r.value === val); });
+    };
+    radios.forEach((r) => {
+      r.addEventListener('change', () => apply(r.value));
+      r.addEventListener('click', () => apply(r.value));
+    });
+    apply((card && card.dataset.applicant) || 'jur');
+    const f = root.getElementById('kpFormEl');
+    if (f) f.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!f.checkValidity()) { f.reportValidity(); return; }
+      root.getElementById('kpOk').classList.add('show');
+      f.querySelector('button[type=submit]').textContent = 'Запрос отправлен ✓';
+    });
+  }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

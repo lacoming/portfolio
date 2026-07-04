@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05060a;-webkit-font-smoothing:antialiased}
+@keyframes aiOrbit{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes aiPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
+@keyframes aiUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+<div data-screen-label="Оркестр — AI-офис" style="font-family:'Inter',sans-serif;color:#EDEFF7;background:radial-gradient(70% 50% at 50% -10%,rgba(124,93,250,.25),transparent 60%),#05060a;min-height:100vh;overflow:hidden">
+
+  <header style="display:flex;align-items:center;gap:28px;max-width:1200px;margin:0 auto;padding:22px 32px">
+    <span style="font-family:'Unbounded',sans-serif;font-weight:800;font-size:17px;letter-spacing:.02em">ОРКЕСТР<span style="color:#7C5DFA">*</span></span>
+    <nav style="display:flex;gap:22px;font-size:13.5px;color:#9AA0B5;margin-left:18px">
+      <a href="#" style="color:#9AA0B5;transition:color .2s" style-hover="color:#fff">Агенты</a>
+      <a href="#" style="color:#9AA0B5;transition:color .2s" style-hover="color:#fff">Пайплайны</a>
+      <a href="#" style="color:#9AA0B5;transition:color .2s" style-hover="color:#fff">Кейсы</a>
+      <a href="#" style="color:#9AA0B5;transition:color .2s" style-hover="color:#fff">Цены</a>
+    </nav>
+    <a href="#" style="margin-left:auto;font-size:13px;font-weight:600;color:#05060a;background:#EDEFF7;padding:10px 20px;border-radius:999px;transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-1px);box-shadow:0 8px 24px rgba(237,239,247,.25)">Запросить демо</a>
+  </header>
+
+  <section style="max-width:1200px;margin:0 auto;padding:64px 32px 80px;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center">
+    <div>
+      <p style="margin:0 0 20px;display:inline-block;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:#B7A6FF;border:1px solid rgba(124,93,250,.4);border-radius:999px;padding:8px 16px;animation:aiUp .7s ease-out both">Концепт · AI-автоматизация бизнеса</p>
+      <h1 style="margin:0 0 22px;font-family:'Unbounded',sans-serif;font-weight:600;font-size:52px;line-height:1.08;letter-spacing:-.01em;text-wrap:balance;animation:aiUp .7s .1s ease-out both">Компания работает.<br><span style="background:linear-gradient(90deg,#7C5DFA,#4FC3F7);-webkit-background-clip:text;background-clip:text;color:transparent">Вы — думаете.</span></h1>
+      <p style="margin:0 0 34px;font-size:16.5px;line-height:1.65;color:#9AA0B5;max-width:460px;animation:aiUp .7s .2s ease-out both">Оркестр собирает офис из AI-агентов: продажи, документы, код-ревью и отчётность идут по пайплайнам без вашего участия. Настраиваем под процессы за 2 недели.</p>
+      <div style="display:flex;gap:12px;animation:aiUp .7s .3s ease-out both">
+        <a href="#" style="background:linear-gradient(90deg,#7C5DFA,#5B8DEF);color:#fff;font-weight:600;font-size:14.5px;padding:15px 28px;border-radius:999px;box-shadow:0 8px 32px rgba(124,93,250,.35);transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 14px 44px rgba(124,93,250,.5)">Собрать свой офис</a>
+        <a href="#" style="border:1px solid rgba(255,255,255,.16);color:#EDEFF7;font-weight:600;font-size:14.5px;padding:15px 28px;border-radius:999px;transition:border-color .2s,background .2s" style-hover="border-color:rgba(124,93,250,.6);background:rgba(124,93,250,.08)">Смотреть пайплайн ↗</a>
+      </div>
+      <div style="display:flex;gap:32px;margin-top:42px;animation:aiUp .7s .4s ease-out both">
+        <div><div style="font-family:'Unbounded',sans-serif;font-size:22px;font-weight:600;color:#fff">×6</div><div style="font-size:11.5px;color:#9AA0B5;margin-top:3px">скорость рутины</div></div>
+        <div><div style="font-family:'Unbounded',sans-serif;font-size:22px;font-weight:600;color:#fff">24/7</div><div style="font-size:11.5px;color:#9AA0B5;margin-top:3px">агенты на смене</div></div>
+        <div><div style="font-family:'Unbounded',sans-serif;font-size:22px;font-weight:600;color:#fff">14 дн</div><div style="font-size:11.5px;color:#9AA0B5;margin-top:3px">до запуска</div></div>
+      </div>
+    </div>
+
+    <div style="position:relative;height:460px;animation:aiUp .9s .25s ease-out both">
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+        <div style="width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#8F76FF,#5B3FD4 60%,#2E1F70);box-shadow:0 0 90px rgba(124,93,250,.55);display:flex;align-items:center;justify-content:center;animation:aiPulse 5s ease-in-out infinite">
+          <span style="font-family:'Unbounded',sans-serif;font-weight:800;font-size:13px;letter-spacing:.06em;color:#fff">ЯДРО</span>
+        </div>
+      </div>
+      <div style="position:absolute;inset:30px;border:1px dashed rgba(255,255,255,.12);border-radius:50%"></div>
+      <div style="position:absolute;inset:95px;border:1px dashed rgba(255,255,255,.08);border-radius:50%"></div>
+      <div style="position:absolute;inset:30px;animation:aiOrbit 26s linear infinite">
+        <span style="position:absolute;top:-19px;left:50%;margin-left:-19px;width:38px;height:38px;border-radius:12px;background:#12141f;border:1px solid rgba(124,93,250,.5);display:flex;align-items:center;justify-content:center;font-size:15px">✉</span>
+        <span style="position:absolute;bottom:-19px;left:50%;margin-left:-19px;width:38px;height:38px;border-radius:12px;background:#12141f;border:1px solid rgba(79,195,247,.5);display:flex;align-items:center;justify-content:center;font-size:15px">⚙</span>
+      </div>
+      <div style="position:absolute;inset:95px;animation:aiOrbit 17s linear infinite reverse">
+        <span style="position:absolute;top:50%;left:-19px;margin-top:-19px;width:38px;height:38px;border-radius:12px;background:#12141f;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:15px">📄</span>
+        <span style="position:absolute;top:50%;right:-19px;margin-top:-19px;width:38px;height:38px;border-radius:12px;background:#12141f;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:15px">📊</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid rgba(255,255,255,.07)">
+    <div style="max-width:1200px;margin:0 auto;padding:28px 32px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+      <div style="padding:18px 20px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);transition:border-color .25s,transform .25s" style-hover="border-color:rgba(124,93,250,.5);transform:translateY(-3px)"><div style="font-size:13.5px;font-weight:600;color:#fff">Агент-продавец</div><div style="font-size:12px;color:#9AA0B5;margin-top:5px;line-height:1.5">Квалифицирует лиды и ведёт переписку</div></div>
+      <div style="padding:18px 20px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);transition:border-color .25s,transform .25s" style-hover="border-color:rgba(124,93,250,.5);transform:translateY(-3px)"><div style="font-size:13.5px;font-weight:600;color:#fff">Агент-юрист</div><div style="font-size:12px;color:#9AA0B5;margin-top:5px;line-height:1.5">Договоры и КП по шаблонам компании</div></div>
+      <div style="padding:18px 20px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);transition:border-color .25s,transform .25s" style-hover="border-color:rgba(124,93,250,.5);transform:translateY(-3px)"><div style="font-size:13.5px;font-weight:600;color:#fff">Агент-ревьюер</div><div style="font-size:12px;color:#9AA0B5;margin-top:5px;line-height:1.5">Код-ревью и тесты до попадания в main</div></div>
+      <div style="padding:18px 20px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);transition:border-color .25s,transform .25s" style-hover="border-color:rgba(124,93,250,.5);transform:translateY(-3px)"><div style="font-size:13.5px;font-weight:600;color:#fff">Агент-аналитик</div><div style="font-size:12px;color:#9AA0B5;margin-top:5px;line-height:1.5">Утренний дайджест метрик в Telegram</div></div>
+    </div>
+  </section>
+</div>
+</x-dc>
+</body>
+</html>

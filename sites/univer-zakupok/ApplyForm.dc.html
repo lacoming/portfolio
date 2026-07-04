@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<form class="form-card" id="applyForm" data-applicant="jur" novalidate>
+  <div class="ok-banner" id="applyOk">Спасибо! Заявка принята - менеджер свяжется в течение рабочего дня. <em>(Демо-форма: реальная отправка не настроена в макете.)</em></div>
+  <h3>{{ heading }}</h3>
+  <p class="form-sub">{{ subtitle }}</p>
+
+  <div class="applicant-toggle">
+    <label><input type="radio" name="applicant" value="jur" checked>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3M9 9v.01M9 12v.01M9 15v.01"></path></svg>Юридическое лицо</span>
+    </label>
+    <label><input type="radio" name="applicant" value="fiz">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21v-1a6 6 0 016-6h4a6 6 0 016 6v1"></path></svg>Физическое лицо</span>
+    </label>
+  </div>
+
+  <div class="field">
+    <label for="ap-fio">ФИО контактного лица *</label>
+    <input type="text" id="ap-fio" name="fio" placeholder="Как к вам обращаться" required>
+  </div>
+
+  <div class="grid2">
+    <div class="field">
+      <label for="ap-phone">Телефон *</label>
+      <input type="tel" id="ap-phone" name="phone" placeholder="+7 (___) ___-__-__" required>
+    </div>
+    <div class="field">
+      <label for="ap-email">Email *</label>
+      <input type="email" id="ap-email" name="email" placeholder="name@mail.ru" required>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="field field--jur">
+      <label for="ap-law">Закон *</label>
+      <select id="ap-law" name="law">
+        <option>44-ФЗ</option>
+        <option>223-ФЗ</option>
+        <option>44-ФЗ и 223-ФЗ</option>
+        <option>ГОЗ (275-ФЗ)</option>
+      </select>
+    </div>
+    <div class="field field--jur">
+      <label for="ap-count">Сотрудников на обучение</label>
+      <input type="number" id="ap-count" name="count" min="1" placeholder="например, 5">
+    </div>
+  </div>
+
+  <div class="field field--fiz">
+    <label for="ap-law-fiz">Закон / направление</label>
+    <select id="ap-law-fiz" name="law_fiz">
+      <option>44-ФЗ</option>
+      <option>223-ФЗ</option>
+      <option>ГОЗ (275-ФЗ)</option>
+      <option>273-ФЗ - антикоррупция</option>
+      <option>Для поставщиков (торги)</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="ap-program">Программа / направление *</label>
+    <select id="ap-program" name="program" required>
+      <option value="">Выберите программу…</option>
+      <optgroup label="Дипломы о переподготовке">
+        <option>44-ФЗ / 223-ФЗ - 520 часов</option>
+        <option>44-ФЗ / 223-ФЗ - 260 часов</option>
+        <option>44-ФЗ - 260 часов</option>
+        <option>Для поставщиков - 260 часов</option>
+      </optgroup>
+      <optgroup label="Удостоверения о повышении квалификации">
+        <option>44-ФЗ - 120 часов</option>
+        <option>44-ФЗ - 40 часов</option>
+        <option>223-ФЗ - 72 часа</option>
+        <option>273-ФЗ Антикоррупция - 72 часа</option>
+        <option>ГОЗ (275-ФЗ) - 72 часа</option>
+      </optgroup>
+      <option>Экспресс ЕАСУЗ / торговые площадки - 16 часов</option>
+      <option>Нужна консультация по подбору</option>
+    </select>
+  </div>
+
+  <div class="grid2">
+    <div class="field field--fiz">
+      <label for="ap-hours">Количество часов</label>
+      <input type="text" id="ap-hours" name="hours" inputmode="numeric" placeholder="например, 144">
+    </div>
+    <div class="field field--fiz">
+      <label for="ap-price">Желаемая стоимость <span class="hint">по тарифам, ₽</span></label>
+      <input type="text" id="ap-price" name="price" inputmode="numeric" placeholder="ориентир">
+    </div>
+  </div>
+
+  <label class="consent">
+    <input type="checkbox" id="ap-consent" required>
+    <span>Я согласен на <a href="politika.dc.html">обработку персональных данных</a> в соответствии с ФЗ-152 и принимаю <a href="politika.dc.html">политику конфиденциальности</a></span>
+  </label>
+
+  <button type="submit" class="btn btn--primary">{{ submitLabel }}
+    <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+  </button>
+</form>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:440,&quot;height&quot;:640},&quot;heading&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Заявка на обучение&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;subtitle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Поля со звёздочкой обязательны&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;submitLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Отправить заявку&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    if (this._init) return; this._init = true;
+    const form = document.getElementById('applyForm');
+    if (!form) return;
+    const radios = form.querySelectorAll('input[name="applicant"]');
+    const apply = (val) => {
+      form.dataset.applicant = val;
+      radios.forEach((r) => { r.checked = (r.value === val); });
+    };
+    radios.forEach((r) => {
+      r.addEventListener('change', () => apply(r.value));
+      r.addEventListener('click', () => apply(r.value));
+    });
+    apply(form.dataset.applicant || 'jur');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      const ok = document.getElementById('applyOk');
+      if (ok) ok.classList.add('show');
+      const btn = form.querySelector('button[type=submit]');
+      if (btn) btn.textContent = 'Заявка отправлена ✓';
+    });
+  }
+  renderVals() {
+    const p = this.props || {};
+    return {
+      heading: p.heading ?? 'Заявка на обучение',
+      subtitle: p.subtitle ?? 'Поля со звёздочкой обязательны',
+      submitLabel: p.submitLabel ?? 'Отправить заявку',
+    };
+  }
+}
+</script>
+</body>
+</html>

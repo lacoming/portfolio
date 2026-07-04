@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:#87cefa}
+@keyframes tooltipIn{from{opacity:0;transform:translateX(-50%) translateY(-8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+</style>
+</helmet>
+<div data-screen-label="Терский конный завод" style="min-height:100vh;display:flex;flex-direction:column">
+
+  <header id="tkHeader" style="position:fixed;top:0;left:0;right:0;z-index:50;background:linear-gradient(to bottom,rgba(135,206,250,1) 0%,rgba(135,206,250,0) 100%)">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 24px">
+      <a href="#" style="display:flex;flex-direction:column;text-decoration:none;padding:8px 16px;border-radius:12px;backdrop-filter:blur(12px);background:rgba(255,255,255,.1);margin-top:2vh;transition:background .3s" style-hover="background:rgba(15,17,26,.3)">
+        <span data-i18n="siteTitle" style="font-family:Georgia,'Times New Roman',serif;font-size:20px;font-weight:600;color:#fff;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.9),0 2px 6px rgba(0,0,0,.7),0 4px 12px rgba(0,0,0,.5)">Терский племенной конный завод</span>
+        <span data-i18n="siteSubtitle" style="font-family:Georgia,'Times New Roman',serif;font-size:12px;color:rgba(255,255,255,.95);white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.9),0 2px 6px rgba(0,0,0,.7)">Элита арабского чистокровного коннозаводства России</span>
+      </a>
+      <div style="display:flex;align-items:center;gap:16px">
+        <nav style="display:flex;align-items:center;gap:8px">
+          <a href="#" data-i18n="navNews" style="display:inline-block;padding:10px 20px;background:rgba(255,255,255,.01);backdrop-filter:blur(1px);color:#fff;font-size:14.5px;font-weight:500;border-radius:9999px;text-decoration:none;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,1);transition:all .2s" style-hover="background:rgba(0,0,0,.75);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.15)">Новости</a>
+          <a href="#" data-i18n="navMission" style="display:inline-block;padding:10px 20px;background:rgba(255,255,255,.01);backdrop-filter:blur(1px);color:#fff;font-size:14.5px;font-weight:500;border-radius:9999px;text-decoration:none;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,1);transition:all .2s" style-hover="background:rgba(0,0,0,.75);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.15)">Наша миссия</a>
+          <a href="#" data-i18n="navHistory" style="display:inline-block;padding:10px 20px;background:rgba(255,255,255,.01);backdrop-filter:blur(1px);color:#fff;font-size:14.5px;font-weight:500;border-radius:9999px;text-decoration:none;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,1);transition:all .2s" style-hover="background:rgba(0,0,0,.75);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.15)">История</a>
+          <a href="#" data-i18n="navServices" style="display:inline-block;padding:10px 20px;background:rgba(255,255,255,.01);backdrop-filter:blur(1px);color:#fff;font-size:14.5px;font-weight:500;border-radius:9999px;text-decoration:none;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,1);transition:all .2s" style-hover="background:rgba(0,0,0,.75);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.15)">Услуги</a>
+          <a href="#" data-i18n="navMedia" style="display:inline-block;padding:10px 20px;background:rgba(255,255,255,.01);backdrop-filter:blur(1px);color:#fff;font-size:14.5px;font-weight:500;border-radius:9999px;text-decoration:none;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,1);transition:all .2s" style-hover="background:rgba(0,0,0,.75);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.15)">Медиа</a>
+        </nav>
+        <button id="tkLangBtn" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 20px;background:rgba(255,255,255,.01);backdrop-filter:blur(1px);border:none;color:#fff;font-size:14px;font-weight:600;border-radius:9999px;cursor:pointer;text-shadow:0 1px 3px rgba(0,0,0,1);transition:all .2s" style-hover="background:rgba(0,0,0,.75)">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+          <span id="tkLangLabel">RU</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div style="position:relative;width:100%;min-height:100vh;overflow:hidden">
+    <img src="images/main_hero.jpg" alt="Терский конный завод" style="position:fixed;top:0;left:0;width:100vw;height:100vh;object-fit:cover;z-index:0">
+    <img id="tkZoneImgMountain" src="images/areas/feeding.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;z-index:3;pointer-events:none;transition:opacity .4s ease,transform .5s,filter .4s ease">
+    <img id="tkZoneImgBuildings" src="images/areas/hall-of-fame.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;z-index:3;pointer-events:none;transition:opacity .4s ease,transform .5s,filter .4s ease">
+
+    <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:4" viewBox="0 0 3456 1944" fill="none" preserveAspectRatio="xMidYMid slice">
+      <path id="tkZoneMountain" d="M1423 750.5L1096 762.5L481.5 683L493.5 648L855.5 566L1096 491.5L1392.5 461H1778L2193.5 545L2723.5 750.5L2448 781H2053.5L1423 750.5Z" fill="transparent" stroke="transparent" stroke-width="2" style="cursor:pointer;pointer-events:auto"></path>
+      <path id="tkZoneBuildings" d="M2268 986.5H1194L913.5 1388H2380.5L2455 1206L2268 986.5Z" fill="transparent" stroke="transparent" stroke-width="2" style="cursor:pointer;pointer-events:auto"></path>
+    </svg>
+
+    <div id="tkTooltipMountain" data-i18n="advantages" style="display:none;position:absolute;z-index:6;top:42%;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);backdrop-filter:blur(10px);color:#fff;padding:12px 20px;border-radius:8px;font-size:16px;font-weight:500;box-shadow:0 4px 15px rgba(0,0,0,.3);pointer-events:none;white-space:nowrap;animation:tooltipIn .25s ease both">Наши достоинства</div>
+    <div id="tkTooltipBuildings" data-i18n="ourHorses" style="display:none;position:absolute;z-index:6;top:78%;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);backdrop-filter:blur(10px);color:#fff;padding:12px 20px;border-radius:8px;font-size:16px;font-weight:500;box-shadow:0 4px 15px rgba(0,0,0,.3);pointer-events:none;white-space:nowrap;animation:tooltipIn .25s ease both">Наши лошади</div>
+
+    <div style="position:fixed;left:24px;top:112px;z-index:50;display:flex;flex-direction:column;width:240px">
+      <div style="background:rgba(0,0,0,.6);backdrop-filter:blur(10px);color:#fff;overflow:hidden;border-top:1px solid rgba(255,255,255,.1);border-radius:9px 9px 0 0">
+        <button class="tk-acc-head" style="display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 18px;background:transparent;border:none;cursor:pointer;transition:background .15s" style-hover="background:rgba(255,255,255,.05)">
+          <h3 data-i18n="events" style="font-size:14.5px;font-weight:600;margin:0;color:#fff;text-align:left">Ближайшие события</h3>
+          <span class="tk-acc-icon" style="font-size:36px;font-weight:300;color:rgba(255,255,255,.7);transition:transform .2s;line-height:1;user-select:none">+</span>
+        </button>
+        <div class="tk-acc-body" style="display:none;padding:0 18px 14px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="border-left:2px solid #90caf9;padding-left:10px">
+              <div style="font-size:11px;color:rgba(255,255,255,.6)">12 июля 2026</div>
+              <div style="font-size:12.5px;font-weight:600;line-height:1.35">Скачки на приз Терского завода</div>
+              <div style="font-size:11px;color:rgba(255,255,255,.6)">Пятигорский ипподром</div>
+            </div>
+            <div style="border-left:2px solid #90caf9;padding-left:10px">
+              <div style="font-size:11px;color:rgba(255,255,255,.6)">9 августа 2026</div>
+              <div style="font-size:12.5px;font-weight:600;line-height:1.35">Летний аукцион арабских лошадей</div>
+              <div style="font-size:11px;color:rgba(255,255,255,.6)">Манеж завода · онлайн-трансляция</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:rgba(0,0,0,.6);backdrop-filter:blur(10px);color:#fff;overflow:hidden;border-top:1px solid rgba(255,255,255,.1)">
+        <button class="tk-acc-head" style="display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 18px;background:transparent;border:none;cursor:pointer;transition:background .15s" style-hover="background:rgba(255,255,255,.05)">
+          <h3 data-i18n="contacts" style="font-size:14.5px;font-weight:600;margin:0;color:#fff;text-align:left">Контакты</h3>
+          <span class="tk-acc-icon" style="font-size:36px;font-weight:300;color:rgba(255,255,255,.7);transition:transform .2s;line-height:1;user-select:none">+</span>
+        </button>
+        <div class="tk-acc-body" style="display:none;padding:0 18px 14px">
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+            <li style="display:flex;align-items:flex-start;gap:8px">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="flex:none;color:rgba(255,255,255,.7);margin-top:2px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+              <a href="tel:+78792271316" style="color:#fff;text-decoration:none;font-size:12px;transition:color .2s" style-hover="color:#90caf9">+7 (879) 227-13-16</a>
+            </li>
+            <li style="display:flex;align-items:flex-start;gap:8px">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="flex:none;color:rgba(255,255,255,.7);margin-top:2px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+              <div style="display:flex;flex-direction:column;gap:3px">
+                <a href="tel:+79064112297" style="color:#fff;text-decoration:none;font-size:12px;transition:color .2s" style-hover="color:#90caf9">8-906-411-22-97</a>
+                <a href="tel:+79097682369" style="color:#fff;text-decoration:none;font-size:12px;transition:color .2s" style-hover="color:#90caf9">8-909-768-23-69</a>
+                <span data-i18n="infoAndTours" style="font-size:9.5px;color:rgba(255,255,255,.5);line-height:1.3">уточнение информации, запись на экскурсии</span>
+              </div>
+            </li>
+            <li style="display:flex;align-items:flex-start;gap:8px">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="flex:none;color:rgba(255,255,255,.7);margin-top:2px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+              <a href="mailto:terkonzavod@mail.ru" style="color:#fff;text-decoration:none;font-size:12px;transition:color .2s" style-hover="color:#90caf9">terkonzavod@mail.ru</a>
+            </li>
+            <li style="display:flex;align-items:flex-start;gap:8px">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="flex:none;color:rgba(255,255,255,.7);margin-top:2px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+              <div style="display:flex;flex-direction:column;gap:3px">
+                <span data-i18n="address" style="font-size:12px;color:rgba(255,255,255,.95);line-height:1.4">пос. Новотерский, Школьная ул., 2</span>
+                <span data-i18n="addressFull" style="font-size:10.5px;color:rgba(255,255,255,.6);line-height:1.4">Минераловодский р-н, Ставропольский край, 357242</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="background:rgba(0,0,0,.6);backdrop-filter:blur(10px);color:#fff;border-top:1px solid rgba(255,255,255,.1);border-radius:0 0 9px 9px;padding:12px">
+        <div data-i18n="howToGetThere" style="font-size:14.5px;font-weight:600;color:#fff;margin-bottom:12px">Как добраться</div>
+        <button id="tkMapOpen" style="display:block;width:100%;padding:0;border:none;background:none;cursor:pointer;border-radius:6px;overflow:hidden">
+          <img src="images/map.jpg" alt="Карта — Терский конный завод" style="display:block;width:100%;height:120px;object-fit:cover;border-radius:6px;transition:opacity .2s" style-hover="opacity:.9">
+        </button>
+        <div data-i18n="address" style="font-size:12px;color:rgba(255,255,255,.8);margin-top:12px;line-height:1.4">пос. Новотерский, Школьная ул., 2</div>
+      </div>
+    </div>
+
+    <div style="position:fixed;right:32px;top:192px;z-index:50;display:flex;flex-direction:column;gap:12px;width:280px">
+      <a href="#" data-i18n="horseSale" style="display:block;background:rgba(40,40,35,.85);backdrop-filter:blur(12px);color:#fff;text-align:center;padding:14px 20px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.08)" style-hover="background:rgba(50,50,45,.9);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.35)">Продажа лошадей</a>
+      <div style="background:rgba(0,0,0,.45);backdrop-filter:blur(16px);border-radius:8px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.08)">
+        <h3 data-i18n="discover" style="font-size:16px;font-weight:600;color:#fff;padding:14px 20px;margin:0;background:rgba(0,0,0,.15);border-bottom:1px solid rgba(255,255,255,.1);text-shadow:0 1px 2px rgba(0,0,0,.3)">Открой для себя Терский</h3>
+        <nav style="display:flex;flex-direction:column">
+          <a href="#" id="tkLinkMountain" data-i18n="advantages" style="display:block;padding:12px 20px;color:#fff;text-decoration:none;font-size:14.5px;font-weight:500;transition:all .2s;border-bottom:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.25);text-shadow:0 1px 2px rgba(0,0,0,.3)" style-hover="background:rgba(255,255,255,.1);padding-left:24px">Наши достоинства</a>
+          <a href="#" id="tkLinkBuildings" data-i18n="ourHorses" style="display:block;padding:12px 20px;color:#fff;text-decoration:none;font-size:14.5px;font-weight:500;transition:all .2s;border-bottom:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.25);text-shadow:0 1px 2px rgba(0,0,0,.3)" style-hover="background:rgba(255,255,255,.1);padding-left:24px">Наши лошади</a>
+          <a href="#" data-i18n="infrastructure" style="display:block;padding:12px 20px;color:#fff;text-decoration:none;font-size:14.5px;font-weight:500;transition:all .2s;border-bottom:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.25);text-shadow:0 1px 2px rgba(0,0,0,.3)" style-hover="background:rgba(255,255,255,.1);padding-left:24px">Инфраструктура</a>
+          <a href="#" data-i18n="races" style="display:block;padding:12px 20px;color:#fff;text-decoration:none;font-size:14.5px;font-weight:500;transition:all .2s;border-bottom:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.25);text-shadow:0 1px 2px rgba(0,0,0,.3)" style-hover="background:rgba(255,255,255,.1);padding-left:24px">Скачки</a>
+          <a href="#" data-i18n="endurance" style="display:block;padding:12px 20px;color:#fff;text-decoration:none;font-size:14.5px;font-weight:500;transition:all .2s;border-bottom:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.25);text-shadow:0 1px 2px rgba(0,0,0,.3)" style-hover="background:rgba(255,255,255,.1);padding-left:24px">Пробеги</a>
+          <a href="#" data-i18n="shows" style="display:block;padding:12px 20px;color:#fff;text-decoration:none;font-size:14.5px;font-weight:500;transition:all .2s;background:rgba(0,0,0,.25);text-shadow:0 1px 2px rgba(0,0,0,.3)" style-hover="background:rgba(255,255,255,.1);padding-left:24px">Шоу</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <section style="position:relative;z-index:10;padding:96px 7% 64px">
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 0%,rgba(255,255,255,.1) 60px,rgba(255,255,255,.25) 100px,rgba(255,255,255,.4) 140px,rgba(255,255,255,.5) 180px,rgba(255,255,255,.5) 100%);backdrop-filter:blur(3px);pointer-events:none"></div>
+    <h2 data-i18n="latestNews" style="position:relative;font-size:32px;font-weight:700;text-align:center;margin:32px 0 40px;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.8),0 4px 8px rgba(0,0,0,.6)">Последние новости</h2>
+    <div style="position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:32px">
+      <article style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,.05);transition:transform .25s,box-shadow .25s;cursor:pointer" style-hover="transform:translateY(-4px);box-shadow:0 12px 24px rgba(0,0,0,.12)">
+        <div style="aspect-ratio:16/9;overflow:hidden"><img src="images/news-default.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div>
+        <div style="padding:24px">
+          <div style="font-size:12px;color:#9ca3af;margin-bottom:10px">28 июня 2026</div>
+          <h3 style="margin:0 0 10px;font-size:17px;font-weight:700;color:#111827;line-height:1.35">Кубок Терского завода: итоги скакового дня</h3>
+          <p style="margin:0;font-size:13.5px;color:#6b7280;line-height:1.55">Заглушка новости для витрины — текст не является реальной публикацией завода.</p>
+        </div>
+      </article>
+      <article style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,.05);transition:transform .25s,box-shadow .25s;cursor:pointer" style-hover="transform:translateY(-4px);box-shadow:0 12px 24px rgba(0,0,0,.12)">
+        <div style="aspect-ratio:16/9;overflow:hidden"><img src="images/legacy_champs.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div>
+        <div style="padding:24px">
+          <div style="font-size:12px;color:#9ca3af;margin-bottom:10px">15 июня 2026</div>
+          <h3 style="margin:0 0 10px;font-size:17px;font-weight:700;color:#111827;line-height:1.35">Наши чемпионы — призёры международной выставки</h3>
+          <p style="margin:0;font-size:13.5px;color:#6b7280;line-height:1.55">Заглушка новости для витрины — текст не является реальной публикацией завода.</p>
+        </div>
+      </article>
+      <article style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,.05);transition:transform .25s,box-shadow .25s;cursor:pointer" style-hover="transform:translateY(-4px);box-shadow:0 12px 24px rgba(0,0,0,.12)">
+        <div style="aspect-ratio:16/9;overflow:hidden"><img src="images/about.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div>
+        <div style="padding:24px">
+          <div style="font-size:12px;color:#9ca3af;margin-bottom:10px">2 июня 2026</div>
+          <h3 style="margin:0 0 10px;font-size:17px;font-weight:700;color:#111827;line-height:1.35">Экскурсионный сезон открыт: расписание визитов</h3>
+          <p style="margin:0;font-size:13.5px;color:#6b7280;line-height:1.55">Заглушка новости для витрины — текст не является реальной публикацией завода.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <footer style="position:relative;z-index:10;background:#111827;color:#fff;padding:48px 7% 32px">
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1.2fr;gap:40px">
+      <div>
+        <h3 data-i18n="footerTitle" style="font-size:18px;font-weight:700;margin:0 0 16px">Терский конный завод</h3>
+        <p data-i18n="footerDesc" style="margin:0;color:#9ca3af;font-size:14px;line-height:1.6">Ведущий центр разведения арабских лошадей в России. 137 лет истории и традиций.</p>
+      </div>
+      <div>
+        <h3 data-i18n="footerNav" style="font-size:18px;font-weight:700;margin:0 0 16px">Навигация</h3>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;color:#9ca3af;font-size:14px">
+          <li><a href="#" data-i18n="navNews" style="color:#9ca3af;text-decoration:none;transition:color .2s" style-hover="color:#fff">Новости</a></li>
+          <li><a href="#" data-i18n="navMission" style="color:#9ca3af;text-decoration:none;transition:color .2s" style-hover="color:#fff">Наша миссия</a></li>
+          <li><a href="#" data-i18n="navHistory" style="color:#9ca3af;text-decoration:none;transition:color .2s" style-hover="color:#fff">История</a></li>
+          <li><a href="#" data-i18n="navMedia" style="color:#9ca3af;text-decoration:none;transition:color .2s" style-hover="color:#fff">Медиа</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 data-i18n="contacts" style="font-size:18px;font-weight:700;margin:0 0 16px">Контакты</h3>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;color:#9ca3af;font-size:14px">
+          <li data-i18n="footerTitle">Терский конный завод</li>
+          <li>Email: tpkz@agrosas.ru</li>
+          <li><span data-i18n="footerPhone">Телефон</span>: +7 (879) 227-13-16</li>
+          <li data-i18n="footerAddress" style="font-size:13px">Школьная ул., 2, пос. Новотерский, Минераловодский р-н, Ставропольский край, 357242</li>
+        </ul>
+      </div>
+    </div>
+    <div data-i18n="copyright" style="border-top:1px solid #1f2937;margin-top:32px;padding-top:32px;text-align:center;color:#9ca3af;font-size:14px">© 2026 Терский конный завод. Все права защищены.</div>
+  </footer>
+
+  <div id="tkLightbox" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.95);align-items:center;justify-content:center;padding:32px">
+    <button id="tkLightboxClose" style="position:absolute;top:24px;right:24px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.3);border-radius:50%;color:#fff;cursor:pointer;transition:all .2s" style-hover="background:rgba(255,255,255,.2);transform:scale(1.1)">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:24px;max-width:90vw;max-height:90vh">
+      <img src="images/map.jpg" alt="Карта — Терский конный завод" style="max-width:100%;max-height:calc(90vh - 80px);object-fit:contain;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5)">
+      <a href="#" data-i18n="openMap" style="display:inline-block;padding:14px 32px;background:rgba(255,255,255,.9);color:#1a2a3a;font-weight:600;text-decoration:none;border-radius:9999px;transition:all .2s" style-hover="background:#fff;transform:translateY(-2px)">Открыть в Яндекс.Картах →</a>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    const $ = (id) => document.getElementById(id);
+    this.locale = 'ru';
+    this.dict = {
+      ru: {
+        siteTitle: 'Терский племенной конный завод', siteSubtitle: 'Элита арабского чистокровного коннозаводства России',
+        navNews: 'Новости', navMission: 'Наша миссия', navHistory: 'История', navServices: 'Услуги', navMedia: 'Медиа',
+        events: 'Ближайшие события', contacts: 'Контакты', howToGetThere: 'Как добраться',
+        infoAndTours: 'уточнение информации, запись на экскурсии',
+        address: 'пос. Новотерский, Школьная ул., 2', addressFull: 'Минераловодский р-н, Ставропольский край, 357242',
+        horseSale: 'Продажа лошадей', discover: 'Открой для себя Терский',
+        advantages: 'Наши достоинства', ourHorses: 'Наши лошади', infrastructure: 'Инфраструктура',
+        races: 'Скачки', endurance: 'Пробеги', shows: 'Шоу',
+        latestNews: 'Последние новости', openMap: 'Открыть в Яндекс.Картах →',
+        footerTitle: 'Терский конный завод', footerDesc: 'Ведущий центр разведения арабских лошадей в России. 137 лет истории и традиций.',
+        footerNav: 'Навигация', footerPhone: 'Телефон',
+        footerAddress: 'Школьная ул., 2, пос. Новотерский, Минераловодский р-н, Ставропольский край, 357242',
+        copyright: '© 2026 Терский конный завод. Все права защищены.',
+      },
+      en: {
+        siteTitle: 'Tersk Stud', siteSubtitle: 'The Elite of Arabian Purebred Horse Breeding in Russia',
+        navNews: 'News', navMission: 'Our Mission', navHistory: 'History', navServices: 'Services', navMedia: 'Media',
+        events: 'Upcoming Events', contacts: 'Contacts', howToGetThere: 'How to get there',
+        infoAndTours: 'information, tour bookings',
+        address: 'Novoterskiy, 2 Shkolnaya St.', addressFull: 'Mineralovodskiy District, Stavropol Krai, 357242',
+        horseSale: 'Horse Sales', discover: 'Discover Tersk',
+        advantages: 'Our Advantages', ourHorses: 'Our Horses', infrastructure: 'Infrastructure',
+        races: 'Racing', endurance: 'Endurance', shows: 'Shows',
+        latestNews: 'Latest News', openMap: 'Open in Yandex Maps →',
+        footerTitle: 'Tersk Stud', footerDesc: 'The leading center for Arabian horse breeding in Russia. 137 years of history and traditions.',
+        footerNav: 'Navigation', footerPhone: 'Phone',
+        footerAddress: '2 Shkolnaya St., Novoterskiy, Mineralovodskiy District, Stavropol Krai, 357242',
+        copyright: '© 2026 Tersk Stud. All rights reserved.',
+      },
+    };
+
+    // Переключение языка (RU/EN как на реальном сайте)
+    const langBtn = $('tkLangBtn');
+    if (langBtn) langBtn.addEventListener('click', () => {
+      this.locale = this.locale === 'ru' ? 'en' : 'ru';
+      const d = this.dict[this.locale];
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.getAttribute('data-i18n');
+        if (d[key]) el.textContent = d[key];
+      });
+      const lbl = $('tkLangLabel');
+      if (lbl) lbl.textContent = this.locale.toUpperCase();
+    });
+
+    // Интерактивные зоны хиро (как в index.vue)
+    const bindZone = (pathId, imgId, tooltipId, linkId) => {
+      const path = $(pathId), img = $(imgId), tip = $(tooltipId), link = $(linkId);
+      const onEnter = () => {
+        if (img) { img.style.opacity = '1'; img.style.transform = 'scale(1.03)'; img.style.filter = 'drop-shadow(0 0 25px rgba(255,255,255,.5)) drop-shadow(0 0 50px rgba(255,255,255,.3))'; }
+        if (tip) tip.style.display = 'block';
+      };
+      const onLeave = () => {
+        if (img) { img.style.opacity = '0'; img.style.transform = 'scale(1)'; img.style.filter = 'none'; }
+        if (tip) tip.style.display = 'none';
+      };
+      if (path) { path.addEventListener('mouseenter', onEnter); path.addEventListener('mouseleave', onLeave); }
+      if (link) { link.addEventListener('mouseenter', onEnter); link.addEventListener('mouseleave', onLeave); }
+    };
+    bindZone('tkZoneMountain', 'tkZoneImgMountain', 'tkTooltipMountain', 'tkLinkMountain');
+    bindZone('tkZoneBuildings', 'tkZoneImgBuildings', 'tkTooltipBuildings', 'tkLinkBuildings');
+
+    // Аккордеоны сайдбара (+ → ×)
+    document.querySelectorAll('.tk-acc-head').forEach((head) => {
+      head.addEventListener('click', () => {
+        const body = head.parentElement.querySelector('.tk-acc-body');
+        const icon = head.querySelector('.tk-acc-icon');
+        const open = body && body.style.display !== 'none';
+        if (body) body.style.display = open ? 'none' : 'block';
+        if (icon) { icon.style.transform = open ? 'rotate(0deg)' : 'rotate(45deg)'; icon.style.color = open ? 'rgba(255,255,255,.7)' : 'rgba(255,255,255,.9)'; }
+      });
+    });
+
+    // Лайтбокс карты
+    const lb = $('tkLightbox');
+    const openLb = () => { if (lb) lb.style.display = 'flex'; };
+    const closeLb = () => { if (lb) lb.style.display = 'none'; };
+    const mapOpen = $('tkMapOpen');
+    if (mapOpen) mapOpen.addEventListener('click', openLb);
+    const lbClose = $('tkLightboxClose');
+    if (lbClose) lbClose.addEventListener('click', closeLb);
+    if (lb) lb.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
+    this._esc = (e) => { if (e.key === 'Escape') closeLb(); };
+    window.addEventListener('keydown', this._esc);
+  }
+  componentWillUnmount() { window.removeEventListener('keydown', this._esc); }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

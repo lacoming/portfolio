@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700;8..60,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./site.css">
+</helmet>
+<div class="topbar">
+  <div class="container">
+    <div class="tb-left">
+      <a href="licenziya.dc.html" class="tb-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 7v6c0 5 4 8 9 9 5-1 9-4 9-9V7l-9-5z"></path></svg>
+        Лицензия Рособрнадзора
+      </a>
+      <span class="tb-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9 12l2 2 4-4"></path></svg>
+        Документы в реестре ФИС ФРДО
+      </span>
+      <span class="tb-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0118 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        Новосибирск, пр-кт Ак. Лаврентьева, 6/1
+      </span>
+    </div>
+    <div class="tb-right">
+      <span class="msgr" aria-label="Мессенджеры">
+        <a href="#" title="MAX" aria-label="MAX"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="maxg-hdr" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4185F6"></stop><stop offset=".5" stop-color="#4930E0"></stop><stop offset="1" stop-color="#964BDA"></stop></linearGradient></defs><rect x="2" y="2" width="44" height="44" rx="11" fill="url(#maxg-hdr)"></rect><path fill="#fff" fill-rule="evenodd" d="M24 9.5a14.5 14.5 0 1 1 -10.6 24.4l-4.7 1.3a1.3 1.3 0 0 1 -1.6 -1.6l1.3 -4.7A14.5 14.5 0 0 1 24 9.5Zm0 7.2a7.3 7.3 0 1 0 0 14.6 7.3 7.3 0 0 0 0 -14.6Z"></path></svg></a>
+        <a href="#" title="Telegram" aria-label="Telegram"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22 3L2 11l6 2 2 7 4-4 6 5 2-18z"></path></svg></a>
+        <a href="#" title="VK" aria-label="VK" style="font-size:9px;font-weight:700;">VK</a>
+      </span>
+    </div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container header-row">
+    <a href="glavnaya.dc.html" class="logo" aria-label="Университет закупок - на главную">
+      <span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="19.5" fill="#332C4E"></circle>
+          <circle cx="20" cy="20" r="16" fill="none" stroke="#D4A745" stroke-width="0.6" stroke-dasharray="1.2 1.8"></circle>
+          <circle cx="3" cy="20" r="1" fill="#D4A745"></circle>
+          <circle cx="37" cy="20" r="1" fill="#D4A745"></circle>
+          <text x="20" y="26" text-anchor="middle" font-family="'Source Serif 4', Georgia, serif" font-weight="700" font-size="15" fill="#D4A745" letter-spacing="-0.2">УЗ</text>
+        </svg>
+      </span>
+      <span>Университет закупок<small>Учебный центр</small></span>
+    </a>
+
+    <nav class="nav" aria-label="Главное меню">
+      <div class="nav-item">
+        <a href="katalog.dc.html" data-nav="courses">Курсы
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+        </a>
+        <ul class="submenu">
+          <li><a href="katalog.dc.html#diplomy">Диплом о переподготовке<small>от 260 до 520 часов</small></a></li>
+          <li><a href="katalog.dc.html#udostovereniya">Удостоверение о повышении квалификации<small>от 40 до 120 часов</small></a></li>
+          <li><a href="katalog.dc.html#ekspress">Экспресс-курсы<small>ЕАСУЗ, торговые площадки - 16 часов</small></a></li>
+          <li><a href="katalog.dc.html#postavshchikam">Для поставщиков и ИП<small>участие в торгах</small></a></li>
+        </ul>
+      </div>
+      <a href="o-nas.dc.html" class="nav-item" data-nav="about" style="display:inline-flex"><span style="padding:10px 0;font-size:15px;font-weight:500">О нас</span></a>
+      <a href="prepodavateli.dc.html" class="nav-item" data-nav="teachers" style="display:inline-flex"><span style="padding:10px 0;font-size:15px;font-weight:500">Преподаватели</span></a>
+      <a href="otzyvy.dc.html" class="nav-item" data-nav="reviews" style="display:inline-flex"><span style="padding:10px 0;font-size:15px;font-weight:500">Отзывы</span></a>
+      <a href="novosti.dc.html" class="nav-item" data-nav="news" style="display:inline-flex"><span style="padding:10px 0;font-size:15px;font-weight:500">Новости</span></a>
+      <a href="svedeniya.dc.html" class="nav-item" data-nav="sveden" style="display:inline-flex"><span style="padding:10px 0;font-size:15px;font-weight:500">Сведения</span></a>
+      <a href="kontakty.dc.html" class="nav-item" data-nav="contacts" style="display:inline-flex"><span style="padding:10px 0;font-size:15px;font-weight:500">Контакты</span></a>
+    </nav>
+
+    <div class="header-cta">
+      <div class="tel">
+        <select class="city-select" id="citySelect" aria-label="Выбор города">
+          <option>Новосибирск</option>
+          <option>Москва</option>
+          <option>Санкт-Петербург</option>
+          <option>Краснодар</option>
+          <option>Екатеринбург</option>
+          <option>Красноярск</option>
+          <option>Якутск</option>
+          <option>Владивосток</option>
+        </select>
+        <a href="tel:+79232221759" class="tel-num" id="cityTel">+7 (923) 222-17-59</a>
+      </div>
+      <a href="katalog.dc.html" class="btn btn--primary btn--sm">Записаться</a>
+      <button class="burger" id="burgerBtn" type="button" aria-label="Открыть меню">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <div class="container" style="display:flex;flex-direction:column;gap:2px;padding-bottom:14px;padding-top:6px;">
+      <a href="katalog.dc.html" data-nav="courses" style="padding:11px 0;font-weight:500;border-bottom:1px solid var(--c-border)">Курсы</a>
+      <a href="o-nas.dc.html" data-nav="about" style="padding:11px 0;font-weight:500;border-bottom:1px solid var(--c-border)">О нас</a>
+      <a href="prepodavateli.dc.html" data-nav="teachers" style="padding:11px 0;font-weight:500;border-bottom:1px solid var(--c-border)">Преподаватели</a>
+      <a href="otzyvy.dc.html" data-nav="reviews" style="padding:11px 0;font-weight:500;border-bottom:1px solid var(--c-border)">Отзывы</a>
+      <a href="novosti.dc.html" data-nav="news" style="padding:11px 0;font-weight:500;border-bottom:1px solid var(--c-border)">Новости</a>
+      <a href="svedeniya.dc.html" data-nav="sveden" style="padding:11px 0;font-weight:500;border-bottom:1px solid var(--c-border)">Сведения</a>
+      <a href="kontakty.dc.html" data-nav="contacts" style="padding:11px 0;font-weight:600;color:var(--c-primary)">Контакты</a>
+    </div>
+  </div>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:120},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;&quot;,&quot;courses&quot;,&quot;about&quot;,&quot;teachers&quot;,&quot;reviews&quot;,&quot;news&quot;,&quot;sveden&quot;,&quot;contacts&quot;],&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    if (this._init) return; this._init = true;
+    const root = document;
+    const active = this.props.active || '';
+
+    // highlight current nav
+    root.querySelectorAll('[data-nav]').forEach((a) => {
+      if (a.getAttribute('data-nav') === active) a.classList.add('is-current');
+    });
+
+    // burger
+    const burger = root.getElementById('burgerBtn');
+    const mn = root.getElementById('mobileNav');
+    if (burger && mn) burger.addEventListener('click', () => mn.classList.toggle('show'));
+    if (mn) mn.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => mn.classList.remove('show')));
+
+    // city selector -> phone
+    const phones = {
+      'Москва': '+7 (495) 481-37-55', 'Санкт-Петербург': '+7 (812) 309-73-45',
+      'Краснодар': '+7 (861) 203-64-53', 'Екатеринбург': '+7 (343) 318-24-45',
+      'Новосибирск': '+7 (923) 222-17-59', 'Красноярск': '+7 (391) 204-65-53',
+      'Якутск': '+7 (4112) 25-13-00', 'Владивосток': '+7 (423) 205-59-03'
+    };
+    const sel = root.getElementById('citySelect');
+    const tel = root.getElementById('cityTel');
+    const setCity = (city) => {
+      const p = phones[city]; if (!p || !tel) return;
+      tel.textContent = p; tel.setAttribute('href', 'tel:+' + p.replace(/[^0-9]/g, ''));
+    };
+    if (sel) {
+      let saved = null;
+      try { saved = localStorage.getItem('uc_city'); } catch (e) {}
+      if (saved && phones[saved]) { sel.value = saved; setCity(saved); }
+      sel.addEventListener('change', () => {
+        setCity(sel.value);
+        try { localStorage.setItem('uc_city', sel.value); } catch (e) {}
+      });
+    }
+
+    // stub-link toast for any remaining href="#"
+    let toast;
+    const showToast = (msg) => {
+      if (!toast) { toast = root.createElement('div'); toast.className = 'cc-toast'; root.body.appendChild(toast); }
+      toast.innerHTML = msg; toast.classList.add('show');
+      clearTimeout(this._tt); this._tt = setTimeout(() => toast.classList.remove('show'), 2600);
+    };
+    root.addEventListener('click', (e) => {
+      const a = e.target.closest('a');
+      if (a && (a.getAttribute('href') === '#' || a.hasAttribute('data-stub'))) {
+        e.preventDefault();
+        showToast('Раздел в разработке - подключим на боевом этапе. <b>Канал/реквизиты уточняем.</b>');
+      }
+    });
+  }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

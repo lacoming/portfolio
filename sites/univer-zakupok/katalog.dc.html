@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700;8..60,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./site.css">
+<title>Каталог курсов по госзакупкам - 44-ФЗ, 223-ФЗ, ГОЗ, антикоррупция | Университет закупок</title>
+<meta name="description" content="Курсы профпереподготовки и повышения квалификации по 44-ФЗ, 223-ФЗ, 275-ФЗ (ГОЗ), 273-ФЗ. Диплом и удостоверение установленного образца, дистанционно, документы в ФИС ФРДО.">
+</helmet>
+
+<dc-import name="SiteHeader" active="courses" hint-size="100%,140px"></dc-import>
+
+<section class="page-hero">
+  <div class="container">
+    <nav class="crumbs" aria-label="Хлебные крошки">
+      <a href="glavnaya.dc.html">Главная</a><span class="sep">/</span><span class="cur">Каталог курсов</span>
+    </nav>
+    <span class="eyebrow" style="display:inline-block;margin-top:18px">Обучение по 44-ФЗ, 223-ФЗ, ГОЗ, антикоррупции</span>
+    <h1>Каталог курсов по госзакупкам</h1>
+    <p class="lede">Программы профпереподготовки и повышения квалификации для заказчиков, поставщиков, ИП и госслужащих. Документы установленного образца вносим в федеральный реестр ФИС ФРДО.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="filter-bar" id="catFilters" style="gap:18px">
+      <div class="filter-group" data-filter="law">
+        <span class="flabel">Закон</span>
+        <button class="chip is-active" data-val="all">Все</button>
+        <button class="chip" data-val="44"><span class="dot" style="--chip-dot:#332C4E"></span>44-ФЗ</button>
+        <button class="chip" data-val="223"><span class="dot" style="--chip-dot:#0F6E78"></span>223-ФЗ</button>
+        <button class="chip" data-val="273"><span class="dot" style="--chip-dot:#6B1F2E"></span>273-ФЗ</button>
+        <button class="chip" data-val="275"><span class="dot" style="--chip-dot:#2C3140"></span>275-ФЗ (ГОЗ)</button>
+        <button class="chip" data-val="supplier"><span class="dot" style="--chip-dot:#8A7BC8"></span>Поставщикам</button>
+      </div>
+      <div class="filter-group" data-filter="doc" style="margin-left:auto">
+        <span class="flabel">Документ</span>
+        <button class="chip is-active" data-val="all">Все</button>
+        <button class="chip" data-val="diplom">Диплом о переподготовке</button>
+        <button class="chip" data-val="udo">Удостоверение о ПК</button>
+      </div>
+    </div>
+
+    <div class="result-meta">
+      <div class="count">Показано <b id="catCount">10</b> программ</div>
+      <a href="zapros-kp.dc.html" class="btn btn--secondary btn--sm">Запрос коммерческого предложения</a>
+    </div>
+
+    <div id="catGroups">
+      <div class="cat-group" id="diplomy" data-group>
+        <div class="cat-group-head">
+          <span class="lawdot" style="background:#332C4E"></span>
+          <h3>Диплом о профпереподготовке</h3>
+          <span class="meta">260-520 часов · квалификация «Специалист» / «Эксперт»</span>
+        </div>
+        <div class="courses-grid">
+          <article class="course-card" data-law="44" data-laws="44 223" data-doc="diplom">
+            <div class="course-cover">
+              <div class="cover-deco"></div>
+              <span class="cover-eyebrow">Профпереподготовка</span>
+              <div class="course-law">44–223</div>
+              <span class="cover-doc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"></path></svg>Диплом</span>
+              <span class="cover-hours"><b>520</b> ч</span>
+              <span class="accent-bar"></span>
+            </div>
+            <div class="course-body">
+              <h3>Контрактная система: эксперт в сфере закупок</h3>
+              <div class="course-meta">
+                <span class="m">Квалификация «Эксперт»</span>
+                <span class="m">Дистанционно</span>
+              </div>
+              <div class="course-foot">
+                <div class="course-price"><small>Стоимость</small>от 14 000 ₽</div>
+                <a href="kurs.dc.html" class="btn btn--primary btn--sm">Подробнее</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="course-card" data-law="44" data-laws="44 223" data-doc="diplom">
+            <div class="course-cover">
+              <div class="cover-deco"></div>
+              <span class="cover-eyebrow">Профпереподготовка</span>
+              <div class="course-law">44–223</div>
+              <span class="cover-doc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"></path></svg>Диплом</span>
+              <span class="cover-hours"><b>260</b> ч</span>
+              <span class="accent-bar"></span>
+            </div>
+            <div class="course-body">
+              <h3>Контрактная система: специалист в сфере закупок</h3>
+              <div class="course-meta">
+                <span class="m">Квалификация «Специалист»</span>
+                <span class="m">Дистанционно</span>
+              </div>
+              <div class="course-foot">
+                <div class="course-price"><small>Стоимость</small>от 9 900 ₽</div>
+                <a href="kurs.dc.html" class="btn btn--primary btn--sm">Подробнее</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="course-card" data-law="44" data-laws="44" data-doc="diplom">
+            <div class="course-cover">
+              <div class="cover-deco"></div>
+              <span class="cover-eyebrow">Профпереподготовка</span>
+              <div class="course-law">44-ФЗ</div>
+              <span class="cover-doc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"></path></svg>Диплом</span>
+              <span class="cover-hours"><b>260</b> ч</span>
+              <span class="accent-bar"></span>
+            </div>
+            <div class="course-body">
+              <h3>Контрактная система по 44-ФЗ для заказчика</h3>
+              <div class="course-meta">
+                <span class="m">Контрактная служба</span>
+                <span class="m">Дистанционно</span>
+              </div>
+              <div class="course-foot">
+                <div class="course-price"><small>Стоимость</small>от 7 900 ₽</div>
+                <a href="kurs.dc.html" class="btn btn--primary btn--sm">Подробнее</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat-group" id="postavshchikam" data-group>
+        <div class="cat-group-head">
+          <span class="lawdot" style="background:#8A7BC8"></span>
+          <h3>Для поставщиков и ИП</h3>
+          <span class="meta">участие в торгах и победы по 44-ФЗ / 223-ФЗ</span>
+        </div>
+        <div class="courses-grid">
+          <article class="course-card" data-law="supplier" data-laws="44 223 supplier" data-doc="diplom">
+            <div class="course-cover">
+              <div class="cover-deco"></div>
+              <span class="cover-eyebrow">Профпереподготовка</span>
+              <div class="course-law course-law--word">Поставщикам</div>
+              <span class="cover-doc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"></path></svg>Диплом</span>
+              <span class="cover-hours"><b>260</b> ч</span>
+              <span class="accent-bar"></span>
+            </div>
+            <div class="course-body">
+              <h3>Участие в торгах: поставщикам и ИП</h3>
+              <div class="course-meta">
+                <span class="m">44-ФЗ / 223-ФЗ</span>
+                <span class="m">Заявки и обеспечение</span>
+              </div>
+              <div class="course-foot">
+                <div class="course-price"><small>Стоимость</small>от 8 900 ₽</div>
+                <a href="kurs.dc.html" class="btn btn--primary btn--sm">Подробнее</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat-group" id="udostovereniya" data-group>
+        <div class="cat-group-head">
+          <span class="lawdot" style="background:#0F6E78"></span>
+          <h3>Удостоверение о повышении квалификации</h3>
+          <span class="meta">40-120 часов · обновление квалификации</span>
+        </div>
+        <div class="courses-grid">
+          <article class="course-card" data-law="44" data-laws="44" data-doc="udo">
+            <div class="course-cover">
+              <div class="cover-deco"></div>
+              <span class="cover-eyebrow">Повышение квалификации</span>
+              <div class="course-law">44-ФЗ</div>
+              <span class="cover-doc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"></path><path d="M8 9h8M8 13h5"></path></svg>Удостоверение</span>
+              <span class="cover-hours"><b>120</b> ч</span>
+              <span class="accent-bar"></span>
+            </div>
+            <div class="course-body">
+              <h3>Управление закупками по 44-ФЗ</h3>
+              <div class="course-meta">
+                <span class="m">Для контрактной службы</span>
+                <span class="m">Дистанционно</span>
+              </div>
+              <div class="course-foot">
+                <div class="course-price"><small>Стоимость</small>от 5 000 ₽</div>
+                <a href="kurs.dc.html" class="btn btn--primary btn--sm">Подробнее</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="course-card" data-law="44" data-laws="44" data-doc="udo">
+            <div class="course-cover">
+              <div class="cover-deco"></div>
+              <span class="cover-eyebrow">Повышение квалификации</span>
+              <div class="course-law">44-ФЗ</div>
+              <span class="cover-doc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"></path><path d="M8 9h8M8 13h5"></path></svg>Удостоверение</span>
+              <span class="cover-hours"><b>40</b> ч</span>
+              <span class="accent-bar"></span>
+            </div>
+            <div class="course-body">
+              <h3>Контрактная система по 44-ФЗ: экспресс-обновление</h3>
+              <div class="course-meta">
+                <span class="m">Минимальный объём ПК</span>
+                <span class="m">Дистанционно</span>
+              </div>
+              <div class="course-foot">
+                <div class="course-price"><small>Стоимость</small>от 5 900 ₽</div>
+                <a href="kurs.dc.html" class="btn btn--primary btn--sm">Подробнее</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="course-card" data-law="223" data-laws="223" data-doc="udo">
+            <div class="course-cover">
+              <div class="cover-deco"></div>
+              <span class="cover-eyebrow">Повышение квалификации</span>
+              <div class="course-law">223-ФЗ</div>
+              <span class="cover-doc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"></path><path d="M8 9h8M8 13h5"></path></svg>Удостоверение</span>
+              <span class="cover-hours"><b>72</b> ч</span>
+              <span class="accent-bar"></span>
+            </div>
+            <div class="course-body">
+              <h3>Закупки отдельными видами юрлиц по 223-ФЗ</h3>
+              <div class="course-meta">
+                <span class="m">Положение о закупке</span>
+                <span class="m">Дистанционно</span>
+              </div>
+              <div class="course-foot">
+                <div class="course-price"><small>Стоимость</small>от 5 000 ₽</div>
+                <a href="kurs.dc.html" class="btn btn--primary btn--sm">Подробнее</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="course-card" data-law="anti" data-laws="273" data-doc="udo">
+            <div class="course-cover">
+              <div class="cover-deco"></div>
+              <span class="cover-eyebrow">Повышение квалификации</span>
+              <div class="course-law course-law--word">Антикоррупция</div>
+              <span class="cover-doc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"></path><path d="M8 9h8M8 13h5"></path></svg>Удостоверение</span>
+              <span class="cover-hours"><b>72</b> ч</span>
+              <span class="accent-bar"></span>
+            </div>
+            <div class="course-body">
+              <h3>Противодействие коррупции (273-ФЗ)</h3>
+              <div class="course-meta">
+                <span class="m">Обязательное обучение</span>
+                <span class="m">Дистанционно</span>
+              </div>
+              <div class="course-foot">
+                <div class="course-price"><small>Стоимость</small>от 4 500 ₽</div>
+                <a href="kurs.dc.html" class="btn btn--primary btn--sm">Подробнее</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="course-card" data-law="goz" data-laws="275" data-doc="udo">
+            <div class="course-cover">
+              <div class="cover-deco"></div>
+              <span class="cover-eyebrow">Повышение квалификации</span>
+              <div class="course-law course-law--word">ГОЗ · 275-ФЗ</div>
+              <span class="cover-doc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"></path><path d="M8 9h8M8 13h5"></path></svg>Удостоверение</span>
+              <span class="cover-hours"><b>72</b> ч</span>
+              <span class="accent-bar"></span>
+            </div>
+            <div class="course-body">
+              <h3>Гособоронзаказ по 275-ФЗ</h3>
+              <div class="course-meta">
+                <span class="m">Для предприятий ОПК</span>
+                <span class="m">Дистанционно</span>
+              </div>
+              <div class="course-foot">
+                <div class="course-price"><small>Стоимость</small>от 4 500 ₽</div>
+                <a href="kurs.dc.html" class="btn btn--primary btn--sm">Подробнее</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat-group" id="ekspress" data-group>
+        <div class="cat-group-head">
+          <span class="lawdot" style="background:#3A4256"></span>
+          <h3>Экспресс-курсы</h3>
+          <span class="meta">16 часов · работа в системах и на площадках</span>
+        </div>
+        <div class="courses-grid">
+          <article class="course-card" data-law="mng" data-laws="44 223" data-doc="udo">
+            <div class="course-cover">
+              <div class="cover-deco"></div>
+              <span class="cover-eyebrow">Практикум</span>
+              <div class="course-law course-law--word">ЕАСУЗ · ЭТП</div>
+              <span class="cover-doc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"></path><path d="M8 9h8M8 13h5"></path></svg>Удостоверение</span>
+              <span class="cover-hours"><b>16</b> ч</span>
+              <span class="accent-bar"></span>
+            </div>
+            <div class="course-body">
+              <h3>Работа на электронных торговых площадках</h3>
+              <div class="course-meta">
+                <span class="m">ЕАСУЗ 2.0 / ПИК</span>
+                <span class="m">Практика</span>
+              </div>
+              <div class="course-foot">
+                <div class="course-price is-request"><small>Стоимость</small>по запросу</div>
+                <a href="zapros-kp.dc.html" class="btn btn--primary btn--sm">Запросить</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="card" id="catEmpty" style="display:none;text-align:center;padding:48px">
+        <h3 style="margin-bottom:8px">По выбранным фильтрам ничего не найдено</h3>
+        <p class="muted">Сбросьте фильтры или отправьте запрос - подберём программу под вашу задачу.</p>
+        <div style="margin-top:20px"><button class="btn btn--secondary btn--sm" id="catReset">Сбросить фильтры</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--bg">
+  <div class="container" style="text-align:center;max-width:720px">
+    <h2>Не нашли подходящую программу?</h2>
+    <p class="muted" style="margin-top:14px;font-size:17px">Подберём курс под требования вашей организации и сформируем коммерческое предложение для юридического лица.</p>
+    <div style="margin-top:26px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="zapros-kp.dc.html" class="btn btn--primary">Запрос коммерческого предложения</a>
+      <a href="kontakty.dc.html" class="btn btn--secondary">Связаться с нами</a>
+    </div>
+  </div>
+</section>
+
+<dc-import name="SiteFooter" hint-size="100%,440px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  componentDidMount() {
+    if (this._init) return; this._init = true;
+    const root = document;
+    const state = { law: 'all', doc: 'all' };
+    const cards = Array.from(root.querySelectorAll('.course-card[data-laws]'));
+
+    const apply = () => {
+      let shown = 0;
+      cards.forEach((c) => {
+        const laws = (c.getAttribute('data-laws') || '').split(' ');
+        const doc = c.getAttribute('data-doc');
+        const okLaw = state.law === 'all' || laws.includes(state.law);
+        const okDoc = state.doc === 'all' || doc === state.doc;
+        const vis = okLaw && okDoc;
+        c.style.display = vis ? '' : 'none';
+        if (vis) shown++;
+      });
+      // hide empty groups
+      root.querySelectorAll('[data-group]').forEach((g) => {
+        const any = g.querySelector('.course-card:not([style*="display: none"])');
+        const visibleCards = Array.from(g.querySelectorAll('.course-card')).some((c) => c.style.display !== 'none');
+        g.style.display = visibleCards ? '' : 'none';
+      });
+      const cnt = root.getElementById('catCount'); if (cnt) cnt.textContent = shown;
+      const empty = root.getElementById('catEmpty'); if (empty) empty.style.display = shown === 0 ? '' : 'none';
+    };
+
+    root.querySelectorAll('#catFilters .filter-group').forEach((group) => {
+      const key = group.getAttribute('data-filter');
+      group.querySelectorAll('.chip').forEach((chip) => {
+        chip.addEventListener('click', () => {
+          group.querySelectorAll('.chip').forEach((c) => c.classList.remove('is-active'));
+          chip.classList.add('is-active');
+          state[key] = chip.getAttribute('data-val');
+          apply();
+        });
+      });
+    });
+
+    const reset = root.getElementById('catReset');
+    if (reset) reset.addEventListener('click', () => {
+      state.law = 'all'; state.doc = 'all';
+      root.querySelectorAll('#catFilters .chip').forEach((c) => c.classList.toggle('is-active', c.getAttribute('data-val') === 'all'));
+      apply();
+    });
+
+    // вся карточка курса кликабельна (ведёт туда же, что и кнопка «Подробнее»/«Запросить»)
+    cards.forEach((card) => {
+      const link = card.querySelector('.course-foot a[href]');
+      if (!link) return;
+      const href = link.getAttribute('href');
+      card.classList.add('is-clickable');
+      card.setAttribute('role', 'link');
+      card.setAttribute('tabindex', '0');
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('a, button')) return; // клики по самим ссылкам/кнопкам не перехватываем
+        window.location.href = href;
+      });
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { window.location.href = href; }
+      });
+    });
+  }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
