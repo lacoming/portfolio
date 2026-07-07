@@ -13,7 +13,7 @@
 <style>
 body{margin:0;background:#060609;-webkit-font-smoothing:antialiased}
 a{text-decoration:none}
-::selection{background:#C36250;color:#131008}
+::selection{background:var(--acc,#B7524A);color:var(--acc-ink,#fff)}
 @keyframes vzColUp{from{transform:translateY(0)}to{transform:translateY(-50%)}}
 @keyframes vzColDown{from{transform:translateY(-50%)}to{transform:translateY(0)}}
 @keyframes vzFade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
@@ -26,11 +26,11 @@ a{text-decoration:none}
 #vzAboutGrid{grid-template-columns:1fr !important;gap:36px !important}
 }
 @media (max-width:720px){
-#vzHeader{flex-wrap:wrap !important;padding:14px 20px !important;gap:12px 14px !important}
+#vzHeader{flex-wrap:wrap !important;padding:14px 25px !important;gap:12px 14px !important}
 #vzNav{order:5;width:100%;margin-left:0 !important;gap:20px !important}
 #vzLang{margin-left:auto}
 #vzHeadCta{display:none !important}
-#vzHero{padding:14px 20px 44px !important;gap:30px !important}
+#vzHero{padding:14px 25px 44px !important;gap:30px !important}
 #vzH1{font-size:32px !important}
 #vzSub{font-size:15px !important}
 #vzHeroBtns a{flex:1 1 auto;text-align:center}
@@ -38,14 +38,14 @@ a{text-decoration:none}
 #vzMarquee{height:46vh !important;min-height:330px !important;border-radius:14px !important}
 #vzMarqueeGrid{gap:12px !important}
 .vz-col{gap:12px !important}
-#works{padding:52px 20px 8px !important}
+#works{padding:52px 25px 8px !important}
 #vzWorksTitle{font-size:24px !important}
 #vzWorksHint{display:none !important}
 #vzGrid{grid-template-columns:1fr !important;gap:16px !important}
-#about{padding:56px 20px !important}
+#about{padding:56px 25px !important}
 #vzAboutTitle{font-size:25px !important}
 #vzFacts{flex-direction:column !important;gap:16px !important}
-#contact{padding:14px 20px 56px !important}
+#contact{padding:14px 25px 56px !important}
 #vzCtaBox{padding:44px 22px !important;border-radius:20px !important}
 #vzCtaTitle{font-size:24px !important}
 #vzCtaBtns{flex-direction:column !important;align-items:stretch !important}
@@ -57,19 +57,19 @@ a{text-decoration:none}
 }
 </style>
 </helmet>
-<div id="vzRoot" data-screen-label="Витрина" style="font-family:'Golos Text',system-ui,sans-serif;color:#F2F2F7;background:#060609;min-height:100vh;overflow-x:hidden">
+<div id="vzRoot" data-screen-label="Витрина" style="--acc:#C8232B;--acc-deep:#6E1318;--acc-rgb:200,35,43;--acc-ink:#fff;font-family:'Golos Text',system-ui,sans-serif;color:#F2F2F7;background:#060609;min-height:100vh;overflow-x:hidden">
 
   <div style="position:fixed;inset:0;pointer-events:none;z-index:0">
     <div style="position:absolute;top:-38vh;left:50%;transform:translateX(-50%);width:130vw;height:90vh;background:radial-gradient(50% 50% at 50% 50%,rgba(68,56,202,.34),transparent 70%);animation:vzGlow 9s ease-in-out infinite"></div>
-    <div style="position:absolute;bottom:-30vh;right:-20vw;width:70vw;height:70vh;background:radial-gradient(50% 50% at 50% 50%,rgba(195,98,80,.07),transparent 70%)"></div>
+    <div style="position:absolute;bottom:-30vh;right:-20vw;width:70vw;height:70vh;background:radial-gradient(50% 50% at 50% 50%,rgba(var(--acc-rgb,183,82,74),.07),transparent 70%)"></div>
   </div>
 
-  <header id="vzHeader" style="position:relative;z-index:20;display:flex;align-items:center;gap:24px;max-width:1440px;margin:0 auto;padding:20px 40px">
-    <a href="#" style="display:flex;align-items:center;gap:14px;color:#F2F2F7">
-      <span style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#C36250,#823329);display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-weight:500;font-size:12px;color:#15100A">АВ</span>
-      <span style="display:flex;flex-direction:column;gap:5px;line-height:1">
-        <span style="font-family:'Unbounded',sans-serif;font-weight:400;font-size:12.5px;letter-spacing:.02em">Александр Вострухин</span>
-        <span data-l10n="role" style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;color:#8E93A8">FULLSTACK · AI-ИНЖЕНЕРИЯ</span>
+  <header id="vzHeader" style="position:relative;z-index:20;display:flex;align-items:center;gap:24px;max-width:1440px;margin:0 auto;padding:20px 67px">
+    <a href="#" style="display:flex;align-items:center;gap:18px;color:#F2F2F7">
+      <img src="uploads/logo-prince-emblem.png" alt="Маленький принц с розой" style="width:96px;height:96px;object-fit:contain;flex:none">
+      <span style="display:flex;flex-direction:column;gap:16px;line-height:1">
+        <span style="font-family:'Unbounded',sans-serif;font-weight:400;font-size:19.5px;letter-spacing:.02em">Александр Вострухин</span>
+        <span data-l10n="slogan" style="font-size:17px;color:#B9BDCC;letter-spacing:.01em">«Есть время любоваться прекрасным»</span>
       </span>
     </a>
     <nav id="vzNav" style="margin-left:auto;display:flex;align-items:center;gap:24px;font-size:13.5px;font-weight:500">
@@ -77,18 +77,17 @@ a{text-decoration:none}
       <a href="#about" data-l10n="navAbout" style="color:#B9BDCC;transition:color .2s" style-hover="color:#fff">Обо мне</a>
       <a href="#contact" data-l10n="navContact" style="color:#B9BDCC;transition:color .2s" style-hover="color:#fff">Контакты</a>
     </nav>
-    <button id="vzLang" style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:#F2F2F7;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:8px 14px;cursor:pointer;transition:border-color .2s" style-hover="border-color:#C36250">RU / <span style="color:#8E93A8">EN</span></button>
-    <a href="#" id="vzHeadCta" data-l10n="cta" style="font-size:13px;font-weight:600;color:#060609;background:#F2F2F7;padding:10px 20px;border-radius:999px;transition:background .2s,transform .2s" style-hover="background:#C36250;transform:translateY(-1px)">Обсудить проект</a>
+    <button id="vzLang" style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:#F2F2F7;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:8px 14px;cursor:pointer;transition:border-color .2s" style-hover="border-color:var(--acc,#B7524A)">RU / <span style="color:#8E93A8">EN</span></button>
+    <a href="#" id="vzHeadCta" data-l10n="cta" style="font-size:13px;font-weight:600;color:#060609;background:#F2F2F7;padding:10px 20px;border-radius:999px;transition:background .2s,transform .2s" style-hover="background:var(--acc,#B7524A);color:var(--acc-ink,#fff);transform:translateY(-1px)">Обсудить проект</a>
   </header>
 
-  <section id="vzHero" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:48px 40px 40px;display:grid;grid-template-columns:0.92fr 1.08fr;gap:40px;align-items:center;min-height:78vh">
+  <section id="vzHero" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:48px 67px 40px;display:grid;grid-template-columns:0.92fr 1.08fr;gap:40px;align-items:center;min-height:78vh">
     <div style="animation:vzFade .8s ease-out both">
-      <p style="margin:0 0 20px;display:inline-flex;align-items:center;gap:9px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:8px 15px"><span style="width:7px;height:7px;border-radius:50%;background:#C36250"></span><span data-l10n="badge">ОТКРЫТ К ЗАКАЗАМ · 2026</span></p>
-      <h1 id="vzH1" data-l10n="h1" style="margin:0 0 22px;font-family:'Unbounded',sans-serif;font-weight:500;font-size:47px;line-height:1.12;letter-spacing:-.01em;text-wrap:balance">Сайты и сервисы под ключ — <span style="color:#C36250">в короткие сроки</span></h1>
+      <h1 id="vzH1" data-l10n="h1" style="margin:0 0 22px;font-family:'Unbounded',sans-serif;font-weight:500;font-size:47px;line-height:1.12;letter-spacing:-.01em;text-wrap:balance">Сайты и сервисы под ключ — <span style="color:var(--acc,#B7524A)">в короткие сроки</span></h1>
       <p id="vzSub" data-l10n="sub" style="margin:0 0 32px;font-size:16.5px;line-height:1.65;color:#B9BDCC;max-width:470px;text-wrap:pretty">Fullstack-разработка, усиленная AI-агентами: от идеи до продакшена за дни, а не месяцы. Каждое окно справа — реальный проект. Наведите и кликните — сайт откроется, его можно полистать.</p>
       <div id="vzHeroBtns" style="display:flex;gap:12px;flex-wrap:wrap">
-        <a href="#works" data-l10n="btnWorks" style="background:#C36250;color:#15100A;font-weight:600;font-size:14.5px;padding:15px 30px;border-radius:999px;box-shadow:0 10px 34px rgba(195,98,80,.25);transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 16px 44px rgba(195,98,80,.38)">Смотреть работы</a>
-        <a href="#about" data-l10n="btnAbout" style="border:1px solid rgba(255,255,255,.18);color:#F2F2F7;font-weight:500;font-size:14.5px;padding:15px 30px;border-radius:999px;transition:border-color .2s,background .2s" style-hover="border-color:#C36250;background:rgba(195,98,80,.08)">Кто я такой</a>
+        <a href="#works" data-l10n="btnWorks" style="background:var(--acc,#B7524A);color:var(--acc-ink,#fff);font-weight:600;font-size:14.5px;padding:15px 30px;border-radius:999px;box-shadow:0 10px 34px rgba(var(--acc-rgb,183,82,74),.25);transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 16px 44px rgba(var(--acc-rgb,183,82,74),.38)">Смотреть работы</a>
+        <a href="#about" data-l10n="btnAbout" style="border:1px solid rgba(255,255,255,.18);color:#F2F2F7;font-weight:500;font-size:14.5px;padding:15px 30px;border-radius:999px;transition:border-color .2s,background .2s" style-hover="border-color:var(--acc,#B7524A);background:rgba(var(--acc-rgb,183,82,74),.08)">Кто я такой</a>
       </div>
       <div id="vzStats" style="display:flex;gap:34px;margin-top:44px">
         <div><div style="font-family:'Unbounded',sans-serif;font-size:24px;font-weight:500">×6</div><div data-l10n="stat2" style="font-size:12px;color:#8E93A8;margin-top:4px">быстрее с AI-пайплайнами</div></div>
@@ -100,59 +99,59 @@ a{text-decoration:none}
     <div id="vzMarquee" style="position:relative;height:76vh;min-height:540px;overflow:hidden;border-radius:20px;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent 100%)">
       <div id="vzMarqueeGrid" style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:0 4px">
         <div class="vz-col" style="display:flex;flex-direction:column;gap:18px;animation:vzColUp 46s linear infinite;will-change:transform">
-          <div class="vz-win" data-open-site="sites/tokeon/index.html" data-site-title="Токеон" data-site-url="tokeon.ru" data-site-live="1"></div>
           <div class="vz-win" data-open-site="sites/rentsale-altay/index.html" data-site-title="Недвижимость Горного Алтая" data-site-url="rentsale-altay.ru"></div>
           <div class="vz-win" data-open-site="sites/flexpath/index.dc.html" data-site-title="Radius Step — конструктор дорожек" data-site-url="radius-step.ru"></div>
-          <div class="vz-win" data-open-site="sites/sport-scout/database.dc.html" data-site-title="SportScout" data-site-url="sport-scout.app"></div>
-          <div class="vz-win" data-open-site="sites/tokeon/index.html" data-site-title="Токеон" data-site-url="tokeon.ru" data-site-live="1"></div>
+          <div class="vz-win" data-open-site="sites/tersk/index.dc.html" data-site-title="Терский конный завод" data-site-url="terskarabian.com"></div>
+          <div class="vz-win" data-open-site="sites/concepts/gastro.dc.html" data-site-title="Ресторан «Сад»" data-site-url="sad-garden.ru"></div>
           <div class="vz-win" data-open-site="sites/rentsale-altay/index.html" data-site-title="Недвижимость Горного Алтая" data-site-url="rentsale-altay.ru"></div>
           <div class="vz-win" data-open-site="sites/flexpath/index.dc.html" data-site-title="Radius Step — конструктор дорожек" data-site-url="radius-step.ru"></div>
-          <div class="vz-win" data-open-site="sites/sport-scout/database.dc.html" data-site-title="SportScout" data-site-url="sport-scout.app"></div>
+          <div class="vz-win" data-open-site="sites/tersk/index.dc.html" data-site-title="Терский конный завод" data-site-url="terskarabian.com"></div>
+          <div class="vz-win" data-open-site="sites/concepts/gastro.dc.html" data-site-title="Ресторан «Сад»" data-site-url="sad-garden.ru"></div>
         </div>
         <div class="vz-col" style="display:flex;flex-direction:column;gap:18px;animation:vzColDown 52s linear infinite;will-change:transform">
-          <div class="vz-win" data-open-site="sites/univer-zakupok/glavnaya.dc.html" data-site-title="Университет закупок" data-site-url="u-gz.ru"></div>
-          <div class="vz-win" data-open-site="sites/tersk/index.dc.html" data-site-title="Терский конный завод" data-site-url="terskarabian.com"></div>
-          <div class="vz-win" data-open-site="sites/last-signal/index.dc.html" data-site-title="LAST SIGNAL" data-site-url="last-signal.ru"></div>
-          <div class="vz-win" data-open-site="sites/concepts/gastro.dc.html" data-site-title="Ресторан «Сад»" data-site-url="sad-garden.ru"></div>
           <div class="vz-win" data-open-site="sites/concepts/atelier.dc.html" data-site-title="Ателье «Форма»" data-site-url="forma-atelier.ru"></div>
+          <div class="vz-win" data-open-site="sites/concepts/termy.dc.html" data-site-title="Термы «Пар»" data-site-url="par-termy.ru"></div>
+          <div class="vz-win" data-open-site="sites/tokeon/index.html" data-site-title="Токеон" data-site-url="tokeon.ru" data-site-live="1"></div>
           <div class="vz-win" data-open-site="sites/univer-zakupok/glavnaya.dc.html" data-site-title="Университет закупок" data-site-url="u-gz.ru"></div>
-          <div class="vz-win" data-open-site="sites/tersk/index.dc.html" data-site-title="Терский конный завод" data-site-url="terskarabian.com"></div>
           <div class="vz-win" data-open-site="sites/last-signal/index.dc.html" data-site-title="LAST SIGNAL" data-site-url="last-signal.ru"></div>
-          <div class="vz-win" data-open-site="sites/concepts/gastro.dc.html" data-site-title="Ресторан «Сад»" data-site-url="sad-garden.ru"></div>
           <div class="vz-win" data-open-site="sites/concepts/atelier.dc.html" data-site-title="Ателье «Форма»" data-site-url="forma-atelier.ru"></div>
+          <div class="vz-win" data-open-site="sites/concepts/termy.dc.html" data-site-title="Термы «Пар»" data-site-url="par-termy.ru"></div>
+          <div class="vz-win" data-open-site="sites/tokeon/index.html" data-site-title="Токеон" data-site-url="tokeon.ru" data-site-live="1"></div>
+          <div class="vz-win" data-open-site="sites/univer-zakupok/glavnaya.dc.html" data-site-title="Университет закупок" data-site-url="u-gz.ru"></div>
+          <div class="vz-win" data-open-site="sites/last-signal/index.dc.html" data-site-title="LAST SIGNAL" data-site-url="last-signal.ru"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="works" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:72px 40px 30px;scroll-margin-top:20px">
+  <section id="works" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:72px 67px 30px;scroll-margin-top:20px">
     <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:8px;flex-wrap:wrap">
       <h2 id="vzWorksTitle" data-l10n="worksTitle" style="margin:0;font-family:'Unbounded',sans-serif;font-weight:500;font-size:30px">Работы</h2>
       <span id="vzWorksHint" data-l10n="worksHint" style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#8E93A8">кликните карточку — сайт откроется внутри витрины</span>
     </div>
-    <p data-l10n="worksNote" style="margin:0 0 34px;font-size:13.5px;color:#8E93A8;max-width:640px">От финтеха и недвижимости до спорта и фэшна — каждый сайт открывается живьём прямо внутри витрины.</p>
+    <p data-l10n="worksNote" style="margin:0 0 34px;font-size:13.5px;color:#8E93A8;max-width:640px">От финтеха и недвижимости до гастрономии и фэшна — каждый сайт открывается живьём прямо внутри витрины.</p>
     <div id="vzGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px"></div>
   </section>
 
-  <section id="about" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:80px 40px;scroll-margin-top:20px">
+  <section id="about" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:80px 67px;scroll-margin-top:20px">
     <div id="vzAboutGrid" style="display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center">
       <div style="position:relative">
         <img src="uploads/photo-1782991400713.png" alt="Маленький принц на автоматизированной планете" style="width:100%;border-radius:24px;box-shadow:0 30px 80px -30px rgba(68,56,202,.5)">
         <span data-l10n="planetCaption" style="position:absolute;left:18px;bottom:18px;background:rgba(6,6,9,.78);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.14);color:#F2F2F7;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.05em;padding:10px 15px;border-radius:10px">планета полностью автоматизирована</span>
       </div>
       <div>
-        <p data-l10n="aboutBadge" style="margin:0 0 18px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#C36250">ОБО МНЕ · МОСКВА · РАБОТАЮ УДАЛЁННО</p>
+        <p data-l10n="aboutBadge" style="margin:0 0 18px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:var(--acc,#B7524A)">ОБО МНЕ · МОСКВА · РАБОТАЮ УДАЛЁННО</p>
         <h2 id="vzAboutTitle" data-l10n="aboutTitle" style="margin:0 0 20px;font-family:'Unbounded',sans-serif;font-weight:500;font-size:34px;line-height:1.2;text-wrap:balance">«Есть время любоваться прекрасным»</h2>
         <p data-l10n="aboutP1" style="margin:0 0 16px;font-size:15.5px;line-height:1.7;color:#B9BDCC;text-wrap:pretty">Как Маленький принц, который автоматизировал всю свою планету: вулканы чистятся сами, баобабы выпалываются по расписанию — а он смотрит на закаты. Я строю так же: AI-агенты берут рутину, я отвечаю за архитектуру, качество и результат.</p>
         <p data-l10n="aboutP2" style="margin:0 0 28px;font-size:15.5px;line-height:1.7;color:#B9BDCC;text-wrap:pretty">Fullstack-разработчик: сайты, лендинги, веб-приложения и интеграции. Собственный AI-офис — пайплайны на n8n и Claude Code для код-ревью, тестов и документации — позволяет собирать индивидуальные проекты в разы быстрее без потери качества.</p>
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:#C36250;color:#fff">React / Next.js</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:#C36250;color:#fff">Vue / Nuxt</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:#C36250;color:#fff">TypeScript</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:#C36250;color:#fff">Node.js · PostgreSQL</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:#C36250;color:#fff">Python · FastAPI</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:#C36250;color:#fff">WordPress</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#C36250;border:1px solid rgba(195,98,80,.5);border-radius:999px;padding:7px 13px">n8n · Claude Code · AI-агенты</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:var(--acc,#B7524A);color:#fff">React / Next.js</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:var(--acc,#B7524A);color:#fff">Vue / Nuxt</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:var(--acc,#B7524A);color:#fff">TypeScript</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:var(--acc,#B7524A);color:#fff">Node.js · PostgreSQL</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:var(--acc,#B7524A);color:#fff">Python · FastAPI</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:var(--acc,#B7524A);color:#fff">WordPress</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--acc,#B7524A);border:1px solid rgba(var(--acc-rgb,183,82,74),.5);border-radius:999px;padding:7px 13px">n8n · Claude Code · AI-агенты</span>
         </div>
         <div id="vzFacts" style="display:flex;gap:26px">
           <div><div data-l10n="fact1t" style="font-weight:600;font-size:14.5px">Индивидуально</div><div data-l10n="fact1s" style="font-size:12.5px;color:#8E93A8;margin-top:3px">никаких шаблонов — под задачу</div></div>
@@ -163,12 +162,12 @@ a{text-decoration:none}
     </div>
   </section>
 
-  <section id="contact" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:30px 40px 90px;scroll-margin-top:20px">
+  <section id="contact" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:30px 67px 90px;scroll-margin-top:20px">
     <div id="vzCtaBox" style="position:relative;border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:64px 48px;text-align:center;overflow:hidden;background:radial-gradient(60% 120% at 50% 0%,rgba(68,56,202,.25),transparent 70%)">
       <p data-l10n="ctaBadge" style="margin:0 0 16px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:#8E93A8">СВОБОДНЫЕ СЛОТЫ НА ИЮЛЬ ЕСТЬ</p>
       <h2 id="vzCtaTitle" data-l10n="ctaTitle" style="margin:0 auto 30px;font-family:'Unbounded',sans-serif;font-weight:500;font-size:36px;line-height:1.2;max-width:720px;text-wrap:balance">Расскажите про задачу — верну план и смету за день</h2>
       <div id="vzCtaBtns" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-        <a href="https://t.me/lacomingsoon" target="_blank" rel="noopener" style="background:#C36250;color:#15100A;font-weight:600;font-size:15px;padding:16px 34px;border-radius:999px;box-shadow:0 10px 34px rgba(195,98,80,.28);transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 16px 44px rgba(195,98,80,.4)">Telegram · @lacomingsoon</a>
+        <a href="https://t.me/lacomingsoon" target="_blank" rel="noopener" style="background:var(--acc,#B7524A);color:var(--acc-ink,#fff);font-weight:600;font-size:15px;padding:16px 34px;border-radius:999px;box-shadow:0 10px 34px rgba(var(--acc-rgb,183,82,74),.28);transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 16px 44px rgba(var(--acc-rgb,183,82,74),.4)">Telegram · @lacomingsoon</a>
         <a href="mailto:lacoming@yandex.ru" style="border:1px solid rgba(255,255,255,.2);color:#F2F2F7;font-weight:500;font-size:15px;padding:16px 34px;border-radius:999px;transition:border-color .2s,background .2s" style-hover="border-color:#fff;background:rgba(255,255,255,.06)">lacoming@yandex.ru</a>
         <a href="https://github.com/lacoming" target="_blank" rel="noopener" style="border:1px solid rgba(255,255,255,.2);color:#F2F2F7;font-weight:500;font-size:15px;padding:16px 34px;border-radius:999px;transition:border-color .2s,background .2s" style-hover="border-color:#fff;background:rgba(255,255,255,.06)">GitHub ↗</a>
       </div>
@@ -189,35 +188,35 @@ a{text-decoration:none}
         </span>
         <span id="vzModalTitle" style="font-size:13px;font-weight:600;color:#F2F2F7;white-space:nowrap">…</span>
         <a id="vzModalExt" href="#" target="_blank" rel="noopener" data-l10n="openTab" style="font-size:12px;color:#8E93A8;border:1px solid rgba(255,255,255,.14);border-radius:7px;padding:6px 12px;transition:color .2s,border-color .2s" style-hover="color:#fff;border-color:#fff">в новой вкладке ↗</a>
-        <button id="vzModalClose" aria-label="Закрыть" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#F2F2F7;font-size:15px;cursor:pointer;transition:background .2s,color .2s" style-hover="background:#C36250;color:#15100A">✕</button>
+        <button id="vzModalClose" aria-label="Закрыть" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#F2F2F7;font-size:15px;cursor:pointer;transition:background .2s,color .2s" style-hover="background:var(--acc,#B7524A);color:var(--acc-ink,#fff)">✕</button>
       </div>
       <iframe id="vzModalFrame" title="Просмотр сайта" style="flex:1;width:100%;border:none;background:#fff"></iframe>
     </div>
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#C8232B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Стиль&quot;,&quot;options&quot;:[&quot;#C8232B&quot;,&quot;#D2B183&quot;,&quot;#C97355&quot;,&quot;#C36250&quot;,&quot;#B7524A&quot;,&quot;#B87333&quot;,&quot;#E0A458&quot;,&quot;#D4A745&quot;,&quot;#C65D57&quot;,&quot;#8E3B46&quot;,&quot;#B76E79&quot;,&quot;#C98A97&quot;,&quot;#915F6D&quot;,&quot;#A48BD8&quot;,&quot;#8D7BB8&quot;,&quot;#7A8CC9&quot;,&quot;#4F74C9&quot;,&quot;#6C8EBF&quot;,&quot;#56A3A6&quot;,&quot;#4E8D7C&quot;,&quot;#7FA08C&quot;,&quot;#A3B18A&quot;,&quot;#8A9A5B&quot;,&quot;#708090&quot;,&quot;#C9C5BD&quot;,&quot;#E8E4DC&quot;]}}">
 class Component extends DCLogic {
   componentDidMount() {
     const $ = (id) => document.getElementById(id);
 
     // ---------- данные проектов ----------
     const SITES = [
-      { src: 'sites/tokeon/index.html', title: 'Токеон', url: 'tokeon.ru', tags: 'Финтех · платформа ЦФА', desc: 'Платформа цифровых финансовых активов (ЦФА): выпуск и покупка токенов. Копия главной страницы.', accent: '#00A24A', live: true },
       { src: 'sites/rentsale-altay/index.html', title: 'Недвижимость Горного Алтая', url: 'rentsale-altay.ru', tags: 'Next.js 14 · Tailwind · лидоген', desc: 'Лендинг-агрегатор трёх курортных проектов: сравнение, калькулятор доходности.', accent: '#C2A36B' },
       { src: 'sites/flexpath/index.dc.html', title: 'Radius Step', url: 'radius-step.ru', tags: 'Next.js · Konva · FastAPI · DXF', desc: 'Лендинг конструктора садовых дорожек с онлайн-редактором, тёмная тема.', accent: '#D9BF9E' },
-      { src: 'sites/last-signal/index.dc.html', title: 'LAST SIGNAL', url: 'last-signal.ru', tags: 'Nuxt · кастомная типографика', desc: 'Промо вымышленной группы: эстетика цифрового сбоя, IFKica + Neue Machina.', accent: '#FE5907' },
+      { src: 'sites/tersk/index.dc.html', title: 'Терский конный завод', url: 'terskarabian.com', tags: 'Nuxt 3 · Directus · RU/EN', desc: 'Сайт старейшего конезавода России (1889): интерактивный хиро, события, новости.', accent: '#87CEFA' },
       { src: 'sites/concepts/gastro.dc.html', title: 'Ресторан «Сад»', url: 'sad-garden.ru', tags: 'Гастро · сезонное меню', desc: 'Тёплый editorial-лендинг ресторана сезонной кухни с меню-строками.', accent: '#3E5233' },
       { src: 'sites/concepts/atelier.dc.html', title: 'Ателье «Форма»', url: 'forma-atelier.ru', tags: 'Фэшн · editorial', desc: 'Модный лукбук-лендинг: гигантская типографика, марквиз, ч/б.', accent: '#141414' },
+      { src: 'sites/concepts/termy.dc.html', title: 'Термы «Пар»', url: 'par-termy.ru', tags: 'Wellness · городские термы', desc: 'Светлый концепт городских терм: четыре зоны тепла, парения с мастерами, тарифы.', accent: '#A6845A' },
+      { src: 'sites/tokeon/index.html', title: 'Токеон', url: 'tokeon.ru', tags: 'Финтех · платформа ЦФА', desc: 'Платформа цифровых финансовых активов (ЦФА): выпуск и покупка токенов. Копия главной страницы.', accent: '#00A24A', live: true },
       { src: 'sites/univer-zakupok/glavnaya.dc.html', title: 'Университет закупок', url: 'u-gz.ru', tags: 'WordPress FSE · 13 страниц · SEO', desc: 'Каталог курсов по госзакупкам для учебного центра: 44-ФЗ, 223-ФЗ, ГОЗ.', accent: '#D4A745' },
-      { src: 'sites/tersk/index.dc.html', title: 'Терский конный завод', url: 'terskarabian.com', tags: 'Nuxt 3 · Directus · RU/EN', desc: 'Сайт старейшего конезавода России (1889): интерактивный хиро, события, новости.', accent: '#87CEFA' },
-      { src: 'sites/sport-scout/database.dc.html', title: 'SportScout', url: 'sport-scout.app', tags: 'React 19 · TS · SVG без библиотек', desc: 'Скаутинговая платформа: база игроков, тактические фильтры, карточки ролей.', accent: '#00E3FF' },
+      { src: 'sites/last-signal/index.dc.html', title: 'LAST SIGNAL', url: 'last-signal.ru', tags: 'Nuxt · кастомная типографика', desc: 'Промо вымышленной группы: эстетика цифрового сбоя, IFKica + Neue Machina.', accent: '#FE5907' },
     ];
 
     // ---------- марквиз: статичные превью (скрин/гиф) · клик → живой сайт в модалке ----------
     const previewFor = (src) => {
-      const keys = ['tokeon', 'rentsale-altay', 'flexpath', 'univer-zakupok', 'tersk', 'sport-scout', 'last-signal', 'gastro', 'atelier'];
-      for (const k of keys) if (src.indexOf(k) !== -1) return 'previews/' + k + '.jpg';
+      const keys = ['tokeon', 'rentsale-altay', 'flexpath', 'univer-zakupok', 'tersk', 'termy', 'last-signal', 'gastro', 'atelier'];
+      for (const k of keys) if (src.indexOf(k) !== -1) return 'previews/' + k + '.jpg?v=2';
       return '';
     };
     this.previewFor = previewFor;
@@ -247,9 +246,9 @@ class Component extends DCLogic {
       win.appendChild(label);
       const col = win.closest('.vz-col');
       win.addEventListener('mouseenter', () => {
-        win.style.borderColor = '#C36250';
+        win.style.borderColor = 'var(--acc)';
         win.style.transform = 'scale(1.025)';
-        win.style.boxShadow = '0 14px 44px rgba(195,98,80,.22)';
+        win.style.boxShadow = '0 14px 44px rgba(var(--acc-rgb),.22)';
         label.style.opacity = '1';
         if (col) col.style.animationPlayState = 'paused';
       });
@@ -278,7 +277,7 @@ class Component extends DCLogic {
         '<p style="margin:9px 0 12px;font-size:13px;line-height:1.55;color:#B9BDCC">' + s.desc + '</p>' +
         '<div style="font-family:JetBrains Mono,monospace;font-size:10.5px;letter-spacing:.03em;color:#8E93A8">' + s.tags + '</div>' +
         '</div>';
-      card.addEventListener('mouseenter', () => { card.style.borderColor = '#C36250'; card.style.transform = 'translateY(-5px)'; card.style.boxShadow = '0 22px 54px rgba(0,0,0,.5)'; });
+      card.addEventListener('mouseenter', () => { card.style.borderColor = 'var(--acc)'; card.style.transform = 'translateY(-5px)'; card.style.boxShadow = '0 22px 54px rgba(0,0,0,.5)'; });
       card.addEventListener('mouseleave', () => { card.style.borderColor = 'rgba(255,255,255,.1)'; card.style.transform = 'none'; card.style.boxShadow = 'none'; });
       card.addEventListener('click', () => openModal(s.src, s.title, s.url, !!s.live));
       grid.appendChild(card);
@@ -309,14 +308,14 @@ class Component extends DCLogic {
     this.locale = 'ru';
     const L10N = {
       ru: {
-        role: 'FULLSTACK · AI-ИНЖЕНЕРИЯ', navWorks: 'Работы', navAbout: 'Обо мне', navContact: 'Контакты', cta: 'Обсудить проект',
+        role: 'FULLSTACK · AI-ИНЖЕНЕРИЯ', slogan: '«Есть время любоваться прекрасным»', navWorks: 'Работы', navAbout: 'Обо мне', navContact: 'Контакты', cta: 'Обсудить проект',
         badge: 'ОТКРЫТ К ЗАКАЗАМ · 2026',
         h1: 'Сайты и сервисы под ключ — в короткие сроки',
         sub: 'Fullstack-разработка, усиленная AI-агентами: от идеи до продакшена за дни, а не месяцы. Каждое окно справа — реальный проект. Наведите и кликните — сайт откроется, его можно полистать.',
         btnWorks: 'Смотреть работы', btnAbout: 'Кто я такой',
         stat1: 'живых проектов в витрине', stat2: 'быстрее с AI-пайплайнами', stat3: 'двуязычные продукты',
         worksTitle: 'Работы', worksHint: 'кликните карточку — сайт откроется внутри витрины',
-        worksNote: 'От финтеха и недвижимости до спорта и фэшна — каждый сайт открывается живьём прямо внутри витрины.',
+        worksNote: 'От финтеха и недвижимости до гастрономии и фэшна — каждый сайт открывается живьём прямо внутри витрины.',
         planetCaption: 'планета полностью автоматизирована',
         aboutBadge: 'ОБО МНЕ · МОСКВА · РАБОТАЮ УДАЛЁННО',
         aboutTitle: '«Есть время любоваться прекрасным»',
@@ -327,14 +326,14 @@ class Component extends DCLogic {
         openTab: 'в новой вкладке ↗', footNote: 'собрано вручную — от дизайна до деплоя',
       },
       en: {
-        role: 'FULLSTACK · AI ENGINEERING', navWorks: 'Work', navAbout: 'About', navContact: 'Contact', cta: 'Start a project',
+        role: 'FULLSTACK · AI ENGINEERING', slogan: '“There is time to admire the beautiful”', navWorks: 'Work', navAbout: 'About', navContact: 'Contact', cta: 'Start a project',
         badge: 'OPEN FOR PROJECTS · 2026',
         h1: 'Turn-key websites and services — on tight deadlines',
         sub: 'Fullstack development boosted by AI agents: idea to production in days, not months. Every window on the right is a real project. Hover and click — the site opens and you can browse it.',
         btnWorks: 'View work', btnAbout: 'Who I am',
         stat1: 'live projects in this gallery', stat2: 'faster with AI pipelines', stat3: 'bilingual products',
         worksTitle: 'Work', worksHint: 'click a card — the site opens right here',
-        worksNote: 'From fintech and real estate to sport and fashion — every site opens live right inside the gallery.',
+        worksNote: 'From fintech and real estate to gastronomy and fashion — every site opens live right inside the gallery.',
         planetCaption: 'the planet is fully automated',
         aboutBadge: 'ABOUT · MOSCOW · WORKING REMOTELY',
         aboutTitle: '“There is time to admire the beautiful”',
@@ -355,6 +354,21 @@ class Component extends DCLogic {
       });
       langBtn.innerHTML = this.locale === 'ru' ? 'RU / <span style="color:#8E93A8">EN</span>' : '<span style="color:#8E93A8">RU</span> / EN';
     });
+
+    this._applyAccent();
+  }
+  componentDidUpdate() { this._applyAccent(); }
+  _applyAccent() {
+    const root = document.getElementById('vzRoot');
+    if (!root) return;
+    const hex = this.props.accent || '#C8232B';
+    const n = parseInt(hex.slice(1), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    const deep = '#' + [r, g, b].map((v) => Math.round(v * 0.55).toString(16).padStart(2, '0')).join('');
+    const lum = 0.2126 * Math.pow(r / 255, 2.2) + 0.7152 * Math.pow(g / 255, 2.2) + 0.0722 * Math.pow(b / 255, 2.2);
+    root.style.setProperty('--acc', hex);
+    root.style.setProperty('--acc-deep', deep);
+    root.style.setProperty('--acc-rgb', r + ',' + g + ',' + b);
+    root.style.setProperty('--acc-ink', lum > 0.18 ? '#15100A' : '#fff');
   }
   componentWillUnmount() {
     window.removeEventListener('keydown', this._esc);

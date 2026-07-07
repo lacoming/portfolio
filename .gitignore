@@ -2,6 +2,7 @@
 research/
 .thumbnail
 
-# uploads: в витрине используется только фото, остальное - временные файлы
+# uploads: в витрине используются только фото и логотип, остальное - временные файлы
 uploads/*
 !uploads/photo-1782991400713.png
+!uploads/logo-prince-emblem.png
