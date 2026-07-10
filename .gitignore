@@ -1,8 +1,9 @@
 # Рабочие материалы - не публикуем (репозиторий публичный)
 research/
+claudeDesign/
 .thumbnail
 
 # uploads: в витрине используются только фото и логотип, остальное - временные файлы
 uploads/*
-!uploads/photo-1782991400713.png
+!uploads/planet-cosmos.png
 !uploads/logo-prince-emblem.png

@@ -57,11 +57,12 @@ a{text-decoration:none}
 }
 </style>
 </helmet>
-<div id="vzRoot" data-screen-label="Витрина" style="--acc:#C8232B;--acc-deep:#6E1318;--acc-rgb:200,35,43;--acc-ink:#fff;font-family:'Golos Text',system-ui,sans-serif;color:#F2F2F7;background:#060609;min-height:100vh;overflow-x:hidden">
+<div id="vzRoot" data-screen-label="Витрина · Космос" style="--acc:#C8232B;--acc-deep:#6E1318;--acc-rgb:200,35,43;--acc-ink:#fff;font-family:'Golos Text',system-ui,sans-serif;color:#F2F2F7;background:#060609;min-height:100vh;overflow-x:hidden">
 
   <div style="position:fixed;inset:0;pointer-events:none;z-index:0">
     <div style="position:absolute;top:-38vh;left:50%;transform:translateX(-50%);width:130vw;height:90vh;background:radial-gradient(50% 50% at 50% 50%,rgba(68,56,202,.34),transparent 70%);animation:vzGlow 9s ease-in-out infinite"></div>
     <div style="position:absolute;bottom:-30vh;right:-20vw;width:70vw;height:70vh;background:radial-gradient(50% 50% at 50% 50%,rgba(var(--acc-rgb,183,82,74),.07),transparent 70%)"></div>
+    <canvas id="vzStars" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
   </div>
 
   <header id="vzHeader" style="position:relative;z-index:20;display:flex;align-items:center;gap:24px;max-width:1440px;margin:0 auto;padding:20px 67px">
@@ -136,25 +137,27 @@ a{text-decoration:none}
   <section id="about" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:80px 67px;scroll-margin-top:20px">
     <div id="vzAboutGrid" style="display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start">
       <div style="position:relative">
-        <img src="uploads/photo-1782991400713.png" alt="Маленький принц на автоматизированной планете" style="width:100%;border-radius:24px;box-shadow:0 30px 80px -30px rgba(68,56,202,.5)">
+        <div style="position:absolute;inset:-24%;background:radial-gradient(50% 50% at 50% 50%,rgba(16,28,58,.42),rgba(10,18,40,.18) 55%,transparent 76%);pointer-events:none"></div>
+        <img id="vzPlanetImg" src="uploads/planet-cosmos.png" alt="Маленький принц на автоматизированной планете" style="position:relative;display:block;width:116%;margin:-8%">
       </div>
-      <div>
+      <div style="position:relative">
+        <div style="position:absolute;z-index:-1;inset:-18px -28px;background:rgba(6,6,9,.58);border-radius:36px;box-shadow:0 0 72px 48px rgba(6,6,9,.58);pointer-events:none"></div>
         <h2 id="vzAboutTitle" data-l10n="aboutTitle" style="margin:0 0 20px;font-family:'Unbounded',sans-serif;font-weight:500;font-size:34px;line-height:1.2;text-wrap:balance">«Есть время любоваться прекрасным»</h2>
-        <p data-l10n="aboutP1" style="margin:0 0 16px;font-size:15.5px;line-height:1.7;color:#B9BDCC;text-wrap:pretty">Маленький принц вернулся на свою планету и полностью её автоматизировал: вулканы очищают роботы, баобабы ликвидируют ещё в зачатке команда агентов — а принц теперь круглые сутки любуется и ухаживает за своей прекрасной Розой.</p>
-        <p data-l10n="aboutP2" style="margin:0 0 16px;font-size:15.5px;line-height:1.7;color:#B9BDCC;text-wrap:pretty">Вдохновившись его примером, я автоматизировал все процессы разработки приложений и сайтов: AI-агенты берут рутину, я отвечаю за архитектуру, качество и результат.</p>
+        <p data-l10n="aboutP1" style="margin:0 0 16px;font-size:15.5px;line-height:1.7;color:#CDD2E0;text-wrap:pretty">Маленький принц вернулся на свою планету и полностью её автоматизировал: вулканы очищают роботы, баобабы ликвидируют ещё в зачатке команда агентов — а принц теперь круглые сутки любуется и ухаживает за своей прекрасной Розой.</p>
+        <p data-l10n="aboutP2" style="margin:0 0 16px;font-size:15.5px;line-height:1.7;color:#CDD2E0;text-wrap:pretty">Вдохновившись его примером, я автоматизировал все процессы разработки приложений и сайтов: AI-агенты берут рутину, я отвечаю за архитектуру, качество и результат.</p>
         <h3 data-l10n="aboutWho" style="margin:26px 0 14px;font-family:'Unbounded',sans-serif;font-weight:500;font-size:20px;line-height:1.3">Кто я такой?</h3>
-        <p data-l10n="aboutEdu" style="margin:0 0 12px;font-size:15.5px;line-height:1.7;color:#B9BDCC;text-wrap:pretty">По образованию — программист с математическим уклоном (НГТУ — ФПМИ):</p>
+        <p data-l10n="aboutEdu" style="margin:0 0 12px;font-size:15.5px;line-height:1.7;color:#CDD2E0;text-wrap:pretty">По образованию — программист с математическим уклоном (НГТУ — ФПМИ):</p>
         <div style="display:flex;flex-direction:column;gap:9px;margin:0 0 16px">
-          <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#B9BDCC"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2008</span><span data-l10n="tl2008">первый язык C++, начинал с алгоритмов и работы с памятью</span></div>
-          <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#B9BDCC"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2019</span><span data-l10n="tl2019">курс по Java/Kotlin</span></div>
-          <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#B9BDCC"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2022</span><span data-l10n="tl2022">курс по QA</span></div>
-          <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#B9BDCC"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2023</span><span data-l10n="tl2023">Python: на нём сейчас все парсеры, боты и автоматизация</span></div>
-          <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#B9BDCC"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2024</span><span data-l10n="tl2024a">курс по фронтенду + 1,5 года в финтех-компании: Vue/Nuxt, React/Next, TypeScript, Dart (Flutter)</span></div>
-          <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#B9BDCC"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2024</span><span data-l10n="tl2024b">первое знакомство с AI-инженерией: Cursor, ChatGPT, prompt-инжиниринг</span></div>
-          <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#B9BDCC"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2025</span><span data-l10n="tl2025">углубление в AI-технологии, знакомство с Claude Code, создание своего AI-офиса для полного цикла разработки, первые реальные заказы с бюджетом от 200 тыс. рублей</span></div>
-          <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#B9BDCC"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2026</span><span data-l10n="tl2026">15+ реальных проектов за полгода: от сайтов крупных фирм до 1С-расширений, от частных предпринимателей до крупных госзаказов. С частью работ можно ознакомиться на витрине выше</span></div>
+          <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#CDD2E0"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2008</span><span data-l10n="tl2008">первый язык C++, начинал с алгоритмов и работы с памятью</span></div>
+          <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#CDD2E0"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2019</span><span data-l10n="tl2019">курс по Java/Kotlin</span></div>
+          <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#CDD2E0"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2022</span><span data-l10n="tl2022">курс по QA</span></div>
+          <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#CDD2E0"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2023</span><span data-l10n="tl2023">Python: на нём сейчас все парсеры, боты и автоматизация</span></div>
+          <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#CDD2E0"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2024</span><span data-l10n="tl2024a">курс по фронтенду + 1,5 года в финтех-компании: Vue/Nuxt, React/Next, TypeScript, Dart (Flutter)</span></div>
+          <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#CDD2E0"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2024</span><span data-l10n="tl2024b">первое знакомство с AI-инженерией: Cursor, ChatGPT, prompt-инжиниринг</span></div>
+          <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#CDD2E0"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2025</span><span data-l10n="tl2025">углубление в AI-технологии, знакомство с Claude Code, создание своего AI-офиса для полного цикла разработки, первые реальные заказы с бюджетом от 200 тыс. рублей</span></div>
+          <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#CDD2E0"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2026</span><span data-l10n="tl2026">15+ реальных проектов за полгода: от сайтов крупных фирм до 1С-расширений, от частных предпринимателей до крупных госзаказов. С частью работ можно ознакомиться на витрине выше</span></div>
         </div>
-        <p data-l10n="aboutP4" style="margin:0 0 28px;font-size:15.5px;line-height:1.7;color:#B9BDCC;text-wrap:pretty">Берусь за задачи любой сложности, закрываю полный цикл: frontend + backend + deploy. Отдельно люблю нетривиальные кейсы, где готового решения нет.</p>
+        <p data-l10n="aboutP4" style="margin:0 0 28px;font-size:15.5px;line-height:1.7;color:#CDD2E0;text-wrap:pretty">Берусь за задачи любой сложности, закрываю полный цикл: frontend + backend + deploy. Отдельно люблю нетривиальные кейсы, где готового решения нет.</p>
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px">
           <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:var(--acc,#B7524A);color:#fff">React / Next.js</span>
           <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:var(--acc,#B7524A);color:#fff">Vue / Nuxt</span>
@@ -174,7 +177,7 @@ a{text-decoration:none}
   </section>
 
   <section id="contact" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:30px 67px 90px;scroll-margin-top:20px">
-    <div id="vzCtaBox" style="position:relative;border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:64px 48px;text-align:center;overflow:hidden;background:radial-gradient(60% 120% at 50% 0%,rgba(68,56,202,.25),transparent 70%)">
+    <div id="vzCtaBox" style="position:relative;border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:64px 48px;text-align:center;overflow:hidden;background:radial-gradient(60% 120% at 50% 0%,rgba(68,56,202,.25),transparent 70%),linear-gradient(rgba(6,6,9,.52),rgba(6,6,9,.52))">
       <p data-l10n="ctaBadge" style="margin:0 0 16px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:#8E93A8">СВОБОДНЫЕ СЛОТЫ НА ИЮЛЬ ЕСТЬ</p>
       <h2 id="vzCtaTitle" data-l10n="ctaTitle" style="margin:0 auto 30px;font-family:'Unbounded',sans-serif;font-weight:500;font-size:36px;line-height:1.2;max-width:720px;text-wrap:balance">Расскажите про задачу — верну план и смету за день</h2>
       <div id="vzCtaBtns" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
@@ -183,7 +186,7 @@ a{text-decoration:none}
         <a href="https://github.com/lacoming" target="_blank" rel="noopener" style="border:1px solid rgba(255,255,255,.2);color:#F2F2F7;font-weight:500;font-size:15px;padding:16px 34px;border-radius:999px;transition:border-color .2s,background .2s" style-hover="border-color:#fff;background:rgba(255,255,255,.06)">GitHub ↗</a>
       </div>
     </div>
-    <p style="margin:26px 0 0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:#5A5F72">© 2026 Александр Вострухин · lacoming · <span data-l10n="footNote">собрано вручную — от дизайна до деплоя</span></p>
+    <p style="margin:26px 0 0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:#7B8197">© 2026 Александр Вострухин · lacoming · <span data-l10n="footNote">собрано вручную — от дизайна до деплоя</span></p>
   </section>
 
   <div id="vzModal" style="display:none;position:fixed;inset:0;z-index:100;background:rgba(4,4,7,.82);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:34px">
@@ -206,7 +209,7 @@ a{text-decoration:none}
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#C8232B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Стиль&quot;,&quot;options&quot;:[&quot;#C8232B&quot;,&quot;#D2B183&quot;,&quot;#C97355&quot;,&quot;#C36250&quot;,&quot;#B7524A&quot;,&quot;#B87333&quot;,&quot;#E0A458&quot;,&quot;#D4A745&quot;,&quot;#C65D57&quot;,&quot;#8E3B46&quot;,&quot;#B76E79&quot;,&quot;#C98A97&quot;,&quot;#915F6D&quot;,&quot;#A48BD8&quot;,&quot;#8D7BB8&quot;,&quot;#7A8CC9&quot;,&quot;#4F74C9&quot;,&quot;#6C8EBF&quot;,&quot;#56A3A6&quot;,&quot;#4E8D7C&quot;,&quot;#7FA08C&quot;,&quot;#A3B18A&quot;,&quot;#8A9A5B&quot;,&quot;#708090&quot;,&quot;#C9C5BD&quot;,&quot;#E8E4DC&quot;]}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#C8232B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Стиль&quot;,&quot;options&quot;:[&quot;#C8232B&quot;,&quot;#D2B183&quot;,&quot;#C97355&quot;,&quot;#C36250&quot;,&quot;#B7524A&quot;,&quot;#B87333&quot;,&quot;#E0A458&quot;,&quot;#D4A745&quot;,&quot;#C65D57&quot;,&quot;#8E3B46&quot;,&quot;#B76E79&quot;,&quot;#C98A97&quot;,&quot;#915F6D&quot;,&quot;#A48BD8&quot;,&quot;#8D7BB8&quot;,&quot;#7A8CC9&quot;,&quot;#4F74C9&quot;,&quot;#6C8EBF&quot;,&quot;#56A3A6&quot;,&quot;#4E8D7C&quot;,&quot;#7FA08C&quot;,&quot;#A3B18A&quot;,&quot;#8A9A5B&quot;,&quot;#708090&quot;,&quot;#C9C5BD&quot;,&quot;#E8E4DC&quot;]},&quot;starDensity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2.2,&quot;min&quot;:0.3,&quot;max&quot;:2.2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;haloRadius&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2,&quot;min&quot;:0.5,&quot;max&quot;:2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;twinkle&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;constellations&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Космос&quot;}}">
 class Component extends DCLogic {
   componentDidMount() {
     const $ = (id) => document.getElementById(id);
@@ -224,7 +227,7 @@ class Component extends DCLogic {
       { src: 'sites/last-signal/index.dc.html', title: 'LAST SIGNAL', url: 'last-signal.ru', tags: 'Nuxt · кастомная типографика', desc: 'Промо вымышленной группы: эстетика цифрового сбоя, IFKica + Neue Machina.', accent: '#FE5907' },
     ];
 
-    // ---------- марквиз: статичные превью (скрин/гиф) · клик → живой сайт в модалке ----------
+    // ---------- марквиз ----------
     const previewFor = (src) => {
       const keys = ['tokeon', 'rentsale-altay', 'flexpath', 'univer-zakupok', 'tersk', 'termy', 'last-signal', 'gastro', 'atelier'];
       for (const k of keys) if (src.indexOf(k) !== -1) return 'previews/' + k + '.jpg?v=2';
@@ -282,7 +285,7 @@ class Component extends DCLogic {
         '<div style="position:relative;aspect-ratio:16/9;overflow:hidden;background:#0D0D14;border-bottom:1px solid rgba(255,255,255,.08)">' +
         '<img src="' + this.previewFor(s.src) + '" loading="lazy" alt="' + s.title + '" draggable="false" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">' +
         (this.previewFor(s.src).indexOf('tokeon') !== -1 ? '<img src="previews/tokeon-sphere.png" alt="" draggable="false" style="position:absolute;left:57.55%;top:22.02%;width:36.72%;height:auto;animation:vzBob 5s ease-in-out infinite;will-change:transform;pointer-events:none">' : '') +
-                '</div>' +
+        '</div>' +
         '<div style="padding:16px 18px 18px">' +
         '<div style="display:flex;align-items:center;gap:10px"><span style="width:9px;height:9px;border-radius:3px;background:' + s.accent + ';flex:none"></span><span style="font-weight:600;font-size:15.5px;color:#F2F2F7">' + s.title + '</span><span style="margin-left:auto;font-family:JetBrains Mono,monospace;font-size:10.5px;color:#8E93A8">' + s.url + '</span></div>' +
         '<p style="margin:9px 0 12px;font-size:13px;line-height:1.55;color:#B9BDCC">' + s.desc + '</p>' +
@@ -385,8 +388,238 @@ class Component extends DCLogic {
     });
 
     this._applyAccent();
+    this._initStars();
   }
-  componentDidUpdate() { this._applyAccent(); }
+
+  // ================= ЗВЁЗДНОЕ НЕБО =================
+  // Плотность звёзд — гауссов ореол вокруг картинки планеты (якорь = центр
+  // <img id="vzPlanetImg">). У границы картинки плотность совпадает с её
+  // собственной звёздной плотностью и плавно спадает с расстоянием, поэтому
+  // край картинки (с запечённым альфа-растушёванным краем) неотличим от фона.
+  _initStars() {
+    const cv = document.getElementById('vzStars');
+    if (!cv) return;
+    this._cv = cv;
+    this._cx = cv.getContext('2d');
+    this._sprites = {};
+    this._dirty = true;
+    this._lastT = 0;
+    this._genStars();
+
+    this._onScroll = () => { this._dirty = true; };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+
+    const root = document.getElementById('vzRoot');
+    this._ro = new ResizeObserver(() => {
+      clearTimeout(this._rt);
+      this._rt = setTimeout(() => { this._genStars(); this._dirty = true; }, 180);
+    });
+    if (root) this._ro.observe(root);
+
+    const img = document.getElementById('vzPlanetImg');
+    if (img && !img.complete) img.addEventListener('load', () => { this._genStars(); this._dirty = true; }, { once: true });
+
+    this._loop = (t) => {
+      const tw = (this.props.twinkle ?? true) && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (this._dirty || (tw && t - this._lastT > 40)) {
+        this._lastT = t;
+        this._dirty = false;
+        this._drawStars(t / 1000, tw);
+      }
+      this._raf = requestAnimationFrame(this._loop);
+    };
+    this._raf = requestAnimationFrame(this._loop);
+  }
+
+  _starParams() {
+    return {
+      dens: this.props.starDensity ?? 1,
+      halo: this.props.haloRadius ?? 1,
+      consts: this.props.constellations ?? true,
+    };
+  }
+
+  _genStars() {
+    const root = document.getElementById('vzRoot');
+    const de = document.documentElement;
+    const W = de.clientWidth;
+    const H = Math.max(root ? root.scrollHeight : 0, de.scrollHeight);
+    if (!W || !H) return;
+    const p = this._starParams();
+
+    // якорь — центр картинки планеты
+    const img = document.getElementById('vzPlanetImg');
+    let ax = W * 0.28, ay = H * 0.72;
+    if (img) {
+      const rc = img.getBoundingClientRect();
+      if (rc.width > 40 && rc.height > 40) {
+        ax = rc.left + rc.width / 2;
+        ay = rc.top + window.scrollY + rc.height / 2;
+      }
+    }
+    this._anchor = { x: ax, y: ay };
+
+    const base = 26 * p.dens;                 // звёзд на мегапиксель вдали
+    const peak = 600 * p.dens;                // в ореоле у картинки
+    const rx = W * 0.74 * p.halo;
+    const ry = Math.max(950, window.innerHeight * 1.08) * p.halo;
+    const dens = (x, y) => {
+      const dx = (x - ax) / rx, dy = (y - ay) / ry;
+      return base + peak * Math.exp(-2.1 * (dx * dx + dy * dy));
+    };
+    this._densFn = dens;
+    const maxD = base + peak;
+
+    const COLORS = [
+      ['255,255,255', 0.70], ['191,208,255', 0.15], ['255,221,176', 0.08],
+      ['203,168,255', 0.04], ['255,179,166', 0.03],
+    ];
+    const pickColor = () => {
+      let r = Math.random(), acc = 0;
+      for (const [c, w] of COLORS) { acc += w; if (r <= acc) return c; }
+      return '255,255,255';
+    };
+
+    const stars = [];
+    const candidates = Math.round(maxD * W * H / 1e6 * 1.02);
+    for (let i = 0; i < candidates; i++) {
+      const x = Math.random() * W, y = Math.random() * H;
+      if (Math.random() * maxD > dens(x, y)) continue;
+      const bright = Math.random() < 0.045;
+      stars.push({
+        x, y,
+        r: bright ? 1.15 + Math.random() * 1.05 : 0.35 + Math.pow(Math.random(), 2.6) * 1.25,
+        c: pickColor(),
+        a: bright ? 0.85 + Math.random() * 0.15 : 0.38 + Math.random() * 0.55,
+        g: bright,
+        tw: Math.random() < 0.35 ? { s: 0.5 + Math.random() * 1.3, p: Math.random() * 6.283 } : null,
+      });
+    }
+    this._stars = stars;
+
+    // дальний слой (лёгкий параллакс — глубина при скролле)
+    const far = [];
+    const farH = H * 0.5 + window.innerHeight;
+    const nFar = Math.round(W * farH / 1e6 * 30 * p.dens);
+    for (let i = 0; i < nFar; i++) {
+      far.push({ x: Math.random() * W, y: Math.random() * farH, r: 0.3 + Math.random() * 0.5, a: 0.16 + Math.random() * 0.2 });
+    }
+    this._far = far;
+
+    // созвездия — как нарисованные на картинке, гуще к ореолу
+    const cons = [];
+    if (p.consts) {
+      const want = 8;
+      let tries = 0;
+      while (cons.length < want && tries < 600) {
+        tries++;
+        const x = 60 + Math.random() * (W - 120), y = 120 + Math.random() * (H - 240);
+        if (Math.random() * maxD > dens(x, y) * 1.15) continue;
+        const pts = [{ x, y }];
+        let angs = Math.random() * 6.283;
+        const n = 3 + Math.floor(Math.random() * 3);
+        for (let k = 0; k < n; k++) {
+          angs += (Math.random() - 0.5) * 2.2;
+          const st = 42 + Math.random() * 66;
+          pts.push({ x: pts[k].x + Math.cos(angs) * st, y: pts[k].y + Math.sin(angs) * st });
+        }
+        cons.push({ pts, a: 0.5 + Math.random() * 0.5 });
+      }
+    }
+    this._cons = cons;
+  }
+
+  _sprite(color) {
+    if (this._sprites[color]) return this._sprites[color];
+    const s = document.createElement('canvas');
+    s.width = s.height = 64;
+    const g = s.getContext('2d');
+    const gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    gr.addColorStop(0, 'rgba(' + color + ',.85)');
+    gr.addColorStop(0.22, 'rgba(' + color + ',.28)');
+    gr.addColorStop(1, 'rgba(' + color + ',0)');
+    g.fillStyle = gr;
+    g.fillRect(0, 0, 64, 64);
+    this._sprites[color] = s;
+    return s;
+  }
+
+  _drawStars(t, tw) {
+    const cv = this._cv, ctx = this._cx;
+    if (!cv || !ctx || !this._stars) return;
+    const de = document.documentElement;
+    const W = de.clientWidth, vh = window.innerHeight;
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(vh * dpr)) {
+      cv.width = Math.round(W * dpr);
+      cv.height = Math.round(vh * dpr);
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, vh);
+    const sy = window.scrollY;
+
+    // дальний слой, параллакс 0.5
+    ctx.fillStyle = 'rgba(214,224,255,.9)';
+    for (const s of this._far) {
+      const y = s.y - sy * 0.5;
+      if (y < -3 || y > vh + 3) continue;
+      ctx.globalAlpha = s.a;
+      ctx.beginPath();
+      ctx.arc(s.x, y, s.r, 0, 6.283);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    // созвездия
+    for (const c of this._cons) {
+      let vis = false;
+      for (const p of c.pts) { const y = p.y - sy; if (y > -160 && y < vh + 160) { vis = true; break; } }
+      if (!vis) continue;
+      ctx.strokeStyle = 'rgba(158,173,224,' + (0.13 * c.a).toFixed(3) + ')';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      c.pts.forEach((p, i) => { const y = p.y - sy; if (i === 0) ctx.moveTo(p.x, y); else ctx.lineTo(p.x, y); });
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(196,208,242,' + (0.55 * c.a).toFixed(3) + ')';
+      for (const p of c.pts) {
+        const y = p.y - sy;
+        ctx.beginPath();
+        ctx.arc(p.x, y, 1.3, 0, 6.283);
+        ctx.fill();
+      }
+    }
+
+    // основной слой — движется вместе с контентом (приклеен к картинке)
+    for (const s of this._stars) {
+      const y = s.y - sy;
+      if (y < -14 || y > vh + 14) continue;
+      let a = s.a;
+      if (tw && s.tw) a *= 0.7 + 0.3 * Math.sin(t * s.tw.s + s.tw.p);
+      if (s.g) {
+        ctx.globalAlpha = a;
+        const d = s.r * 11;
+        ctx.drawImage(this._sprite(s.c), s.x - d / 2, y - d / 2, d, d);
+        ctx.globalAlpha = 1;
+      }
+      ctx.fillStyle = 'rgba(' + s.c + ',' + a.toFixed(3) + ')';
+      ctx.beginPath();
+      ctx.arc(s.x, y, s.r, 0, 6.283);
+      ctx.fill();
+    }
+  }
+
+  componentDidUpdate() {
+    this._applyAccent();
+    const p = this._starParams();
+    const key = p.dens + '|' + p.halo + '|' + p.consts;
+    if (key !== this._starKey) {
+      this._starKey = key;
+      this._genStars();
+      this._dirty = true;
+    } else {
+      this._dirty = true;
+    }
+  }
   _applyAccent() {
     const root = document.getElementById('vzRoot');
     if (!root) return;
@@ -401,6 +634,10 @@ class Component extends DCLogic {
   }
   componentWillUnmount() {
     window.removeEventListener('keydown', this._esc);
+    if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._ro) this._ro.disconnect();
+    clearTimeout(this._rt);
     if (this._gridTimers) this._gridTimers.forEach(clearTimeout);
   }
   renderVals() { return {}; }
