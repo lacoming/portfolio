@@ -74,6 +74,19 @@
   .buy-box { position:static; }
   .samples-grid { grid-template-columns:1fr; }
 }
+@media (max-width:600px){
+  .sample { grid-template-columns:1fr; justify-items:start; }
+  .sample img { width:140px; }
+  .spec-list li { flex-wrap:wrap; }
+  .spec-list .v { text-align:left; }
+}
+@media (max-width:480px){
+  .kurs-cover { min-height:250px; padding:24px 24px 22px; }
+  .buy-box { padding:22px 18px; }
+  .buy-price { font-size:34px; }
+  .buy-price-row { flex-wrap:wrap; gap:10px; }
+  .tab-btn { padding:12px 12px; font-size:14px; }
+}
 </style>
 </helmet>
 

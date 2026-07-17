@@ -149,6 +149,20 @@ input[type='range']::-moz-range-thumb {
   [data-r='prodimgK'] {
     order: -1 !important;
   }
+  /* шапка на планшете: ужимаем навигацию, чтобы влезала до ~960px */
+  [data-r='navlinks'] {
+    gap: 18px !important;
+    font-size: 13px !important;
+  }
+  [data-r='headcta'] {
+    gap: 12px !important;
+  }
+  [data-r='headcta'] a:first-child {
+    font-size: 14px !important;
+  }
+  [data-r='headcta'] a:last-child {
+    padding: 11px 16px !important;
+  }
 }
 @media (max-width: 760px) {
   [data-pad] {
@@ -187,6 +201,149 @@ input[type='range']::-moz-range-thumb {
   [data-r='trust'] {
     grid-template-columns: 1fr 1fr !important;
     gap: 24px 16px !important;
+  }
+}
+
+/* ===== Доработка мобильного адаптива =====
+   Ниже 960px полная навигация шапки уже не помещается — сворачиваем в бургер.
+   768px — планшет/крупный телефон, 480px — основной телефонный брейкпоинт (360–430px).
+   Разметка не менялась: селекторы опираются на существующие id / data-r / структуру. */
+
+@media (max-width: 960px) {
+  [data-r='navlinks'],
+  [data-r='headcta'] {
+    display: none !important;
+  }
+  [data-r='burger'] {
+    display: flex !important;
+  }
+  /* мобильное меню не должно вылезать за низкий экран */
+  #mobileMenu > div:nth-child(2) {
+    max-height: 100dvh;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+  /* инпуты формы >=16px, чтобы iOS Safari не зумил при фокусе */
+  #fName,
+  #fPhone,
+  #fObj {
+    font-size: 16px !important;
+  }
+  /* ползунок калькулятора удобнее пальцу */
+  input[type='range'] {
+    height: 4px;
+  }
+  input[type='range']::-webkit-slider-thumb {
+    width: 28px;
+    height: 28px;
+  }
+  input[type='range']::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+  }
+  /* строка «Цена входа + кнопка» в карточках объектов: разрешаем перенос */
+  [data-r='prod'] > div:not([data-r]) > div:last-child {
+    flex-wrap: wrap;
+    row-gap: 12px;
+  }
+  /* строка «Стоимость апартамента + цена» в калькуляторе */
+  [data-r='calc'] > div:first-child > div:nth-of-type(3) {
+    flex-wrap: wrap;
+    gap: 2px 12px;
+  }
+  /* строки «застройщик — объект» в блоках «Кто строит / Кто управляет» */
+  [data-r='grid2'] > div > div > div {
+    flex-wrap: wrap;
+    row-gap: 2px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* вертикальный ритм секций ужимаем: 80px -> 64px */
+  #location > div[data-pad],
+  #compare > div[data-pad],
+  #buy > div[data-pad],
+  #income > div[data-pad],
+  #contact > div[data-pad] {
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
+  }
+  #objects > div[data-pad]:first-child {
+    padding-top: 64px !important;
+  }
+  #objects > div:last-child {
+    height: 64px !important;
+  }
+  #prod-gorod-gor,
+  #prod-karluu {
+    padding-bottom: 56px !important;
+  }
+
+  /* hero: заголовок и кнопки */
+  #heroH1 {
+    font-size: clamp(33px, 9.5vw, 40px) !important;
+  }
+  #top a[href='#compare'],
+  #top a[href='#income'] {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  /* заголовки секций чуть меньше */
+  .dc-root h2 {
+    font-size: clamp(29px, 8.5vw, 34px) !important;
+  }
+
+  /* полоса цифр (trust): цифры не упираются в колонку */
+  [data-r='trust'] > div > div:first-child {
+    font-size: 34px !important;
+  }
+  [data-r='trust'] > div > div:first-child span {
+    font-size: 16px !important;
+  }
+
+  /* карточки объектов: компактнее паддинги, кнопка на всю ширину */
+  [data-r='prodimg'],
+  [data-r='prodimgK'] {
+    min-height: 240px !important;
+  }
+  [data-r='prod'] > div:not([data-r]) {
+    padding: 26px 18px 24px !important;
+  }
+  [data-r='prod'] > div:not([data-r]) > div:last-child a {
+    margin-left: 0 !important;
+    flex: 1 1 100%;
+    text-align: center;
+    padding: 14px !important;
+  }
+
+  /* способы покупки */
+  [data-r='methods'] > div {
+    padding: 24px 20px !important;
+  }
+  [data-r='grid2'] > div {
+    padding: 26px 20px !important;
+  }
+
+  /* калькулятор: паддинги панелей и переключатель объектов */
+  [data-r='calc'] > div {
+    padding: 24px 18px !important;
+  }
+  #calcBtnGG,
+  #calcBtnKA,
+  #calcBtnBE {
+    padding: 13px 4px !important;
+    font-size: 12.5px !important;
+  }
+
+  /* форма: компактнее карточка */
+  [data-r='form'] > div:nth-child(2) {
+    padding: 24px 18px !important;
   }
 }
 

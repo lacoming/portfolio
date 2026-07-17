@@ -16,13 +16,52 @@ html,body{height:100%}
 body{margin:0;background-color:#171717}
 a{text-decoration:none}
 h2{margin:0}
+/* --- Мобильный адаптив (классы ls-m-*), десктоп не затрагивается --- */
+@media (max-width:768px){
+.ls-m-header{height:64px !important}
+.ls-m-nav{gap:28px !important}
+.ls-m-nav a{font-size:16px !important}
+.ls-m-hero{min-height:420px !important;padding-top:64px !important}
+.ls-m-hero-l{font-size:64px !important;line-height:68px !important;padding-left:6% !important;grid-column:1/-1 !important}
+.ls-m-hero-r{font-size:64px !important;line-height:68px !important;padding-right:6% !important;grid-column:1/-1 !important;max-width:100% !important}
+.ls-m-intro{padding:56px 12px 64px !important}
+.ls-m-h{font-size:32px !important;line-height:40px !important}
+.ls-m-num{font-size:36px !important;line-height:44px !important}
+.ls-m-pad{padding:8px 0 !important}
+.ls-m-glas{flex-direction:column !important;align-items:flex-start !important;min-height:0 !important;gap:20px !important}
+.ls-m-glas img{height:190px !important;align-self:center !important}
+.ls-m-signal{padding:64px 16px !important}
+.ls-m-blur1{width:300px !important;height:300px !important;filter:blur(60px) !important}
+.ls-m-blur2{width:200px !important;height:200px !important;filter:blur(36px) !important}
+.ls-m-cta{padding:0 12px 32px !important}
+.ls-m-album{flex-direction:column-reverse !important;gap:0 !important}
+.ls-m-album > div:first-child{padding-left:12px !important}
+.ls-m-album > div:last-child{align-self:center !important}
+.ls-m-album h2{font-size:28px !important;line-height:34px !important;overflow-wrap:anywhere !important}
+.ls-m-btn{width:100% !important;max-width:380px !important}
+.ls-m-footer > div{padding-top:32px !important}
+.ls-m-streams{flex-wrap:wrap !important;justify-content:center !important;gap:20px 32px !important}
+}
+@media (max-width:480px){
+.ls-m-nav{gap:18px !important}
+.ls-m-nav a{font-size:14px !important;letter-spacing:.06em !important}
+.ls-m-hero{min-height:390px !important}
+.ls-m-hero-l{font-size:56px !important;line-height:60px !important}
+.ls-m-hero-r{font-size:56px !important;line-height:60px !important}
+.ls-m-h{font-size:28px !important;line-height:36px !important}
+.ls-m-num{font-size:32px !important;line-height:40px !important}
+.ls-m-glas img{height:160px !important}
+.ls-m-signal{padding:56px 12px !important}
+.ls-m-album h2{font-size:24px !important;line-height:30px !important}
+.ls-m-streams img{height:32px !important}
+}
 </style>
 </helmet>
 <div id="top" data-screen-label="LAST SIGNAL — главная" style="background-color:#171717;min-height:100vh;overflow-x:hidden">
 
-  <header id="lsHeader" style="position:fixed;top:0;left:0;right:0;z-index:1200;height:100px;background-color:rgba(23,23,23,0);display:flex;align-items:center">
+  <header id="lsHeader" class="ls-m-header" style="position:fixed;top:0;left:0;right:0;z-index:1200;height:100px;background-color:rgba(23,23,23,0);display:flex;align-items:center">
     <div style="max-width:1200px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:center">
-      <nav style="display:flex;gap:46px;align-items:center;margin:0 auto">
+      <nav class="ls-m-nav" style="display:flex;gap:46px;align-items:center;margin:0 auto">
         <a href="#top" style="font-size:18px;font-weight:700;font-family:Helvetica,Arial,sans-serif;letter-spacing:.1em;color:#FFFFC5;transition:color .2s ease-in-out" style-hover="color:#888888">ГЛАВНАЯ</a>
         <a href="#albums" style="font-size:18px;font-weight:700;font-family:Helvetica,Arial,sans-serif;letter-spacing:.1em;color:#FFFFC5;transition:color .2s ease-in-out" style-hover="color:#888888">АЛЬБОМЫ</a>
         <a href="#" style="font-size:18px;font-weight:700;font-family:Helvetica,Arial,sans-serif;letter-spacing:.1em;color:#FFFFC5;transition:color .2s ease-in-out" style-hover="color:#888888">КОНЦЕРТЫ</a>
@@ -30,17 +69,17 @@ h2{margin:0}
     </div>
   </header>
 
-  <div style="position:relative;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr auto;min-height:600px;align-items:center;z-index:0">
+  <div class="ls-m-hero" style="position:relative;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr auto;min-height:600px;align-items:center;z-index:0">
     <img src="back-main.png" alt="" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0">
-    <h2 style="grid-column:1;grid-row:1/3;position:relative;z-index:1;font-family:'IFKica';font-weight:300;font-size:150px;line-height:150px;color:#FFFFC5;text-align:left;padding-left:10%">LAST</h2>
-    <h2 style="grid-column:2;grid-row:2/4;position:relative;z-index:1;font-family:'IFKica';font-weight:300;font-size:150px;line-height:150px;color:#FFFFC5;text-align:right;padding-right:10%;align-self:end;justify-self:end">SIGNAL</h2>
+    <h2 class="ls-m-hero-l" style="grid-column:1;grid-row:1/3;position:relative;z-index:1;font-family:'IFKica';font-weight:300;font-size:150px;line-height:150px;color:#FFFFC5;text-align:left;padding-left:10%">LAST</h2>
+    <h2 class="ls-m-hero-r" style="grid-column:2;grid-row:2/4;position:relative;z-index:1;font-family:'IFKica';font-weight:300;font-size:150px;line-height:150px;color:#FFFFC5;text-align:right;padding-right:10%;align-self:end;justify-self:end">SIGNAL</h2>
   </div>
 
   <div style="max-width:1200px;margin:0 auto;padding-left:16px;padding-right:16px">
 
-    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:88px 12px 112px">
+    <div class="ls-m-intro" style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:88px 12px 112px">
       <div>
-        <h2 style="font-family:'IFKica';font-weight:300;font-size:52px;line-height:62px;letter-spacing:.05em;color:#FE5907">&gt; РАСПОЗНАВАНИЕ ЕДИНИЦ...</h2>
+        <h2 class="ls-m-h" style="font-family:'IFKica';font-weight:300;font-size:52px;line-height:62px;letter-spacing:.05em;color:#FE5907">&gt; РАСПОЗНАВАНИЕ ЕДИНИЦ...</h2>
       </div>
       <div style="width:700px;max-width:100%;padding-top:32px;padding-bottom:10px;font-family:Helvetica,Arial,sans-serif;color:#FFFFC5;font-weight:400;font-size:16px;text-align:center;letter-spacing:.1em">
         НЕ ЛЮДИ. НЕ ПРОГРАММА. КОЛЛЕКТИВНЫЙ СБОЙ НА ГРАНИ ЦИФРОВОГО И АНАЛОГОВОГО.
@@ -49,11 +88,11 @@ h2{margin:0}
       </div>
     </div>
 
-    <div style="padding:16px">
+    <div class="ls-m-pad" style="padding:16px">
       <div style="padding:12px">
-        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;min-height:226px">
+        <div class="ls-m-glas" style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;min-height:226px">
           <div style="display:flex;flex-direction:column;gap:8px;max-width:600px">
-            <div style="font-size:52px;line-height:62px;letter-spacing:.05em;color:#FE5907;padding-bottom:10px">
+            <div class="ls-m-num" style="font-size:52px;line-height:62px;letter-spacing:.05em;color:#FE5907;padding-bottom:10px">
               <h2 style="font-family:'IFKica';font-weight:300">[01]</h2>
             </div>
             <div style="font-family:Helvetica,Arial,sans-serif;color:#FFFFC5;font-weight:700;font-size:16px;text-align:left;letter-spacing:.1em;padding-bottom:10px">ГЛАС</div>
@@ -64,10 +103,10 @@ h2{margin:0}
       </div>
     </div>
 
-    <div style="padding:16px">
+    <div class="ls-m-pad" style="padding:16px">
       <div style="display:flex;justify-content:center">
         <div style="padding:12px;min-height:226px">
-          <div style="font-size:52px;line-height:62px;letter-spacing:.05em;color:#FE5907;padding-bottom:10px">
+          <div class="ls-m-num" style="font-size:52px;line-height:62px;letter-spacing:.05em;color:#FE5907;padding-bottom:10px">
             <h2 style="font-family:'IFKica';font-weight:300">[02]</h2>
           </div>
           <div style="font-family:Helvetica,Arial,sans-serif;color:#FFFFC5;font-weight:700;font-size:16px;text-align:left;letter-spacing:.1em;padding-bottom:10px">РИФФ</div>
@@ -76,17 +115,17 @@ h2{margin:0}
       </div>
     </div>
 
-    <div style="padding:16px">
+    <div class="ls-m-pad" style="padding:16px">
       <div style="display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap">
         <div style="padding:12px;min-height:226px">
-          <div style="font-size:52px;line-height:62px;letter-spacing:.05em;color:#FE5907;padding-bottom:10px">
+          <div class="ls-m-num" style="font-size:52px;line-height:62px;letter-spacing:.05em;color:#FE5907;padding-bottom:10px">
             <h2 style="font-family:'IFKica';font-weight:300">[03]</h2>
           </div>
           <div style="font-family:Helvetica,Arial,sans-serif;color:#FFFFC5;font-weight:700;font-size:16px;text-align:left;letter-spacing:.1em;padding-bottom:10px">БИТ</div>
           <div style="font-family:'NeueMachina';color:#FFFFC5;font-weight:300;font-size:16px;text-align:left;letter-spacing:.08em;line-height:24px;padding-bottom:10px;max-width:380px">ХРАНИТЕЛЬ РИТМА СИСТЕМЫ. ЕГО HEARTBEAT — ЭТО МЕТРОНОМ ДЛЯ АПОКАЛИПСИСА. СОБИРАЕТ ЗВУКИ УМИРАЮЩИХ ТЕХНОЛОГИЙ.</div>
         </div>
         <div style="padding:12px;min-height:226px">
-          <div style="font-size:52px;line-height:62px;letter-spacing:.05em;color:#FE5907;padding-bottom:10px">
+          <div class="ls-m-num" style="font-size:52px;line-height:62px;letter-spacing:.05em;color:#FE5907;padding-bottom:10px">
             <h2 style="font-family:'IFKica';font-weight:300">[04]</h2>
           </div>
           <div style="font-family:Helvetica,Arial,sans-serif;color:#FFFFC5;font-weight:700;font-size:16px;text-align:left;letter-spacing:.1em;padding-bottom:10px">ШУМ</div>
@@ -95,20 +134,20 @@ h2{margin:0}
       </div>
     </div>
 
-    <div style="padding:15%">
+    <div class="ls-m-signal" style="padding:15%">
       <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:16px;padding:24px 12px 48px;text-align:center">
-        <div style="position:absolute;border-radius:50%;z-index:0;top:50%;left:50%;transform:translate(-50%,-50%);width:574px;height:574px;background-color:#FE5907;filter:blur(100px)"></div>
-        <div style="position:absolute;border-radius:50%;z-index:0;top:50%;left:50%;transform:translate(-50%,-50%);width:384px;height:384px;background-color:#FFFFC5;filter:blur(50px)"></div>
-        <h2 style="position:relative;z-index:1;font-family:'IFKica';font-weight:300;font-size:52px;line-height:62px;letter-spacing:.05em;color:#171717">&gt; СИГНАЛ <br> ОБНАРУЖЕН...</h2>
+        <div class="ls-m-blur1" style="position:absolute;border-radius:50%;z-index:0;top:50%;left:50%;transform:translate(-50%,-50%);width:574px;height:574px;background-color:#FE5907;filter:blur(100px)"></div>
+        <div class="ls-m-blur2" style="position:absolute;border-radius:50%;z-index:0;top:50%;left:50%;transform:translate(-50%,-50%);width:384px;height:384px;background-color:#FFFFC5;filter:blur(50px)"></div>
+        <h2 class="ls-m-h" style="position:relative;z-index:1;font-family:'IFKica';font-weight:300;font-size:52px;line-height:62px;letter-spacing:.05em;color:#171717">&gt; СИГНАЛ <br> ОБНАРУЖЕН...</h2>
       </div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:24px 12px 48px">
+      <div class="ls-m-cta" style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:24px 12px 48px">
         <a href="#albums" style="position:relative;z-index:1000;display:flex;align-items:center;justify-content:center;border:3px solid #171717;width:380px;max-width:100%;height:48px;gap:10px;font-family:'NeueMachina';font-size:18px;font-weight:800;line-height:24px;letter-spacing:.03em;color:#171717;text-align:center">ВСЕ АЛЬБОМЫ</a>
       </div>
     </div>
 
     <div id="albums" style="padding-bottom:64px">
-      <div style="padding:16px">
-        <div style="display:flex;flex-wrap:nowrap;gap:24px">
+      <div class="ls-m-pad" style="padding:16px">
+        <div class="ls-m-album" style="display:flex;flex-wrap:nowrap;gap:24px">
           <div style="max-width:750px;margin-top:auto;background-color:transparent;padding:12px">
             <div style="padding-bottom:16px">
               <h2 style="font-family:'IFKica';font-size:32px;font-weight:300;letter-spacing:-.03em;color:#FE5907">NO_FUTURE</h2>
@@ -118,7 +157,7 @@ h2{margin:0}
               ЭТО ЗВУК ПЕРЕГРУЗКИ, ПРОТОКОЛ СОПРОТИВЛЕНИЯ И ФИДБЭК ОТ РЕАЛЬНОСТИ, КОТОРОЙ БОЛЬШЕ НЕТ.
             </div>
             <div style="display:flex;justify-content:flex-start">
-              <a href="#albums" style="display:flex;align-items:center;justify-content:center;border:2px solid #FE5907;width:380px;height:48px;font-family:'NeueMachina';font-weight:800;font-size:18px;letter-spacing:.03em;line-height:24px;color:#FE5907;text-align:center">ВСЕ ТРЕКИ</a>
+              <a href="#albums" class="ls-m-btn" style="display:flex;align-items:center;justify-content:center;border:2px solid #FE5907;width:380px;height:48px;font-family:'NeueMachina';font-weight:800;font-size:18px;letter-spacing:.03em;line-height:24px;color:#FE5907;text-align:center">ВСЕ ТРЕКИ</a>
             </div>
           </div>
           <div style="max-width:380px;width:100%;height:auto;aspect-ratio:1;background-color:transparent;padding:12px">
@@ -129,8 +168,8 @@ h2{margin:0}
     </div>
 
     <div style="padding-bottom:16px">
-      <div style="padding:16px">
-        <div style="display:flex;flex-wrap:nowrap;gap:24px">
+      <div class="ls-m-pad" style="padding:16px">
+        <div class="ls-m-album" style="display:flex;flex-wrap:nowrap;gap:24px">
           <div style="max-width:580px;margin-top:auto;background-color:transparent;padding:12px;padding-left:32px">
             <div style="padding-bottom:16px">
               <h2 style="font-family:'IFKica';font-size:32px;font-weight:300;letter-spacing:-.03em;color:#FE5907">PROTOCOL_SILENCE.ZIP</h2>
@@ -139,7 +178,7 @@ h2{margin:0}
               ПЕРВОЕ ПРОЯВЛЕНИЕ. ЗВУК ПУСТОТЫ ПОСЛЕ ОБРЫВА СВЯЗИ. БОЛЬШЕ ЭМБИЕНТА И ДАБОВОГО ВЛИЯНИЯ.
             </div>
             <div style="display:flex;justify-content:flex-start">
-              <a href="#albums" style="display:flex;align-items:center;justify-content:center;border:2px solid #FE5907;width:380px;height:48px;font-family:'NeueMachina';font-weight:800;font-size:18px;letter-spacing:.03em;line-height:24px;color:#FE5907;text-align:center">ВСЕ ТРЕКИ</a>
+              <a href="#albums" class="ls-m-btn" style="display:flex;align-items:center;justify-content:center;border:2px solid #FE5907;width:380px;height:48px;font-family:'NeueMachina';font-weight:800;font-size:18px;letter-spacing:.03em;line-height:24px;color:#FE5907;text-align:center">ВСЕ ТРЕКИ</a>
             </div>
           </div>
           <div style="max-width:580px;width:100%;height:auto;aspect-ratio:1;background-color:transparent;padding:12px">
@@ -151,10 +190,10 @@ h2{margin:0}
 
   </div>
 
-  <footer style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:24px 12px 32px">
+  <footer class="ls-m-footer" style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:24px 12px 32px">
     <div style="width:838px;max-width:100%;text-align:center;padding-top:64px">
-      <h2 style="font-family:'IFKica';font-size:52px;font-weight:300;line-height:62px;letter-spacing:.05em;color:#FE5907;padding-bottom:32px">THE LAST SIGNAL</h2>
-      <div style="display:flex;flex-direction:row;align-items:center;justify-content:space-between">
+      <h2 class="ls-m-h" style="font-family:'IFKica';font-size:52px;font-weight:300;line-height:62px;letter-spacing:.05em;color:#FE5907;padding-bottom:32px">THE LAST SIGNAL</h2>
+      <div class="ls-m-streams" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between">
         <a href="https://open.spotify.com/" target="_blank" rel="noopener"><img src="spotify.png" alt="Spotify" style="height:40px"></a>
         <a href="https://music.youtube.com/" target="_blank" rel="noopener"><img src="youtube.png" alt="YouTube Music" style="height:40px"></a>
         <a href="https://music.yandex.ru/" target="_blank" rel="noopener"><img src="yandex.png" alt="Яндекс Музыка" style="height:40px"></a>

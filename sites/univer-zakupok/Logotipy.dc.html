@@ -15,6 +15,10 @@
   *{box-sizing:border-box}
   html,body{margin:0}
   body{background:#F4ECDB;font-family:'Inter',system-ui,sans-serif;color:#332C4E;-webkit-font-smoothing:antialiased}
+  /* мобильный адаптив: карточки логотипов в одну колонку на узких экранах */
+  @media (max-width:400px){
+    div[style*="minmax(338px"]{grid-template-columns:1fr !important}
+  }
 </style>
 </helmet>
 <div style="min-height:100vh;background:radial-gradient(125% 80% at 50% -12%, #FBF7EC 0%, #F2E8D2 58%, #E8DCBF 100%);padding:clamp(28px,5vw,64px) 20px 96px">

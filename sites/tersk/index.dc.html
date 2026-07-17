@@ -11,18 +11,51 @@
 <style>
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:#87cefa}
 @keyframes tooltipIn{from{opacity:0;transform:translateX(-50%) translateY(-8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@media (max-width:768px){
+  body{overflow-x:hidden!important}
+  .tk-m-head-row{padding:10px 12px!important;gap:10px!important}
+  .tk-m-brand{margin-top:0!important;padding:6px 10px!important;flex:1 1 auto!important;min-width:0!important}
+  .tk-m-title{font-size:16px!important;white-space:normal!important;line-height:1.25!important}
+  .tk-m-subtitle{font-size:10px!important;white-space:normal!important;line-height:1.3!important}
+  .tk-m-headright{flex:none!important;gap:8px!important}
+  .tk-m-nav{display:none!important}
+  .tk-m-hero{display:flex!important;flex-direction:column!important;gap:14px!important;box-sizing:border-box!important;padding:calc(88px + 22vh) 16px 28px!important}
+  .tk-m-zones{display:none!important}
+  .tk-m-zonefx{display:none!important}
+  .tk-m-tip{display:none!important}
+  .tk-m-panel-left{position:relative!important;left:auto!important;top:auto!important;width:100%!important}
+  .tk-m-panel-right{position:relative!important;right:auto!important;top:auto!important;width:100%!important}
+  .tk-m-panel-left .tk-acc-body a{display:inline-block!important;font-size:15px!important;padding:11px 0!important}
+  .tk-m-panel-left #tkMapOpen img{height:150px!important}
+  .tk-m-news{padding:48px 16px 40px!important}
+  .tk-m-news-title{font-size:24px!important;margin:16px 0 24px!important}
+  .tk-m-news-grid{grid-template-columns:1fr!important;gap:20px!important}
+  .tk-m-footer{padding:36px 20px 24px!important}
+  .tk-m-footer-grid{grid-template-columns:1fr!important;gap:28px!important}
+  .tk-m-footer a{display:inline-block!important;font-size:15px!important;padding:10px 0!important}
+  .tk-m-lb{padding:16px!important}
+  .tk-m-lb-close{top:12px!important;right:12px!important;width:48px!important;height:48px!important}
+}
+@media (max-width:480px){
+  .tk-m-title{font-size:15px!important}
+  .tk-m-subtitle{font-size:9.5px!important}
+  .tk-m-hero{padding:calc(84px + 16vh) 12px 24px!important}
+  .tk-m-news{padding:40px 12px 32px!important}
+  .tk-m-news-title{font-size:22px!important}
+  .tk-m-footer{padding:32px 16px 20px!important}
+}
 </style>
 </helmet>
 <div data-screen-label="Терский конный завод" style="min-height:100vh;display:flex;flex-direction:column">
 
   <header id="tkHeader" style="position:fixed;top:0;left:0;right:0;z-index:50;background:linear-gradient(to bottom,rgba(135,206,250,1) 0%,rgba(135,206,250,0) 100%)">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 24px">
-      <a href="#" style="display:flex;flex-direction:column;text-decoration:none;padding:8px 16px;border-radius:12px;backdrop-filter:blur(12px);background:rgba(255,255,255,.1);margin-top:2vh;transition:background .3s" style-hover="background:rgba(15,17,26,.3)">
-        <span data-i18n="siteTitle" style="font-family:Georgia,'Times New Roman',serif;font-size:20px;font-weight:600;color:#fff;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.9),0 2px 6px rgba(0,0,0,.7),0 4px 12px rgba(0,0,0,.5)">Терский племенной конный завод</span>
-        <span data-i18n="siteSubtitle" style="font-family:Georgia,'Times New Roman',serif;font-size:12px;color:rgba(255,255,255,.95);white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.9),0 2px 6px rgba(0,0,0,.7)">Элита арабского чистокровного коннозаводства России</span>
+    <div class="tk-m-head-row" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 24px">
+      <a href="#" class="tk-m-brand" style="display:flex;flex-direction:column;text-decoration:none;padding:8px 16px;border-radius:12px;backdrop-filter:blur(12px);background:rgba(255,255,255,.1);margin-top:2vh;transition:background .3s" style-hover="background:rgba(15,17,26,.3)">
+        <span data-i18n="siteTitle" class="tk-m-title" style="font-family:Georgia,'Times New Roman',serif;font-size:20px;font-weight:600;color:#fff;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.9),0 2px 6px rgba(0,0,0,.7),0 4px 12px rgba(0,0,0,.5)">Терский племенной конный завод</span>
+        <span data-i18n="siteSubtitle" class="tk-m-subtitle" style="font-family:Georgia,'Times New Roman',serif;font-size:12px;color:rgba(255,255,255,.95);white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.9),0 2px 6px rgba(0,0,0,.7)">Элита арабского чистокровного коннозаводства России</span>
       </a>
-      <div style="display:flex;align-items:center;gap:16px">
-        <nav style="display:flex;align-items:center;gap:8px">
+      <div class="tk-m-headright" style="display:flex;align-items:center;gap:16px">
+        <nav class="tk-m-nav" style="display:flex;align-items:center;gap:8px">
           <a href="#" data-i18n="navNews" style="display:inline-block;padding:10px 20px;background:rgba(255,255,255,.01);backdrop-filter:blur(1px);color:#fff;font-size:14.5px;font-weight:500;border-radius:9999px;text-decoration:none;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,1);transition:all .2s" style-hover="background:rgba(0,0,0,.75);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.15)">Новости</a>
           <a href="#" data-i18n="navMission" style="display:inline-block;padding:10px 20px;background:rgba(255,255,255,.01);backdrop-filter:blur(1px);color:#fff;font-size:14.5px;font-weight:500;border-radius:9999px;text-decoration:none;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,1);transition:all .2s" style-hover="background:rgba(0,0,0,.75);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.15)">Наша миссия</a>
           <a href="#" data-i18n="navHistory" style="display:inline-block;padding:10px 20px;background:rgba(255,255,255,.01);backdrop-filter:blur(1px);color:#fff;font-size:14.5px;font-weight:500;border-radius:9999px;text-decoration:none;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,1);transition:all .2s" style-hover="background:rgba(0,0,0,.75);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.15)">История</a>
@@ -37,20 +70,20 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
     </div>
   </header>
 
-  <div style="position:relative;width:100%;min-height:100vh;overflow:hidden">
+  <div class="tk-m-hero" style="position:relative;width:100%;min-height:100vh;overflow:hidden">
     <img src="images/main_hero.jpg" alt="Терский конный завод" style="position:fixed;top:0;left:0;width:100vw;height:100vh;object-fit:cover;z-index:0">
-    <img id="tkZoneImgMountain" src="images/areas/feeding.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;z-index:3;pointer-events:none;transition:opacity .4s ease,transform .5s,filter .4s ease">
-    <img id="tkZoneImgBuildings" src="images/areas/hall-of-fame.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;z-index:3;pointer-events:none;transition:opacity .4s ease,transform .5s,filter .4s ease">
+    <img id="tkZoneImgMountain" class="tk-m-zonefx" src="images/areas/feeding.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;z-index:3;pointer-events:none;transition:opacity .4s ease,transform .5s,filter .4s ease">
+    <img id="tkZoneImgBuildings" class="tk-m-zonefx" src="images/areas/hall-of-fame.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;z-index:3;pointer-events:none;transition:opacity .4s ease,transform .5s,filter .4s ease">
 
-    <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:4" viewBox="0 0 3456 1944" fill="none" preserveAspectRatio="xMidYMid slice">
+    <svg class="tk-m-zones" style="position:absolute;inset:0;width:100%;height:100%;z-index:4" viewBox="0 0 3456 1944" fill="none" preserveAspectRatio="xMidYMid slice">
       <path id="tkZoneMountain" d="M1423 750.5L1096 762.5L481.5 683L493.5 648L855.5 566L1096 491.5L1392.5 461H1778L2193.5 545L2723.5 750.5L2448 781H2053.5L1423 750.5Z" fill="transparent" stroke="transparent" stroke-width="2" style="cursor:pointer;pointer-events:auto"></path>
       <path id="tkZoneBuildings" d="M2268 986.5H1194L913.5 1388H2380.5L2455 1206L2268 986.5Z" fill="transparent" stroke="transparent" stroke-width="2" style="cursor:pointer;pointer-events:auto"></path>
     </svg>
 
-    <div id="tkTooltipMountain" data-i18n="advantages" style="display:none;position:absolute;z-index:6;top:42%;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);backdrop-filter:blur(10px);color:#fff;padding:12px 20px;border-radius:8px;font-size:16px;font-weight:500;box-shadow:0 4px 15px rgba(0,0,0,.3);pointer-events:none;white-space:nowrap;animation:tooltipIn .25s ease both">Наши достоинства</div>
-    <div id="tkTooltipBuildings" data-i18n="ourHorses" style="display:none;position:absolute;z-index:6;top:78%;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);backdrop-filter:blur(10px);color:#fff;padding:12px 20px;border-radius:8px;font-size:16px;font-weight:500;box-shadow:0 4px 15px rgba(0,0,0,.3);pointer-events:none;white-space:nowrap;animation:tooltipIn .25s ease both">Наши лошади</div>
+    <div id="tkTooltipMountain" class="tk-m-tip" data-i18n="advantages" style="display:none;position:absolute;z-index:6;top:42%;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);backdrop-filter:blur(10px);color:#fff;padding:12px 20px;border-radius:8px;font-size:16px;font-weight:500;box-shadow:0 4px 15px rgba(0,0,0,.3);pointer-events:none;white-space:nowrap;animation:tooltipIn .25s ease both">Наши достоинства</div>
+    <div id="tkTooltipBuildings" class="tk-m-tip" data-i18n="ourHorses" style="display:none;position:absolute;z-index:6;top:78%;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);backdrop-filter:blur(10px);color:#fff;padding:12px 20px;border-radius:8px;font-size:16px;font-weight:500;box-shadow:0 4px 15px rgba(0,0,0,.3);pointer-events:none;white-space:nowrap;animation:tooltipIn .25s ease both">Наши лошади</div>
 
-    <div style="position:fixed;left:24px;top:112px;z-index:50;display:flex;flex-direction:column;width:240px">
+    <div class="tk-m-panel-left" style="position:fixed;left:24px;top:112px;z-index:50;display:flex;flex-direction:column;width:240px">
       <div style="background:rgba(0,0,0,.6);backdrop-filter:blur(10px);color:#fff;overflow:hidden;border-top:1px solid rgba(255,255,255,.1);border-radius:9px 9px 0 0">
         <button class="tk-acc-head" style="display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 18px;background:transparent;border:none;cursor:pointer;transition:background .15s" style-hover="background:rgba(255,255,255,.05)">
           <h3 data-i18n="events" style="font-size:14.5px;font-weight:600;margin:0;color:#fff;text-align:left">Ближайшие события</h3>
@@ -115,7 +148,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
       </div>
     </div>
 
-    <div style="position:fixed;right:32px;top:192px;z-index:50;display:flex;flex-direction:column;gap:12px;width:280px">
+    <div class="tk-m-panel-right" style="position:fixed;right:32px;top:192px;z-index:50;display:flex;flex-direction:column;gap:12px;width:280px">
       <a href="#" data-i18n="horseSale" style="display:block;background:rgba(40,40,35,.85);backdrop-filter:blur(12px);color:#fff;text-align:center;padding:14px 20px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.08)" style-hover="background:rgba(50,50,45,.9);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.35)">Продажа лошадей</a>
       <div style="background:rgba(0,0,0,.45);backdrop-filter:blur(16px);border-radius:8px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.08)">
         <h3 data-i18n="discover" style="font-size:16px;font-weight:600;color:#fff;padding:14px 20px;margin:0;background:rgba(0,0,0,.15);border-bottom:1px solid rgba(255,255,255,.1);text-shadow:0 1px 2px rgba(0,0,0,.3)">Открой для себя Терский</h3>
@@ -131,10 +164,10 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
     </div>
   </div>
 
-  <section style="position:relative;z-index:10;padding:96px 7% 64px">
+  <section class="tk-m-news" style="position:relative;z-index:10;padding:96px 7% 64px">
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 0%,rgba(255,255,255,.1) 60px,rgba(255,255,255,.25) 100px,rgba(255,255,255,.4) 140px,rgba(255,255,255,.5) 180px,rgba(255,255,255,.5) 100%);backdrop-filter:blur(3px);pointer-events:none"></div>
-    <h2 data-i18n="latestNews" style="position:relative;font-size:32px;font-weight:700;text-align:center;margin:32px 0 40px;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.8),0 4px 8px rgba(0,0,0,.6)">Последние новости</h2>
-    <div style="position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:32px">
+    <h2 data-i18n="latestNews" class="tk-m-news-title" style="position:relative;font-size:32px;font-weight:700;text-align:center;margin:32px 0 40px;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.8),0 4px 8px rgba(0,0,0,.6)">Последние новости</h2>
+    <div class="tk-m-news-grid" style="position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:32px">
       <article style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,.05);transition:transform .25s,box-shadow .25s;cursor:pointer" style-hover="transform:translateY(-4px);box-shadow:0 12px 24px rgba(0,0,0,.12)">
         <div style="aspect-ratio:16/9;overflow:hidden"><img src="images/news-default.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div>
         <div style="padding:24px">
@@ -162,8 +195,8 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
     </div>
   </section>
 
-  <footer style="position:relative;z-index:10;background:#111827;color:#fff;padding:48px 7% 32px">
-    <div style="display:grid;grid-template-columns:1.2fr 1fr 1.2fr;gap:40px">
+  <footer class="tk-m-footer" style="position:relative;z-index:10;background:#111827;color:#fff;padding:48px 7% 32px">
+    <div class="tk-m-footer-grid" style="display:grid;grid-template-columns:1.2fr 1fr 1.2fr;gap:40px">
       <div>
         <h3 data-i18n="footerTitle" style="font-size:18px;font-weight:700;margin:0 0 16px">Терский конный завод</h3>
         <p data-i18n="footerDesc" style="margin:0;color:#9ca3af;font-size:14px;line-height:1.6">Ведущий центр разведения арабских лошадей в России. 137 лет истории и традиций.</p>
@@ -190,8 +223,8 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
     <div data-i18n="copyright" style="border-top:1px solid #1f2937;margin-top:32px;padding-top:32px;text-align:center;color:#9ca3af;font-size:14px">© 2026 Терский конный завод. Все права защищены.</div>
   </footer>
 
-  <div id="tkLightbox" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.95);align-items:center;justify-content:center;padding:32px">
-    <button id="tkLightboxClose" style="position:absolute;top:24px;right:24px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.3);border-radius:50%;color:#fff;cursor:pointer;transition:all .2s" style-hover="background:rgba(255,255,255,.2);transform:scale(1.1)">
+  <div id="tkLightbox" class="tk-m-lb" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.95);align-items:center;justify-content:center;padding:32px">
+    <button id="tkLightboxClose" class="tk-m-lb-close" style="position:absolute;top:24px;right:24px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.3);border-radius:50%;color:#fff;cursor:pointer;transition:all .2s" style-hover="background:rgba(255,255,255,.2);transform:scale(1.1)">
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path></svg>
     </button>
     <div style="display:flex;flex-direction:column;align-items:center;gap:24px;max-width:90vw;max-height:90vh">

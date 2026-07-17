@@ -1091,7 +1091,7 @@ p { margin: 0; text-wrap: pretty; }
 .dtable thead th { font-size:12px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--c-text-muted); background:var(--c-bg); }
 .dtable tbody tr:hover { background:var(--c-bg); }
 .dtable td b, .dtable th b { color:var(--c-text); }
-.table-wrap { border:1px solid var(--c-border); border-radius:var(--r-md); overflow:hidden; }
+.table-wrap { border:1px solid var(--c-border); border-radius:var(--r-md); overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; }
 
 /* sveden side nav */
 .sv-nav { display:flex; flex-direction:column; gap:2px; }
@@ -1138,3 +1138,58 @@ p { margin: 0; text-wrap: pretty; }
 .nav a.nav-item.is-current span { position:relative; }
 .nav a.nav-item.is-current span::after { content:""; position:absolute; left:0; right:0; bottom:2px; height:2px; background:var(--c-accent); border-radius:2px; }
 .mobile-nav a.is-current { color:var(--c-primary); }
+
+/* ============================================================
+   МОБИЛЬНЫЙ АДАПТИВ - доводка 360-430px (десктоп не трогаем)
+   ============================================================ */
+@media (max-width: 991px) {
+  /* мобильное меню: скролл при малой высоте экрана, тап-таргеты >=44px */
+  .mobile-nav.show { max-height: calc(100vh - 64px); max-height: calc(100dvh - 64px); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .mobile-nav a { display: flex; align-items: center; min-height: 44px; }
+  /* перебиваем инлайновый grid (kurs.dc.html #zayavka) */
+  .apply-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
+}
+@media (max-width: 767px) {
+  .btn--sm { min-height: 44px; }
+  .chip { min-height: 44px; }
+  .dash-filter select { height: 44px; }
+  /* «шапка секции + кнопка справа» складываем в колонку (инлайновый flex) */
+  .section-head[style*="display:flex"] { display: block !important; }
+  .section-head[style*="display:flex"] > .btn,
+  .section-head[style*="display:flex"] > .teach-toggle { margin-top: 18px; }
+  /* герой: корочки-книжки в одну колонку и пропорциональное сжатие */
+  .hero-doc-wrap { grid-template-columns: 1fr; gap: 28px; }
+  .hero-books { width: min(100%, 330px); height: auto; aspect-ratio: 360 / 452; margin: 0 auto; }
+  .hero-book--cert { width: 68.3%; height: 83.2%; top: 12.8%; }
+  .hero-book--dip  { width: 74.4%; height: 88.5%; top: 4.4%; }
+  /* большая новость (novosti.dc.html): инлайновый grid -> одна колонка */
+  .news-feature { grid-template-columns: 1fr !important; }
+  .news-feature .blog-thumb { min-height: 200px !important; border-right: none !important; border-bottom: 1px solid var(--c-border) !important; }
+  .news-feature > div:last-child { padding: 24px !important; }
+  .news-feature h2 { font-size: 22px !important; }
+  /* сегменты дашборда карты переносим на новую строку */
+  .seg, .view-toggle { flex-wrap: wrap; }
+  /* заголовок группы каталога: метаданные под заголовок */
+  .cat-group-head { flex-wrap: wrap; }
+  .cat-group-head .meta { margin-left: 0; width: 100%; padding-left: 28px; }
+  /* модалка обратного звонка на низких экранах */
+  .modal { max-height: calc(100vh - 40px); overflow-y: auto; }
+}
+@media (max-width: 600px) {
+  /* широкие таблицы (svedeniya, licenziya) скроллятся внутри .table-wrap */
+  .dtable { min-width: 540px; }
+}
+@media (max-width: 480px) {
+  .header-row { gap: 14px; }
+  .logo { font-size: 15px; gap: 9px; }
+  .logo-mark { width: 36px; height: 36px; }
+  .header-cta { gap: 10px; }
+  .header-cta .btn--sm { padding: 0 13px; font-size: 13.5px; }
+  .burger { width: 42px; height: 42px; }
+  /* кнопки с длинным текстом не создают горизонтальный скролл */
+  .btn { white-space: normal; }
+  .applicant-toggle span { font-size: 13px; padding: 11px 6px; }
+  .form-card { padding: 20px 16px; }
+  .cat-group-head h3 { font-size: 19px; }
+  .apply-callback .btn { width: 100%; }
+}
