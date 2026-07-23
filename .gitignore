@@ -7,3 +7,4 @@ claudeDesign/
 uploads/*
 !uploads/planet-cosmos.png
 !uploads/logo-prince-emblem.png
+.gstack/
