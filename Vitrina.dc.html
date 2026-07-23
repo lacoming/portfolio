@@ -11,16 +11,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;700&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+html{scroll-behavior:smooth}
 body{margin:0;background:#060609;-webkit-font-smoothing:antialiased}
 a{text-decoration:none}
 ::selection{background:var(--acc,#B7524A);color:var(--acc-ink,#fff)}
-@keyframes vzColUp{from{transform:translateY(0)}to{transform:translateY(-50%)}}
-@keyframes vzColDown{from{transform:translateY(-50%)}to{transform:translateY(0)}}
 @keyframes vzFade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @keyframes vzGlow{0%,100%{opacity:.7}50%{opacity:1}}
 @keyframes vzBob{0%,100%{transform:translateY(0)}50%{transform:translateY(4.19%)}}
 @media (max-width:1120px){
 #vzHero{grid-template-columns:1fr !important;min-height:0 !important;padding-top:24px !important}
+#vzHeroText{padding-left:0 !important}
 #vzMarquee{height:54vh !important;min-height:380px !important}
 #vzGrid{grid-template-columns:repeat(2,1fr) !important}
 #vzAboutGrid{grid-template-columns:1fr !important;gap:36px !important}
@@ -57,13 +57,15 @@ a{text-decoration:none}
 }
 </style>
 </helmet>
-<div id="vzRoot" data-screen-label="Витрина · Космос" style="--acc:#C8232B;--acc-deep:#6E1318;--acc-rgb:200,35,43;--acc-ink:#fff;font-family:'Golos Text',system-ui,sans-serif;color:#F2F2F7;background:#060609;min-height:100vh;overflow-x:hidden">
+<div id="vzRoot" data-screen-label="Витрина · Космос" style="--acc:#C8232B;--acc-deep:#6E1318;--acc-rgb:200,35,43;--acc-ink:#fff;font-family:'Golos Text',system-ui,sans-serif;color:#F2F2F7;background:#060609;min-height:100vh;overflow:hidden;position:relative">
 
   <div style="position:fixed;inset:0;pointer-events:none;z-index:0">
     <div style="position:absolute;top:-38vh;left:50%;transform:translateX(-50%);width:130vw;height:90vh;background:radial-gradient(50% 50% at 50% 50%,rgba(68,56,202,.34),transparent 70%);animation:vzGlow 9s ease-in-out infinite"></div>
     <div style="position:absolute;bottom:-30vh;right:-20vw;width:70vw;height:70vh;background:radial-gradient(50% 50% at 50% 50%,rgba(var(--acc-rgb,183,82,74),.07),transparent 70%)"></div>
     <canvas id="vzStars" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
+    <canvas id="vzMeteors" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
   </div>
+  <canvas id="vzStarsMain" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0"></canvas>
 
   <header id="vzHeader" style="position:relative;z-index:20;display:flex;align-items:center;gap:24px;max-width:1440px;margin:0 auto;padding:20px 67px">
     <a href="#" style="display:flex;align-items:center;gap:18px;color:#F2F2F7">
@@ -79,11 +81,11 @@ a{text-decoration:none}
       <a href="#contact" data-l10n="navContact" style="color:#B9BDCC;transition:color .2s" style-hover="color:#fff">Контакты</a>
     </nav>
     <button id="vzLang" style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:#F2F2F7;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:8px 14px;cursor:pointer;transition:border-color .2s" style-hover="border-color:var(--acc,#B7524A)">RU / <span style="color:#8E93A8">EN</span></button>
-    <a href="#" id="vzHeadCta" data-l10n="cta" style="font-size:13px;font-weight:600;color:#060609;background:#F2F2F7;padding:10px 20px;border-radius:999px;transition:background .2s,transform .2s" style-hover="background:var(--acc,#B7524A);color:var(--acc-ink,#fff);transform:translateY(-1px)">Обсудить проект</a>
+    <a href="#contact" id="vzHeadCta" data-l10n="cta" style="font-size:13px;font-weight:600;color:#060609;background:#F2F2F7;padding:10px 20px;border-radius:999px;transition:background .2s,transform .2s" style-hover="background:var(--acc,#B7524A);color:var(--acc-ink,#fff);transform:translateY(-1px)">Обсудить проект</a>
   </header>
 
   <section id="vzHero" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:48px 67px 40px;display:grid;grid-template-columns:0.92fr 1.08fr;gap:40px;align-items:center;min-height:78vh">
-    <div style="animation:vzFade .8s ease-out both">
+    <div id="vzHeroText" style="animation:vzFade .8s ease-out both;padding-left:56px">
       <h1 id="vzH1" data-l10n="h1" style="margin:0 0 22px;font-family:'Unbounded',sans-serif;font-weight:500;font-size:47px;line-height:1.12;letter-spacing:-.01em;text-wrap:balance">Сайты и сервисы под ключ — <span style="color:var(--acc,#B7524A)">в короткие сроки</span></h1>
       <p id="vzSub" data-l10n="sub" style="margin:0 0 32px;font-size:16.5px;line-height:1.65;color:#B9BDCC;max-width:470px;text-wrap:pretty">Fullstack-разработка, усиленная AI-агентами: от идеи до продакшена за дни, а не месяцы. Каждое окно справа — реальный проект. Наведите и кликните — сайт откроется, его можно полистать.</p>
       <div id="vzHeroBtns" style="display:flex;gap:12px;flex-wrap:wrap">
@@ -97,9 +99,9 @@ a{text-decoration:none}
       </div>
     </div>
 
-    <div id="vzMarquee" style="position:relative;height:76vh;min-height:540px;overflow:hidden;border-radius:20px;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent 100%)">
+    <div id="vzMarquee" style="position:relative;height:76vh;min-height:540px;overflow:hidden;border-radius:20px;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent 100%)">
       <div id="vzMarqueeGrid" style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:0 4px">
-        <div class="vz-col" style="display:flex;flex-direction:column;gap:18px;animation:vzColUp 46s linear infinite;will-change:transform">
+        <div class="vz-col" style="display:flex;flex-direction:column;gap:18px;will-change:transform">
           <div class="vz-win" data-open-site="sites/rentsale-altay/index.html" data-site-title="Недвижимость Горного Алтая" data-site-url="rentsale-altay.ru"></div>
           <div class="vz-win" data-open-site="sites/flexpath/index.dc.html" data-site-title="Radius Step — конструктор дорожек" data-site-url="radius-step.ru"></div>
           <div class="vz-win" data-open-site="sites/tersk/index.dc.html" data-site-title="Терский конный завод" data-site-url="terskarabian.com"></div>
@@ -109,7 +111,7 @@ a{text-decoration:none}
           <div class="vz-win" data-open-site="sites/tersk/index.dc.html" data-site-title="Терский конный завод" data-site-url="terskarabian.com"></div>
           <div class="vz-win" data-open-site="sites/concepts/gastro.dc.html" data-site-title="Ресторан «Сад»" data-site-url="sad-garden.ru"></div>
         </div>
-        <div class="vz-col" style="display:flex;flex-direction:column;gap:18px;animation:vzColDown 52s linear infinite;will-change:transform">
+        <div class="vz-col" style="display:flex;flex-direction:column;gap:18px;will-change:transform">
           <div class="vz-win" data-open-site="sites/concepts/atelier.dc.html" data-site-title="Ателье «Форма»" data-site-url="forma-atelier.ru"></div>
           <div class="vz-win" data-open-site="sites/concepts/termy.dc.html" data-site-title="Термы «Пар»" data-site-url="par-termy.ru"></div>
           <div class="vz-win" data-open-site="sites/tokeon/index.html" data-site-title="Токеон" data-site-url="tokeon.ru" data-site-live="1"></div>
@@ -209,7 +211,7 @@ a{text-decoration:none}
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#C8232B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Стиль&quot;,&quot;options&quot;:[&quot;#C8232B&quot;,&quot;#D2B183&quot;,&quot;#C97355&quot;,&quot;#C36250&quot;,&quot;#B7524A&quot;,&quot;#B87333&quot;,&quot;#E0A458&quot;,&quot;#D4A745&quot;,&quot;#C65D57&quot;,&quot;#8E3B46&quot;,&quot;#B76E79&quot;,&quot;#C98A97&quot;,&quot;#915F6D&quot;,&quot;#A48BD8&quot;,&quot;#8D7BB8&quot;,&quot;#7A8CC9&quot;,&quot;#4F74C9&quot;,&quot;#6C8EBF&quot;,&quot;#56A3A6&quot;,&quot;#4E8D7C&quot;,&quot;#7FA08C&quot;,&quot;#A3B18A&quot;,&quot;#8A9A5B&quot;,&quot;#708090&quot;,&quot;#C9C5BD&quot;,&quot;#E8E4DC&quot;]},&quot;starDensity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2.2,&quot;min&quot;:0.3,&quot;max&quot;:2.2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;haloRadius&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2,&quot;min&quot;:0.5,&quot;max&quot;:2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;twinkle&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;constellations&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Космос&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#C8232B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Стиль&quot;,&quot;options&quot;:[&quot;#C8232B&quot;,&quot;#D2B183&quot;,&quot;#C97355&quot;,&quot;#C36250&quot;,&quot;#B7524A&quot;,&quot;#B87333&quot;,&quot;#E0A458&quot;,&quot;#D4A745&quot;,&quot;#C65D57&quot;,&quot;#8E3B46&quot;,&quot;#B76E79&quot;,&quot;#C98A97&quot;,&quot;#915F6D&quot;,&quot;#A48BD8&quot;,&quot;#8D7BB8&quot;,&quot;#7A8CC9&quot;,&quot;#4F74C9&quot;,&quot;#6C8EBF&quot;,&quot;#56A3A6&quot;,&quot;#4E8D7C&quot;,&quot;#7FA08C&quot;,&quot;#A3B18A&quot;,&quot;#8A9A5B&quot;,&quot;#708090&quot;,&quot;#C9C5BD&quot;,&quot;#E8E4DC&quot;]},&quot;starDensity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2.2,&quot;min&quot;:0.3,&quot;max&quot;:2.2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;haloRadius&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2,&quot;min&quot;:0.5,&quot;max&quot;:2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;twinkle&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;constellations&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;meteors&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Космос&quot;}}">
 class Component extends DCLogic {
   componentDidMount() {
     const $ = (id) => document.getElementById(id);
@@ -258,22 +260,26 @@ class Component extends DCLogic {
       label.style.cssText = 'position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:8px;padding:9px 13px;background:linear-gradient(transparent,rgba(6,6,9,.9) 40%);opacity:0;transition:opacity .25s;pointer-events:none';
       label.innerHTML = '<span style="font-size:12px;font-weight:600;color:#fff">' + title + '</span><span style="margin-left:auto;font-family:JetBrains Mono,monospace;font-size:10px;color:#B9BDCC">' + url + '</span>';
       win.appendChild(label);
-      const col = win.closest('.vz-col');
       win.addEventListener('mouseenter', () => {
+        const m = this._drum && this._drum.mode;
+        if (m === 'drag' || m === 'spin' || m === 'snap') return;
         win.style.borderColor = 'var(--acc)';
         win.style.transform = 'scale(1.025)';
         win.style.boxShadow = '0 14px 44px rgba(var(--acc-rgb),.22)';
         label.style.opacity = '1';
-        if (col) col.style.animationPlayState = 'paused';
+        if (this._drum) this._drum.hover = true;
       });
       win.addEventListener('mouseleave', () => {
         win.style.borderColor = 'rgba(255,255,255,.12)';
         win.style.transform = 'none';
         win.style.boxShadow = 'none';
         label.style.opacity = '0';
-        if (col) col.style.animationPlayState = 'running';
+        if (this._drum) this._drum.hover = false;
       });
-      win.addEventListener('click', () => openModal(src, title, url, win.hasAttribute('data-site-live')));
+      win.addEventListener('click', () => {
+        if (this._drum && this._drum.suppress) return;
+        openModal(src, title, url, win.hasAttribute('data-site-live'));
+      });
     });
 
     // ---------- грид работ ----------
@@ -389,6 +395,112 @@ class Component extends DCLogic {
 
     this._applyAccent();
     this._initStars();
+    this._initDrum();
+  }
+
+  // ================= БАРАБАН САЙТОВ =================
+  // Обе колонки марквиза — один «барабан» с общим ходом pos: левая колонка
+  // едет вверх, правая вниз (как две стороны колеса). Барабан можно схватить
+  // мышью или пальцем и крутануть: инерция с трением, мягкая доводка до
+  // ближайшей карточки, пауза — и возврат к автопрокрутке.
+  _initDrum() {
+    const wrap = document.getElementById('vzMarquee');
+    if (!wrap) return;
+    const cols = Array.from(wrap.querySelectorAll('.vz-col'));
+    if (cols.length < 2) return;
+    const d = this._drum = { pos: 0, v: 0, base: 18, mode: 'auto', hover: false, suppress: false, snapTo: 0, idleUntil: 0, lastCol: 0, drag: null, moved: 0, captured: false, lastT: 0, halves: [1, 1] };
+    const measure = () => { d.halves = cols.map((c) => Math.max(1, c.scrollHeight / 2)); };
+    measure();
+    this._drumResize = measure;
+    window.addEventListener('resize', this._drumResize);
+
+    const mod = (x, m) => ((x % m) + m) % m;
+    const apply = () => {
+      cols[0].style.transform = 'translate3d(0,' + (-mod(d.pos, d.halves[0])).toFixed(2) + 'px,0)';
+      cols[1].style.transform = 'translate3d(0,' + (mod(d.pos, d.halves[1]) - d.halves[1]).toFixed(2) + 'px,0)';
+    };
+    apply();
+    // за какую сторону колеса тянем: левая колонка движется по ходу pos, правая против
+    const dragSign = (i) => (i === 0 ? -1 : 1);
+
+    wrap.addEventListener('pointerdown', (e) => {
+      const r = wrap.getBoundingClientRect();
+      d.lastCol = e.clientX < r.left + r.width / 2 ? 0 : 1;
+      d.drag = { y: e.clientY, t: performance.now(), v: 0 };
+      d.moved = 0;
+      d.suppress = false;
+      d.captured = false;
+      d.v = 0;
+      d.mode = 'drag';
+      wrap.style.cursor = 'grabbing';
+    });
+    wrap.addEventListener('pointermove', (e) => {
+      if (!d.drag) return;
+      const now = performance.now();
+      const dy = e.clientY - d.drag.y;
+      const dt = Math.max(0.001, (now - d.drag.t) / 1000);
+      d.drag.y = e.clientY;
+      d.drag.t = now;
+      d.moved += Math.abs(dy);
+      if (d.moved > 8 && !d.captured) {
+        d.captured = true;
+        d.suppress = true;
+        try { wrap.setPointerCapture(e.pointerId); } catch (_) {}
+      }
+      const dp = dragSign(d.lastCol) * dy;
+      d.pos += dp;
+      d.drag.v = 0.75 * (dp / dt) + 0.25 * d.drag.v;
+      apply();
+    });
+    const release = () => {
+      if (!d.drag) return;
+      d.v = Math.max(-2600, Math.min(2600, d.drag.v));
+      d.drag = null;
+      d.mode = 'spin';
+      wrap.style.cursor = 'grab';
+    };
+    wrap.addEventListener('pointerup', release);
+    wrap.addEventListener('pointercancel', release);
+
+    this._drumLoop = (t) => {
+      const dt = Math.min(0.05, Math.max(0, (t - (d.lastT || t)) / 1000));
+      d.lastT = t;
+      if (d.mode === 'auto') {
+        const target = d.hover ? 0 : d.base;
+        d.v += (target - d.v) * Math.min(1, dt * 5);
+        d.pos += d.v * dt;
+      } else if (d.mode === 'spin') {
+        d.v *= Math.exp(-dt * 1.7);
+        d.pos += d.v * dt;
+        if (Math.abs(d.v) < 40) {
+          // доводка: ближайшую карточку «схваченной» колонки — к центру окна
+          const r = wrap.getBoundingClientRect();
+          const mid = r.top + r.height / 2;
+          let best = 0, bestAbs = Infinity;
+          for (const win of cols[d.lastCol].children) {
+            const c = win.getBoundingClientRect();
+            const delta = c.top + c.height / 2 - mid;
+            if (Math.abs(delta) < bestAbs) { bestAbs = Math.abs(delta); best = delta; }
+          }
+          d.snapTo = d.pos - dragSign(d.lastCol) * best;
+          d.mode = 'snap';
+        }
+      } else if (d.mode === 'snap') {
+        const diff = d.snapTo - d.pos;
+        d.pos += diff * Math.min(1, dt * 4);
+        if (Math.abs(diff) < 0.5) {
+          d.pos = d.snapTo;
+          d.v = 0;
+          d.idleUntil = t + 2600;
+          d.mode = 'idle';
+        }
+      } else if (d.mode === 'idle') {
+        if (t >= d.idleUntil && !d.hover) d.mode = 'auto';
+      }
+      if (d.mode !== 'drag') apply();
+      this._drumRaf = requestAnimationFrame(this._drumLoop);
+    };
+    this._drumRaf = requestAnimationFrame(this._drumLoop);
   }
 
   // ================= ЗВЁЗДНОЕ НЕБО =================
@@ -396,39 +508,114 @@ class Component extends DCLogic {
   // <img id="vzPlanetImg">). У границы картинки плотность совпадает с её
   // собственной звёздной плотностью и плавно спадает с расстоянием, поэтому
   // край картинки (с запечённым альфа-растушёванным краем) неотличим от фона.
+  //
+  // Основной слой (#vzStarsMain) — absolute-канвас на всю высоту документа:
+  // при скролле его двигает компоузитор вместе с контентом, JS в скролле не
+  // участвует вовсе — нет отставания. Дальний слой (#vzStars) — fixed-канвас
+  // с «бесконечно далёкими» неподвижными звёздами. Мерцание перерисовывает
+  // только видимую полосу основного канваса.
   _initStars() {
-    const cv = document.getElementById('vzStars');
-    if (!cv) return;
-    this._cv = cv;
-    this._cx = cv.getContext('2d');
+    const far = document.getElementById('vzStars');
+    const main = document.getElementById('vzStarsMain');
+    if (!far || !main) return;
+    this._cvFar = far;
+    this._cxFar = far.getContext('2d');
+    this._cvMain = main;
+    this._cxMain = main.getContext('2d');
     this._sprites = {};
-    this._dirty = true;
     this._lastT = 0;
     this._genStars();
-
-    this._onScroll = () => { this._dirty = true; };
-    window.addEventListener('scroll', this._onScroll, { passive: true });
+    this._paintFar();
+    this._paintMain();
 
     const root = document.getElementById('vzRoot');
     this._ro = new ResizeObserver(() => {
       clearTimeout(this._rt);
-      this._rt = setTimeout(() => { this._genStars(); this._dirty = true; }, 180);
+      this._rt = setTimeout(() => { this._genStars(); this._paintFar(); this._paintMain(); }, 180);
     });
     if (root) this._ro.observe(root);
 
     const img = document.getElementById('vzPlanetImg');
-    if (img && !img.complete) img.addEventListener('load', () => { this._genStars(); this._dirty = true; }, { once: true });
+    if (img && !img.complete) img.addEventListener('load', () => { this._genStars(); this._paintFar(); this._paintMain(); }, { once: true });
 
     this._loop = (t) => {
-      const tw = (this.props.twinkle ?? true) && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (this._dirty || (tw && t - this._lastT > 40)) {
+      const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const tw = (this.props.twinkle ?? true) && !rm;
+      if (tw && t - this._lastT > 66) {
         this._lastT = t;
-        this._dirty = false;
-        this._drawStars(t / 1000, tw);
+        this._paintMain(t / 1000, window.scrollY - 150, window.scrollY + window.innerHeight + 150);
       }
+      if ((this.props.meteors ?? true) && !rm) this._meteorTick(t);
       this._raf = requestAnimationFrame(this._loop);
     };
     this._raf = requestAnimationFrame(this._loop);
+  }
+
+  // ================= ПАДАЮЩИЕ ЗВЁЗДЫ =================
+  // Метеоры «бесконечно далёкие», поэтому летят в координатах экрана на
+  // отдельном fixed-канвасе. Канвас перерисовывается только пока метеор в
+  // полёте, в остальное время пуст.
+  _meteorTick(t) {
+    const cv = document.getElementById('vzMeteors');
+    if (!cv) return;
+    if (!this._meteorNext) this._meteorNext = t + 3000 + Math.random() * 5000;
+    if (!this._meteor) {
+      if (t < this._meteorNext) return;
+      const W = document.documentElement.clientWidth, vh = window.innerHeight;
+      const ltr = Math.random() < 0.5;
+      const ang = (24 + Math.random() * 18) * Math.PI / 180;
+      this._meteor = {
+        t0: t,
+        x0: ltr ? -40 + Math.random() * W * 0.6 : W * 0.4 + Math.random() * W * 0.6 + 40,
+        y0: vh * (0.05 + Math.random() * 0.45),
+        dx: Math.cos(ang) * (ltr ? 1 : -1),
+        dy: Math.sin(ang),
+        speed: 650 + Math.random() * 550,
+        dist: 380 + Math.random() * 400,
+        trail: 110 + Math.random() * 120,
+      };
+    }
+    const m = this._meteor;
+    const ctx = cv.getContext('2d');
+    const W = document.documentElement.clientWidth, vh = window.innerHeight;
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(vh * dpr)) {
+      cv.width = Math.round(W * dpr);
+      cv.height = Math.round(vh * dpr);
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, vh);
+    const trav = (t - m.t0) / 1000 * m.speed;
+    if (trav >= m.dist) {
+      this._meteor = null;
+      this._meteorNext = t + 7000 + Math.random() * 11000;
+      return;
+    }
+    const prog = trav / m.dist;
+    let alpha = 1;
+    if (prog < 0.15) alpha = prog / 0.15;
+    else if (prog > 0.72) alpha = Math.max(0, (1 - prog) / 0.28);
+    const hx = m.x0 + m.dx * trav, hy = m.y0 + m.dy * trav;
+    const tl = Math.min(m.trail, trav);
+    const tx = hx - m.dx * tl, ty = hy - m.dy * tl;
+    const g = ctx.createLinearGradient(hx, hy, tx, ty);
+    g.addColorStop(0, 'rgba(235,242,255,' + (0.9 * alpha).toFixed(3) + ')');
+    g.addColorStop(0.25, 'rgba(200,218,255,' + (0.45 * alpha).toFixed(3) + ')');
+    g.addColorStop(1, 'rgba(180,200,255,0)');
+    ctx.strokeStyle = g;
+    ctx.lineWidth = 1.7;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(hx, hy);
+    ctx.lineTo(tx, ty);
+    ctx.stroke();
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(this._sprite('213,228,255'), hx - 11, hy - 11, 22, 22);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = 'rgba(255,255,255,' + (0.95 * alpha).toFixed(3) + ')';
+    ctx.beginPath();
+    ctx.arc(hx, hy, 1.6, 0, 6.283);
+    ctx.fill();
   }
 
   _starParams() {
@@ -445,6 +632,7 @@ class Component extends DCLogic {
     const W = de.clientWidth;
     const H = Math.max(root ? root.scrollHeight : 0, de.scrollHeight);
     if (!W || !H) return;
+    this._docH = H;
     const p = this._starParams();
 
     // якорь — центр картинки планеты
@@ -485,21 +673,22 @@ class Component extends DCLogic {
     for (let i = 0; i < candidates; i++) {
       const x = Math.random() * W, y = Math.random() * H;
       if (Math.random() * maxD > dens(x, y)) continue;
-      const bright = Math.random() < 0.045;
+      const bright = Math.random() < 0.08;
       stars.push({
         x, y,
         r: bright ? 1.15 + Math.random() * 1.05 : 0.35 + Math.pow(Math.random(), 2.6) * 1.25,
         c: pickColor(),
         a: bright ? 0.85 + Math.random() * 0.15 : 0.38 + Math.random() * 0.55,
         g: bright,
-        tw: Math.random() < 0.35 ? { s: 0.5 + Math.random() * 1.3, p: Math.random() * 6.283 } : null,
+        sp: bright && Math.random() < 0.6,
+        tw: (bright || Math.random() < 0.35) ? { s: 0.5 + Math.random() * 1.3, p: Math.random() * 6.283 } : null,
       });
     }
     this._stars = stars;
 
-    // дальний слой (лёгкий параллакс — глубина при скролле)
+    // дальний слой — неподвижный (fixed), покрывает только вьюпорт
     const far = [];
-    const farH = H * 0.5 + window.innerHeight;
+    const farH = window.innerHeight;
     const nFar = Math.round(W * farH / 1e6 * 30 * p.dens);
     for (let i = 0; i < nFar; i++) {
       far.push({ x: Math.random() * W, y: Math.random() * farH, r: 0.3 + Math.random() * 0.5, a: 0.16 + Math.random() * 0.2 });
@@ -535,8 +724,8 @@ class Component extends DCLogic {
     s.width = s.height = 64;
     const g = s.getContext('2d');
     const gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
-    gr.addColorStop(0, 'rgba(' + color + ',.85)');
-    gr.addColorStop(0.22, 'rgba(' + color + ',.28)');
+    gr.addColorStop(0, 'rgba(' + color + ',.95)');
+    gr.addColorStop(0.25, 'rgba(' + color + ',.32)');
     gr.addColorStop(1, 'rgba(' + color + ',0)');
     g.fillStyle = gr;
     g.fillRect(0, 0, 64, 64);
@@ -544,11 +733,12 @@ class Component extends DCLogic {
     return s;
   }
 
-  _drawStars(t, tw) {
-    const cv = this._cv, ctx = this._cx;
-    if (!cv || !ctx || !this._stars) return;
-    const de = document.documentElement;
-    const W = de.clientWidth, vh = window.innerHeight;
+  // дальний слой: рисуется один раз, при скролле неподвижен
+  _paintFar() {
+    const cv = this._cvFar, ctx = this._cxFar;
+    if (!cv || !ctx || !this._far) return;
+    const W = document.documentElement.clientWidth, vh = window.innerHeight;
+    if (!W || !vh) return;
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(vh * dpr)) {
       cv.width = Math.round(W * dpr);
@@ -556,56 +746,97 @@ class Component extends DCLogic {
     }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, vh);
-    const sy = window.scrollY;
-
-    // дальний слой, параллакс 0.5
     ctx.fillStyle = 'rgba(214,224,255,.9)';
     for (const s of this._far) {
-      const y = s.y - sy * 0.5;
-      if (y < -3 || y > vh + 3) continue;
       ctx.globalAlpha = s.a;
       ctx.beginPath();
-      ctx.arc(s.x, y, s.r, 0, 6.283);
+      ctx.arc(s.x, s.y, s.r, 0, 6.283);
       ctx.fill();
     }
     ctx.globalAlpha = 1;
+  }
+
+  // dpr основного канваса с бюджетом по пикселям (канвас на всю страницу)
+  _mainDpr(W, H) {
+    let dpr = Math.min(1.5, window.devicePixelRatio || 1);
+    const cap = 30e6;
+    if (W * H * dpr * dpr > cap) dpr = Math.max(0.75, Math.sqrt(cap / (W * H)));
+    return dpr;
+  }
+
+  // основной слой: без аргументов — полная перерисовка, с (t, y0, y1) —
+  // только полоса для мерцания (координаты документа)
+  _paintMain(t, y0, y1) {
+    const cv = this._cvMain, ctx = this._cxMain;
+    if (!cv || !ctx || !this._stars) return;
+    const W = cv.clientWidth;
+    const H = cv.clientHeight;
+    if (!W || !H) return;
+    const dpr = this._mainDpr(W, H);
+    if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) {
+      cv.width = Math.round(W * dpr);
+      cv.height = Math.round(H * dpr);
+      y0 = undefined;
+      y1 = undefined;
+    }
+    const tw = t !== undefined;
+    const a0 = y0 === undefined ? 0 : Math.max(0, y0);
+    const a1 = y1 === undefined ? H : Math.min(H, y1);
+    if (a1 <= a0) return;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, a0, W, a1 - a0);
+    ctx.clip();
+    ctx.clearRect(0, a0, W, a1 - a0);
 
     // созвездия
     for (const c of this._cons) {
       let vis = false;
-      for (const p of c.pts) { const y = p.y - sy; if (y > -160 && y < vh + 160) { vis = true; break; } }
+      for (const p of c.pts) { if (p.y > a0 - 160 && p.y < a1 + 160) { vis = true; break; } }
       if (!vis) continue;
       ctx.strokeStyle = 'rgba(158,173,224,' + (0.13 * c.a).toFixed(3) + ')';
       ctx.lineWidth = 1;
       ctx.beginPath();
-      c.pts.forEach((p, i) => { const y = p.y - sy; if (i === 0) ctx.moveTo(p.x, y); else ctx.lineTo(p.x, y); });
+      c.pts.forEach((p, i) => { if (i === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y); });
       ctx.stroke();
       ctx.fillStyle = 'rgba(196,208,242,' + (0.55 * c.a).toFixed(3) + ')';
       for (const p of c.pts) {
-        const y = p.y - sy;
         ctx.beginPath();
-        ctx.arc(p.x, y, 1.3, 0, 6.283);
+        ctx.arc(p.x, p.y, 1.3, 0, 6.283);
         ctx.fill();
       }
     }
 
-    // основной слой — движется вместе с контентом (приклеен к картинке)
+    // звёзды
     for (const s of this._stars) {
-      const y = s.y - sy;
-      if (y < -14 || y > vh + 14) continue;
+      if (s.y < a0 - 14 || s.y > a1 + 14) continue;
       let a = s.a;
       if (tw && s.tw) a *= 0.7 + 0.3 * Math.sin(t * s.tw.s + s.tw.p);
       if (s.g) {
         ctx.globalAlpha = a;
-        const d = s.r * 11;
-        ctx.drawImage(this._sprite(s.c), s.x - d / 2, y - d / 2, d, d);
+        const d = s.r * 13;
+        ctx.drawImage(this._sprite(s.c), s.x - d / 2, s.y - d / 2, d, d);
         ctx.globalAlpha = 1;
+      }
+      if (s.sp) {
+        // лучики-искры у самых ярких звёзд, мерцают вместе со звездой
+        const L = 4 + s.r * 5;
+        ctx.strokeStyle = 'rgba(' + s.c + ',' + (a * 0.45).toFixed(3) + ')';
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.moveTo(s.x - L, s.y);
+        ctx.lineTo(s.x + L, s.y);
+        ctx.moveTo(s.x, s.y - L);
+        ctx.lineTo(s.x, s.y + L);
+        ctx.stroke();
       }
       ctx.fillStyle = 'rgba(' + s.c + ',' + a.toFixed(3) + ')';
       ctx.beginPath();
-      ctx.arc(s.x, y, s.r, 0, 6.283);
+      ctx.arc(s.x, s.y, s.r, 0, 6.283);
       ctx.fill();
     }
+    ctx.restore();
   }
 
   componentDidUpdate() {
@@ -615,9 +846,13 @@ class Component extends DCLogic {
     if (key !== this._starKey) {
       this._starKey = key;
       this._genStars();
-      this._dirty = true;
-    } else {
-      this._dirty = true;
+      this._paintFar();
+      this._paintMain();
+    }
+    if (!(this.props.meteors ?? true) && this._meteor) {
+      this._meteor = null;
+      const mc = document.getElementById('vzMeteors');
+      if (mc) mc.getContext('2d').clearRect(0, 0, mc.width, mc.height);
     }
   }
   _applyAccent() {
@@ -634,9 +869,10 @@ class Component extends DCLogic {
   }
   componentWillUnmount() {
     window.removeEventListener('keydown', this._esc);
-    if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
     if (this._raf) cancelAnimationFrame(this._raf);
     if (this._ro) this._ro.disconnect();
+    if (this._drumRaf) cancelAnimationFrame(this._drumRaf);
+    if (this._drumResize) window.removeEventListener('resize', this._drumResize);
     clearTimeout(this._rt);
     if (this._gridTimers) this._gridTimers.forEach(clearTimeout);
   }
