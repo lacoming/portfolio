@@ -18,6 +18,12 @@ a{text-decoration:none}
 @keyframes vzFade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @keyframes vzGlow{0%,100%{opacity:.7}50%{opacity:1}}
 @keyframes vzBob{0%,100%{transform:translateY(0)}50%{transform:translateY(4.19%)}}
+.vz-win{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:#0D0D14;cursor:pointer;flex:none;transition:border-color .25s,transform .25s,box-shadow .25s}
+.vz-win>img.vz-prev{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;pointer-events:none}
+.vz-win>img.vz-sphere{position:absolute;left:57.55%;top:22.02%;width:36.72%;height:auto;animation:vzBob 5s ease-in-out infinite;will-change:transform;pointer-events:none}
+.vz-win>.vz-lbl{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:8px;padding:9px 13px;background:linear-gradient(transparent,rgba(6,6,9,.9) 40%);opacity:0;transition:opacity .25s;pointer-events:none}
+.vz-win.vz-hot{border-color:var(--acc,#B7524A);transform:scale(1.025);box-shadow:0 14px 44px rgba(var(--acc-rgb,183,82,74),.22)}
+.vz-win.vz-hot>.vz-lbl{opacity:1}
 @media (max-width:1120px){
 #vzHero{grid-template-columns:1fr !important;min-height:0 !important;padding-top:24px !important}
 #vzHeroText{padding-left:0 !important}
@@ -236,51 +242,43 @@ class Component extends DCLogic {
       return '';
     };
     this.previewFor = previewFor;
-    document.querySelectorAll('.vz-win').forEach((win) => {
+    // Оформление окна витрины. Вынесено в функцию: барабан доклонирует карточки
+    // под высоту вьюпорта, и клонам нужны те же превью и обработчики.
+    // Подсветка и hover живут в CSS (класс .vz-hot) — барабан включает её сам,
+    // чтобы состояние не расходилось с состоянием прокрутки.
+    const decorate = (win) => {
+      if (win.dataset.vzReady) return;
+      win.dataset.vzReady = '1';
       const src = win.getAttribute('data-open-site');
       const title = win.getAttribute('data-site-title');
       const url = win.getAttribute('data-site-url');
-      win.style.cssText += ';position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:#0D0D14;cursor:pointer;flex:none;transition:border-color .25s,transform .25s,box-shadow .25s';
+      const prev = previewFor(src);
       const img = document.createElement('img');
-      img.src = previewFor(src);
+      img.className = 'vz-prev';
+      img.src = prev;
       img.loading = 'lazy';
       img.alt = title;
       img.draggable = false;
-      img.style.cssText = 'width:100%;height:100%;object-fit:cover;object-position:top center;display:block;pointer-events:none';
       win.appendChild(img);
-      if (previewFor(src).indexOf('tokeon') !== -1) {
+      if (prev.indexOf('tokeon') !== -1) {
         const sphere = document.createElement('img');
+        sphere.className = 'vz-sphere';
         sphere.src = 'previews/tokeon-sphere.png';
         sphere.alt = '';
         sphere.draggable = false;
-        sphere.style.cssText = 'position:absolute;left:57.55%;top:22.02%;width:36.72%;height:auto;animation:vzBob 5s ease-in-out infinite;will-change:transform;pointer-events:none';
         win.appendChild(sphere);
       }
       const label = document.createElement('div');
-      label.style.cssText = 'position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:8px;padding:9px 13px;background:linear-gradient(transparent,rgba(6,6,9,.9) 40%);opacity:0;transition:opacity .25s;pointer-events:none';
+      label.className = 'vz-lbl';
       label.innerHTML = '<span style="font-size:12px;font-weight:600;color:#fff">' + title + '</span><span style="margin-left:auto;font-family:JetBrains Mono,monospace;font-size:10px;color:#B9BDCC">' + url + '</span>';
       win.appendChild(label);
-      win.addEventListener('mouseenter', () => {
-        const m = this._drum && this._drum.mode;
-        if (m === 'drag' || m === 'spin' || m === 'snap') return;
-        win.style.borderColor = 'var(--acc)';
-        win.style.transform = 'scale(1.025)';
-        win.style.boxShadow = '0 14px 44px rgba(var(--acc-rgb),.22)';
-        label.style.opacity = '1';
-        if (this._drum) this._drum.hover = true;
-      });
-      win.addEventListener('mouseleave', () => {
-        win.style.borderColor = 'rgba(255,255,255,.12)';
-        win.style.transform = 'none';
-        win.style.boxShadow = 'none';
-        label.style.opacity = '0';
-        if (this._drum) this._drum.hover = false;
-      });
       win.addEventListener('click', () => {
         if (this._drum && this._drum.suppress) return;
         openModal(src, title, url, win.hasAttribute('data-site-live'));
       });
-    });
+    };
+    this._decorateWin = decorate;
+    document.querySelectorAll('.vz-win').forEach(decorate);
 
     // ---------- грид работ ----------
     const grid = $('vzGrid');
@@ -312,11 +310,14 @@ class Component extends DCLogic {
       $('vzModalExt').setAttribute('href', src);
       modal.style.display = 'flex';
       document.body.style.overflow = 'hidden';
+      // пока внутри модалки грузится целый сайт, барабану и звёздам делать нечего
+      if (this._drum) { this._drum.modal = true; this._drumPause(); }
     };
     const closeModal = () => {
       modal.style.display = 'none';
       frame.src = 'about:blank';
       document.body.style.overflow = '';
+      if (this._drum) { this._drum.modal = false; this._drumPause(); }
     };
     this._openModal = openModal;
     $('vzModalClose').addEventListener('click', closeModal);
@@ -399,106 +400,234 @@ class Component extends DCLogic {
   }
 
   // ================= БАРАБАН САЙТОВ =================
-  // Обе колонки марквиза — один «барабан» с общим ходом pos: левая колонка
-  // едет вверх, правая вниз (как две стороны колеса). Барабан можно схватить
-  // мышью или пальцем и крутануть: инерция с трением, мягкая доводка до
-  // ближайшей карточки, пауза — и возврат к автопрокрутке.
+  // Обе колонки марквиза — один «барабан»: левая колонка едет вверх, правая
+  // вниз (как две стороны колеса). Барабан можно схватить мышью или пальцем и
+  // крутануть.
+  //
+  // Одна непрерывная формула на все режимы вместо машины состояний: скорость
+  // всегда экспоненциально стягивается к целевой (0 под курсором, base без
+  // него), позиция интегрируется от неё. exp(-k*dt) не зависит от частоты
+  // кадров и не расходится ни при каком dt, поэтому ни фризов, ни подскоков,
+  // ни переключений фаз тут нет по построению. Трение k мягко растёт с
+  // падением скорости: сильный бросок катится долго, мелкие правки — резче.
+  //
+  // Позиция хранится как фаза каждой колонки в [0, half) — не как общий
+  // растущий pos. Поэтому пересчёт геометрии (ресайз, смена ширины, появление
+  // скроллбара) не рвёт стык: фазу масштабируем пропорционально новому half.
+  // half меряется по реальной геометрии (шаг сетки × число уникальных карточек),
+  // а копий доклонируем столько, чтобы после переноса низ окна был закрыт.
   _initDrum() {
     const wrap = document.getElementById('vzMarquee');
     if (!wrap) return;
     const cols = Array.from(wrap.querySelectorAll('.vz-col'));
     if (cols.length < 2) return;
-    const d = this._drum = { pos: 0, v: 0, base: 18, mode: 'auto', hover: false, suppress: false, snapTo: 0, idleUntil: 0, lastCol: 0, drag: null, moved: 0, captured: false, lastT: 0, halves: [1, 1] };
-    const measure = () => { d.halves = cols.map((c) => Math.max(1, c.scrollHeight / 2)); };
-    measure();
-    this._drumResize = measure;
-    window.addEventListener('resize', this._drumResize);
-
     const mod = (x, m) => ((x % m) + m) % m;
-    const apply = () => {
-      cols[0].style.transform = 'translate3d(0,' + (-mod(d.pos, d.halves[0])).toFixed(2) + 'px,0)';
-      cols[1].style.transform = 'translate3d(0,' + (mod(d.pos, d.halves[1]) - d.halves[1]).toFixed(2) + 'px,0)';
+    // уникальный набор карточек колонки — первая половина разметки (вторая — дубль)
+    const uniq = cols.map((c) => Array.from(c.children).slice(0, Math.max(1, c.children.length >> 1)));
+    const d = this._drum = {
+      ph: [0, 0], half: [1, 1], step: [1, 1], last: ['', ''],
+      v: 0, base: 18, hover: false, drag: null, suppress: false, moved: 0, captured: false,
+      lastT: 0, travel: 0, lastCol: 0, hot: null, px: 0, py: 0, sy: -1, wh: -1,
+      vis: true, modal: false, paused: false, probe: false,
     };
-    apply();
-    // за какую сторону колеса тянем: левая колонка движется по ходу pos, правая против
+    // за какую сторону колеса тянем: левая колонка движется по ходу, правая против
     const dragSign = (i) => (i === 0 ? -1 : 1);
 
+    const apply = (force) => {
+      const a = 'translate3d(0,' + (-d.ph[0]).toFixed(2) + 'px,0)';
+      const b = 'translate3d(0,' + (d.ph[1] - d.half[1]).toFixed(2) + 'px,0)';
+      if (force || a !== d.last[0]) { cols[0].style.transform = a; d.last[0] = a; }
+      if (force || b !== d.last[1]) { cols[1].style.transform = b; d.last[1] = b; }
+    };
+    const advance = (dp) => {
+      d.ph[0] = mod(d.ph[0] + dp, d.half[0]);
+      d.ph[1] = mod(d.ph[1] + dp, d.half[1]);
+    };
+
+    // копий должно хватать, чтобы в момент переноса на half низ окна был закрыт:
+    // (копий − 1) × half − gap >= высота окна
+    const fill = (i) => {
+      const c = cols[i], u = uniq[i];
+      const gap = parseFloat(getComputedStyle(c).rowGap) || 0;
+      const n = Math.max(2, Math.ceil(1 + (wrap.clientHeight + gap + 2) / d.half[i]));
+      const want = u.length * n;
+      while (c.children.length > want) {
+        const rm = c.lastChild;
+        // подсвеченную карточку могло срезать вместе с лишней копией
+        if (d.hot === rm) { rm.classList.remove('vz-hot'); d.hot = null; }
+        c.removeChild(rm);
+      }
+      while (c.children.length < want) {
+        const cl = u[c.children.length % u.length].cloneNode(false);
+        delete cl.dataset.vzReady;
+        cl.classList.remove('vz-hot');
+        c.appendChild(cl);
+        if (this._decorateWin) this._decorateWin(cl);
+      }
+    };
+    const remeasure = () => {
+      let dirty = wrap.clientHeight !== d.wh;
+      d.wh = wrap.clientHeight;
+      for (let i = 0; i < 2; i++) {
+        const kids = cols[i].children;
+        if (!kids.length) continue;
+        const step = kids.length > 1
+          ? Math.max(1, kids[1].getBoundingClientRect().top - kids[0].getBoundingClientRect().top)
+          : Math.max(1, kids[0].getBoundingClientRect().height);
+        if (Math.abs(step - d.step[i]) > 0.02) dirty = true;
+        const half = step * uniq[i].length;
+        // фазу тянем пропорционально — та же карточка остаётся на том же месте
+        if (d.half[i] > 0.5) d.ph[i] = mod(d.ph[i] * (half / d.half[i]), half);
+        d.step[i] = step;
+        d.half[i] = half;
+      }
+      if (!dirty) return;
+      fill(0);
+      fill(1);
+      apply(true);
+    };
+    this._drumMeasure = remeasure;
+    remeasure();
+
+    // ресайза окна мало: ширина карточек меняется и от скроллбара (модалка ставит
+    // body.overflow:hidden), а от устаревшего half стык рвётся и барабан прыгает.
+    // Пересчёт синхронный: ResizeObserver и так зовут не чаще раза за кадр, а
+    // отложенный таймер оставлял барабан со старой геометрией на лишние кадры.
+    this._drumRO = new ResizeObserver(remeasure);
+    this._drumRO.observe(wrap);
+    this._drumRO.observe(uniq[0][0]);
+
+    const pauseCheck = () => {
+      d.paused = document.hidden || d.modal || !d.vis;
+      d.lastT = 0;
+    };
+    this._drumPause = pauseCheck;
+    this._drumIO = new IntersectionObserver((es) => {
+      d.vis = es[es.length - 1].isIntersecting;
+      pauseCheck();
+    });
+    this._drumIO.observe(wrap);
+    this._drumVis = pauseCheck;
+    document.addEventListener('visibilitychange', this._drumVis);
+
+    // ---------- подсветка карточки ----------
+    // одна точка правды: карточка под указателем. Никаких mouseenter/mouseleave
+    // на каждой карточке — при движении барабана они разъезжались с реальностью
+    // (leave гасил hover, enter его не возвращал → барабан дёргался и замирал).
+    const spinning = () => Math.abs(d.v) > d.base * 2.2;
+    const setHot = (win) => {
+      if (d.hot === win) return;
+      if (d.hot) d.hot.classList.remove('vz-hot');
+      d.hot = win || null;
+      if (d.hot) d.hot.classList.add('vz-hot');
+    };
+    const winAt = (x, y) => {
+      const el = document.elementFromPoint(x, y);
+      const w = el && el.closest ? el.closest('.vz-win') : null;
+      return w && wrap.contains(w) ? w : null;
+    };
+    const winOf = (e) => (e.target && e.target.closest ? e.target.closest('.vz-win') : null);
+
+    wrap.addEventListener('pointerenter', (e) => {
+      d.hover = true;
+      d.px = e.clientX;
+      d.py = e.clientY;
+      if (!d.drag && !spinning()) setHot(winOf(e));
+    });
+    wrap.addEventListener('pointerleave', () => {
+      d.hover = false;
+      setHot(null);
+    });
+
+    // ---------- перетаскивание ----------
     wrap.addEventListener('pointerdown', (e) => {
+      if (d.drag || (e.pointerType === 'mouse' && e.button !== 0)) return;
       const r = wrap.getBoundingClientRect();
       d.lastCol = e.clientX < r.left + r.width / 2 ? 0 : 1;
-      d.drag = { y: e.clientY, t: performance.now(), v: 0 };
+      d.hover = true;
+      d.drag = { id: e.pointerId, y: e.clientY, s: [{ t: performance.now(), p: d.travel }] };
       d.moved = 0;
       d.suppress = false;
       d.captured = false;
       d.v = 0;
-      d.mode = 'drag';
       wrap.style.cursor = 'grabbing';
     });
     wrap.addEventListener('pointermove', (e) => {
-      if (!d.drag) return;
+      d.px = e.clientX;
+      d.py = e.clientY;
+      if (!d.drag || e.pointerId !== d.drag.id) {
+        if (!d.drag && !spinning()) setHot(winOf(e));
+        return;
+      }
       const now = performance.now();
       const dy = e.clientY - d.drag.y;
-      const dt = Math.max(0.001, (now - d.drag.t) / 1000);
       d.drag.y = e.clientY;
-      d.drag.t = now;
       d.moved += Math.abs(dy);
       if (d.moved > 8 && !d.captured) {
         d.captured = true;
         d.suppress = true;
+        setHot(null);
         try { wrap.setPointerCapture(e.pointerId); } catch (_) {}
       }
       const dp = dragSign(d.lastCol) * dy;
-      d.pos += dp;
-      d.drag.v = 0.75 * (dp / dt) + 0.25 * d.drag.v;
+      d.travel += dp;
+      advance(dp);
+      const s = d.drag.s;
+      s.push({ t: now, p: d.travel });
+      // окно замера скорости — последние ~110 мс: старее держим ровно одну пробу
+      while (s.length > 2 && s[1].t <= now - 110) s.shift();
       apply();
     });
-    const release = () => {
-      if (!d.drag) return;
-      d.v = Math.max(-2600, Math.min(2600, d.drag.v));
+    const release = (e) => {
+      if (!d.drag || e.pointerId !== d.drag.id) return;
+      const now = performance.now();
+      const s = d.drag.s, first = s[0], last = s[s.length - 1];
+      const captured = d.captured;
       d.drag = null;
-      d.mode = 'spin';
       wrap.style.cursor = 'grab';
+      // у пальца hover не бывает: pointerleave после тача приходит не везде,
+      // а без него барабан остался бы стоять навсегда
+      if (e.pointerType !== 'mouse') { d.hover = false; setHot(null); }
+      if (!captured) { d.v = 0; return; }
+      // палец замер перед отпусканием (или тянул рывками) — это остановка, не бросок
+      const span = last.t - first.t;
+      const fling = now - last.t < 90 && span > 15 && span < 260;
+      d.v = fling ? Math.max(-2000, Math.min(2000, (last.p - first.p) / (span / 1000))) : 0;
+      if (d.hover && !spinning()) setHot(winAt(d.px, d.py));
     };
     wrap.addEventListener('pointerup', release);
     wrap.addEventListener('pointercancel', release);
 
     this._drumLoop = (t) => {
-      const dt = Math.min(0.05, Math.max(0, (t - (d.lastT || t)) / 1000));
-      d.lastT = t;
-      if (d.mode === 'auto') {
-        const target = d.hover ? 0 : d.base;
-        d.v += (target - d.v) * Math.min(1, dt * 5);
-        d.pos += d.v * dt;
-      } else if (d.mode === 'spin') {
-        d.v *= Math.exp(-dt * 1.7);
-        d.pos += d.v * dt;
-        if (Math.abs(d.v) < 40) {
-          // доводка: ближайшую карточку «схваченной» колонки — к центру окна
-          const r = wrap.getBoundingClientRect();
-          const mid = r.top + r.height / 2;
-          let best = 0, bestAbs = Infinity;
-          for (const win of cols[d.lastCol].children) {
-            const c = win.getBoundingClientRect();
-            const delta = c.top + c.height / 2 - mid;
-            if (Math.abs(delta) < bestAbs) { bestAbs = Math.abs(delta); best = delta; }
-          }
-          d.snapTo = d.pos - dragSign(d.lastCol) * best;
-          d.mode = 'snap';
-        }
-      } else if (d.mode === 'snap') {
-        const diff = d.snapTo - d.pos;
-        d.pos += diff * Math.min(1, dt * 4);
-        if (Math.abs(diff) < 0.5) {
-          d.pos = d.snapTo;
-          d.v = 0;
-          d.idleUntil = t + 2600;
-          d.mode = 'idle';
-        }
-      } else if (d.mode === 'idle') {
-        if (t >= d.idleUntil && !d.hover) d.mode = 'auto';
-      }
-      if (d.mode !== 'drag') apply();
       this._drumRaf = requestAnimationFrame(this._drumLoop);
+      // дольше 1/30 с шаг не берём: просадка кадра тормозит барабан, но не
+      // телепортирует его через пол-карточки
+      const dt = Math.min(1 / 30, Math.max(0, (t - (d.lastT || t)) / 1000));
+      d.lastT = t;
+      if (d.paused || d.drag) return;
+      // окно могло уехать из-под неподвижного курсора вместе со скроллом —
+      // тогда pointerleave не придёт, и барабан завис бы остановленным
+      if (d.hover && d.sy !== window.scrollY) {
+        d.sy = window.scrollY;
+        const r = wrap.getBoundingClientRect();
+        if (d.px < r.left || d.px > r.right || d.py < r.top || d.py > r.bottom) {
+          d.hover = false;
+          setHot(null);
+        }
+      }
+      const target = d.hover ? 0 : d.base;
+      if (d.v !== target) {
+        const dv = d.v - target;
+        const k = 1.7 + 4.3 / (1 + Math.abs(dv) / (d.base * 3));
+        d.v = target + dv * Math.exp(-k * dt);
+        if (Math.abs(d.v - target) < 0.4) { d.v = target; d.probe = true; }
+      }
+      if (d.v) { advance(d.v * dt); apply(); }
+      if (d.probe) {
+        d.probe = false;
+        // барабан замер под курсором — вернуть подсветку карточке, которая под ним
+        if (!d.v && d.hover && !d.hot) setHot(winAt(d.px, d.py));
+      }
     };
     this._drumRaf = requestAnimationFrame(this._drumLoop);
   }
@@ -538,15 +667,24 @@ class Component extends DCLogic {
     const img = document.getElementById('vzPlanetImg');
     if (img && !img.complete) img.addEventListener('load', () => { this._genStars(); this._paintFar(); this._paintMain(); }, { once: true });
 
+    // Мерцание — самая тяжёлая работа на кадре: перерисовка полосы канваса
+    // размером во всю страницу. Поэтому его уступаем: пока барабан крутят или
+    // пока предыдущий кадр не уложился в бюджет, такт мерцания пропускается.
+    // Синусы мерцания медленные (периоды 3–12 с), на глаз шаг 110 мс незаметен.
+    this._rmq = window.matchMedia('(prefers-reduced-motion: reduce)');
     this._loop = (t) => {
-      const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const tw = (this.props.twinkle ?? true) && !rm;
-      if (tw && t - this._lastT > 66) {
+      this._raf = requestAnimationFrame(this._loop);
+      const frame = t - (this._frameT || t);
+      this._frameT = t;
+      const d = this._drum;
+      if (document.hidden || (d && d.modal)) return;
+      const rm = this._rmq.matches;
+      const busy = frame > 26 || (d && Math.abs(d.v) > d.base * 2.2);
+      if ((this.props.twinkle ?? true) && !rm && !busy && t - this._lastT > 110) {
         this._lastT = t;
-        this._paintMain(t / 1000, window.scrollY - 150, window.scrollY + window.innerHeight + 150);
+        this._paintMain(t / 1000, window.scrollY - 24, window.scrollY + window.innerHeight + 24);
       }
       if ((this.props.meteors ?? true) && !rm) this._meteorTick(t);
-      this._raf = requestAnimationFrame(this._loop);
     };
     this._raf = requestAnimationFrame(this._loop);
   }
@@ -872,7 +1010,9 @@ class Component extends DCLogic {
     if (this._raf) cancelAnimationFrame(this._raf);
     if (this._ro) this._ro.disconnect();
     if (this._drumRaf) cancelAnimationFrame(this._drumRaf);
-    if (this._drumResize) window.removeEventListener('resize', this._drumResize);
+    if (this._drumRO) this._drumRO.disconnect();
+    if (this._drumIO) this._drumIO.disconnect();
+    if (this._drumVis) document.removeEventListener('visibilitychange', this._drumVis);
     clearTimeout(this._rt);
     if (this._gridTimers) this._gridTimers.forEach(clearTimeout);
   }
