@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;height:100%;overflow:hidden;background:#0B0A08;-webkit-font-smoothing:antialiased}
+#rsRoot{--gold:#C9A66B;--muted:#A89C84;--cream:#F4ECDC;--item:#1C1813;--line:#2E2820;--panel:rgba(20,17,13,.94);
+  position:relative;height:100vh;width:100%;overflow:hidden;background:#0B0A08;font-family:'Inter',sans-serif;color:#fff;user-select:none}
+.rs-mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+.rs-serif{font-family:'Source Serif 4',Georgia,serif}
+.rs-icon-btn{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;
+  background:var(--item);border:1px solid var(--line);color:var(--muted);cursor:pointer;transition:color .18s,background .18s}
+.rs-icon-btn:hover{color:var(--cream);background:#241f18}
+.rs-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;
+  background:rgba(255,255,255,.04);border:1px solid var(--line);color:#C9BFA9;font-size:11px;letter-spacing:.08em}
+.rs-tab{display:flex;align-items:center;gap:7px;border-radius:6px;padding:6px 12px;font-size:12px;font-weight:600;
+  letter-spacing:.05em;text-transform:uppercase;background:transparent;border:none;color:var(--muted);cursor:pointer;transition:all .18s}
+.rs-tab:hover{color:var(--cream)}
+.rs-tab.active{background:var(--gold);color:#1A1207}
+/* одна прокручиваемая строка на 10 типов — как в оригинале */
+.rs-cat-grid{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}
+.rs-cat-grid::-webkit-scrollbar{display:none}
+.rs-cat-grid{scrollbar-width:none}
+.rs-cat-item{display:flex;flex-direction:column;align-items:center;justify-content:space-between;width:76px;height:76px;flex:none;padding:6px 4px;
+  border-radius:12px;background:var(--item);border:1px solid var(--line);cursor:pointer;transition:all .18s}
+.rs-cat-item:hover{border-color:#4a4034}
+.rs-cat-item .lab{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.05em;color:var(--muted)}
+.rs-cat-item.selected{background:rgba(201,166,107,.08);border-color:var(--gold)}
+.rs-cat-item.selected .lab{color:var(--gold)}
+.rs-swatch{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;flex:none;
+  background:var(--item);border:1px solid var(--line);color:#C9BFA9;font-size:11px;white-space:nowrap;cursor:pointer;transition:all .18s}
+.rs-swatch:hover{border-color:#4a4034}
+.rs-swatch.selected{background:rgba(201,166,107,.08);border-color:var(--gold);color:var(--gold)}
+.rs-swatch i{display:block;width:12px;height:12px;border-radius:3px;border:1px solid rgba(255,255,255,.1)}
+.rs-btn-primary{width:100%;height:49px;border-radius:14px;background:var(--gold);color:#1A1207;border:none;
+  font-size:14px;font-weight:500;letter-spacing:.02em;cursor:pointer;transition:background .18s}
+.rs-btn-primary:hover{background:#d8b47a}
+.rs-btn-primary:disabled{opacity:.4;cursor:default}
+.hide-scrollbar::-webkit-scrollbar{display:none}
+.hide-scrollbar{scrollbar-width:none}
+@media (max-width:768px){
+  .rs-hide-sm{display:none !important}
+  .rs-sheet{max-width:100% !important;left:0 !important;right:0 !important;transform:none !important}
+  .rs-cat-item{width:64px !important;height:64px !important}
+  .rs-zoom-col{display:none !important}
+}
+</style>
+</helmet>
+<div id="rsRoot" data-screen-label="Radius Step — конструктор">
+
+  <canvas id="rsCanvas" style="position:absolute;inset:0;width:100%;height:100%;display:block;cursor:crosshair"></canvas>
+
+  <div id="rsHint" style="position:absolute;left:16px;bottom:24px;z-index:5;pointer-events:none;max-width:190px">
+    <div class="rs-mono" style="font-size:11px;line-height:1.5;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,236,220,.8);text-shadow:0 2px 12px rgba(0,0,0,.9)">Нажмите на участок, чтобы разместить плитку</div>
+  </div>
+
+  <div style="position:absolute;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:12px;height:61px;padding:0 12px;background:rgba(20,17,13,.92);backdrop-filter:blur(10px);border-bottom:1px solid #2E2820">
+    <a href="index.dc.html" style="display:flex;align-items:center;gap:10px;flex:none;text-decoration:none">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#C9A66B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 20c4.5 0 5-4 9.5-4S19 20 24 20"></path>
+        <path d="M6 13c3.5 0 4-3.5 7.5-3.5S19 13 22 13"></path>
+        <circle cx="14" cy="5" r="1.4" fill="#C9A66B"></circle>
+      </svg>
+      <span class="rs-hide-sm" style="display:flex;flex-direction:column;line-height:1">
+        <span class="rs-serif" style="font-size:16px;letter-spacing:-.01em;color:#F4ECDC">Radius Step</span>
+        <span class="rs-mono" style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#A89C84;margin-top:2px">Конструктор · Beta</span>
+      </span>
+    </a>
+
+    <div class="rs-hide-sm" style="display:flex;border-radius:8px;padding:2px;background:#1C1813;border:1px solid #2E2820">
+      <button class="rs-tab" data-step="1">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 15l5-5 4 4 3-3 6 6"></path></svg>Участок
+      </button>
+      <button class="rs-tab active" data-step="2">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="9" height="6" rx="1"></rect><rect x="13" y="11" width="9" height="6" rx="1"></rect></svg>Укладка
+      </button>
+      <button class="rs-tab" data-step="3">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c4-1 6-4 8-8s5-8 10-9"></path><circle cx="4" cy="20" r="1.6"></circle></svg>Рисование
+      </button>
+      <button class="rs-tab" data-step="4">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"></path></svg>Предметы
+      </button>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:6px;flex:none">
+      <button id="rsUndo" class="rs-icon-btn" title="Отменить последнюю плиту">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"></path><path d="M3 13a9 9 0 1 0 3-7.7L3 8"></path></svg>
+      </button>
+      <button id="rsClear" class="rs-icon-btn" title="Очистить дорожку">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"></path></svg>
+      </button>
+      <a href="index.dc.html" class="rs-icon-btn" title="Вернуться на сайт">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="rs-pill" style="position:absolute;left:12px;top:69px;z-index:20">
+    <span style="display:block;width:6px;height:6px;border-radius:50%;background:#C9A66B;flex:none"></span>
+    <span style="text-transform:none;letter-spacing:.06em">Шаг 2 · Объекты и плитка</span>
+  </div>
+
+  <div style="position:absolute;left:50%;top:69px;transform:translateX(-50%);z-index:20;display:flex;align-items:stretch;overflow:hidden;border-radius:999px;background:rgba(20,17,13,.85);border:1px solid #2E2820;backdrop-filter:blur(8px)">
+    <button id="rsZoomOut" style="width:34px;background:transparent;border:none;color:#A89C84;font-size:16px;cursor:pointer">−</button>
+    <span id="rsZoomVal" class="rs-mono" style="display:flex;align-items:center;justify-content:center;min-width:56px;font-size:11px;color:#C9BFA9">100%</span>
+    <button id="rsZoomIn" style="width:34px;background:transparent;border:none;color:#A89C84;font-size:16px;cursor:pointer">+</button>
+  </div>
+
+  <div class="rs-zoom-col" style="position:absolute;right:12px;top:69px;z-index:20;display:flex;flex-direction:column;gap:6px">
+    <button id="rsZoomIn2" class="rs-icon-btn" style="width:40px;height:40px" title="Приблизить">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M11 8v6M8 11h6M20 20l-3.6-3.6"></path></svg>
+    </button>
+    <button id="rsZoomOut2" class="rs-icon-btn" style="width:40px;height:40px" title="Отдалить">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M8 11h6M20 20l-3.6-3.6"></path></svg>
+    </button>
+  </div>
+
+  <div class="rs-hide-sm" style="position:absolute;right:16px;bottom:24px;z-index:20;display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:rgba(20,17,13,.85);border:1px solid #2E2820;backdrop-filter:blur(8px)">
+    <div style="position:relative;width:100%;height:100%">
+      <span class="rs-mono" style="position:absolute;left:50%;top:6px;transform:translateX(-50%);font-size:10px;color:#C9A66B">С</span>
+      <span style="position:absolute;left:50%;top:20px;transform:translateX(-50%);width:1px;height:18px;background:linear-gradient(#C9A66B,rgba(201,166,107,.15))"></span>
+    </div>
+  </div>
+
+  <div class="rs-sheet" style="position:absolute;left:50%;bottom:0;transform:translateX(-50%);z-index:10;width:100%;max-width:480px;background:rgba(20,17,13,.94);backdrop-filter:blur(12px);border-radius:22px 22px 0 0;border:1px solid #2E2820;border-bottom:none">
+    <div style="padding:4px 16px 16px">
+      <div style="display:flex;justify-content:center;padding:6px 0 10px"><span style="display:block;width:44px;height:4px;border-radius:2px;background:#2E2820"></span></div>
+
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:16px;border:1px solid rgba(201,166,107,.3)">
+        <div style="display:flex;align-items:center;justify-content:center;width:80px;height:64px;flex:none;border-radius:12px;background:#1A1611;border:1px solid #2E2820">
+          <svg id="rsPreview" width="64" height="64" viewBox="0 0 64 64"></svg>
+        </div>
+        <div style="flex:1;min-width:0">
+          <div class="rs-mono" style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#C9A66B">Выбрано · PR-500</div>
+          <div id="rsShapeName" class="rs-serif" style="font-size:18px;font-weight:500;letter-spacing:-.01em;color:#F4ECDC;margin-top:2px">Прямоугольник</div>
+          <div class="rs-mono" style="font-size:11px;color:#A89C84;margin-top:2px">382 × 220 мм</div>
+        </div>
+        <div class="rs-mono" style="text-align:right;flex:none">
+          <div style="font-size:14px;line-height:1;color:#C9A66B">340 ₽</div>
+          <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#A89C84;margin-top:4px">за плиту</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin:12px 4px 8px">
+        <span style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#A89C84">Геометрия</span>
+        <span class="rs-mono" style="font-size:11px;color:#A89C84">10 типов</span>
+      </div>
+      <div id="rsGeo" class="rs-cat-grid"></div>
+
+      <div style="margin:12px 4px 4px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#A89C84">Цвет и фактура</div>
+      <div id="rsColors" class="hide-scrollbar" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px"></div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin:12px 4px 8px;padding-top:10px;border-top:1px solid #2E2820">
+        <span class="rs-mono" style="font-size:11px;color:#A89C84">Плит в дорожке: <span id="rsCount" style="color:#C9BFA9">0</span></span>
+        <span class="rs-mono" style="font-size:12px;color:#C9A66B"><span id="rsTotal">0</span> ₽</span>
+      </div>
+
+      <button id="rsApply" class="rs-btn-primary" disabled>Применить ко всей дорожке</button>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    const $ = (id) => document.getElementById(id);
+    const canvas = $('rsCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Каталог: те же типы геометрии и цвета, что в реальном конструкторе
+    const GEO = [
+      { id: 'rect', label: 'ПРЯМОУГ', turn: 0, shape: 'rect', name: 'Прямоугольник' },
+      { id: 'a2', label: '2°', turn: 2, shape: 'rect', name: 'Сегмент 2°' },
+      { id: 'a3', label: '3°', turn: 3, shape: 'rect', name: 'Сегмент 3°' },
+      { id: 'a5', label: '5°', turn: 5, shape: 'rect', name: 'Сегмент 5°' },
+      { id: 'a75', label: '7.5°', turn: 7.5, shape: 'rect', name: 'Сегмент 7.5°' },
+      { id: 'a10', label: '10°', turn: 10, shape: 'rect', name: 'Сегмент 10°' },
+      { id: 'a15', label: '15°', turn: 15, shape: 'rect', name: 'Сегмент 15°' },
+      { id: 'a30', label: '30°', turn: 30, shape: 'rect', name: 'Сегмент 30°' },
+      { id: 'a45', label: '45°', turn: 45, shape: 'rect', name: 'Сегмент 45°' },
+      { id: 'tri', label: 'ТРЕУГОЛ', turn: 30, shape: 'tri', name: 'Треугольник' },
+    ];
+    const COLORS = [
+      { id: 'gray', name: 'Серый бетон', hex: '#D8CDB6' },
+      { id: 'graphite', name: 'Графит', hex: '#3A342B' },
+      { id: 'sand', name: 'Песок', hex: '#C9A679' },
+      { id: 'anthracite', name: 'Антрацит', hex: '#1C1813' },
+      { id: 'ivory', name: 'Слоновая кость', hex: '#E8DEC5' },
+    ];
+    const PRICE = 340;
+    const TILE_W = 382, TILE_H = 220; // мм
+
+    let geo = GEO[0];
+    let color = COLORS[0];
+    let zoom = 1;
+    let tiles = [];
+    let heading = 0;      // 0 = вверх, по часовой в градусах
+    let hover = null;
+
+    const bg = new Image();
+    bg.src = 'light/hero.png';
+    bg.onload = () => draw();
+
+    const dpr = () => window.devicePixelRatio || 1;
+    const resize = () => {
+      const r = canvas.getBoundingClientRect();
+      canvas.width = Math.round(r.width * dpr());
+      canvas.height = Math.round(r.height * dpr());
+      draw();
+    };
+
+    const mmToPx = () => 0.28 * zoom;
+    const rad = (d) => d * Math.PI / 180;
+
+    const tilePath = (w, h, shape) => {
+      ctx.beginPath();
+      if (shape === 'tri') {
+        ctx.moveTo(-w / 2, h / 2);
+        ctx.lineTo(w / 2, h / 2);
+        ctx.lineTo(0, -h / 2);
+        ctx.closePath();
+      } else {
+        const r = Math.min(7, h / 3);
+        ctx.moveTo(-w / 2 + r, -h / 2);
+        ctx.arcTo(w / 2, -h / 2, w / 2, h / 2, r);
+        ctx.arcTo(w / 2, h / 2, -w / 2, h / 2, r);
+        ctx.arcTo(-w / 2, h / 2, -w / 2, -h / 2, r);
+        ctx.arcTo(-w / 2, -h / 2, w / 2, -h / 2, r);
+        ctx.closePath();
+      }
+    };
+
+    const drawTile = (t, ghost) => {
+      const s = mmToPx();
+      const w = TILE_W * s, h = TILE_H * s;
+      ctx.save();
+      ctx.translate(t.x, t.y);
+      ctx.rotate(rad(t.heading));
+      ctx.globalAlpha = ghost ? 0.45 : 1;
+      if (!ghost) {
+        ctx.shadowColor = 'rgba(0,0,0,.55)';
+        ctx.shadowBlur = 12 * zoom;
+        ctx.shadowOffsetY = 4 * zoom;
+      }
+      tilePath(w, h, t.shape);
+      ctx.fillStyle = t.hex;
+      ctx.fill();
+      ctx.shadowColor = 'transparent';
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = ghost ? '#C9A66B' : 'rgba(0,0,0,.35)';
+      ctx.stroke();
+      if (!ghost) {
+        // матовая фактура бетона
+        ctx.clip();
+        const g = ctx.createLinearGradient(0, -h / 2, 0, h / 2);
+        g.addColorStop(0, 'rgba(255,255,255,.16)');
+        g.addColorStop(0.5, 'rgba(255,255,255,0)');
+        g.addColorStop(1, 'rgba(0,0,0,.14)');
+        ctx.fillStyle = g;
+        ctx.fillRect(-w / 2, -h / 2, w, h);
+      }
+      ctx.restore();
+    };
+
+    const draw = () => {
+      const W = canvas.width, H = canvas.height;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#0B0A08';
+      ctx.fillRect(0, 0, W, H);
+
+      if (bg.complete && bg.naturalWidth) {
+        const sc = Math.max(W / bg.naturalWidth, H / bg.naturalHeight);
+        const dw = bg.naturalWidth * sc, dh = bg.naturalHeight * sc;
+        ctx.drawImage(bg, (W - dw) / 2, (H - dh) / 2, dw, dh);
+      }
+      ctx.fillStyle = 'rgba(11,10,8,.46)';
+      ctx.fillRect(0, 0, W, H);
+
+      // сетка участка
+      const step = 64 * dpr() * zoom;
+      ctx.strokeStyle = 'rgba(201,166,107,.07)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (let x = (W / 2) % step; x < W; x += step) { ctx.moveTo(x, 0); ctx.lineTo(x, H); }
+      for (let y = (H / 2) % step; y < H; y += step) { ctx.moveTo(0, y); ctx.lineTo(W, y); }
+      ctx.stroke();
+
+      ctx.setTransform(dpr(), 0, 0, dpr(), 0, 0);
+      tiles.forEach((t) => drawTile(t, false));
+      if (hover) drawTile(hover, true);
+    };
+
+    // Следующая плита: поворот к точке клика, но не круче выбранного угла
+    const nextTile = (px, py) => {
+      const s = mmToPx();
+      const stepLen = (TILE_H + 34) * s;
+      if (!tiles.length) return { x: px, y: py, heading: 0, hex: color.hex, shape: geo.shape };
+      const last = tiles[tiles.length - 1];
+      let target = Math.atan2(px - last.x, -(py - last.y)) * 180 / Math.PI;
+      let delta = ((target - heading + 540) % 360) - 180;
+      const max = geo.turn;
+      if (delta > max) delta = max;
+      if (delta < -max) delta = -max;
+      const h = heading + delta;
+      return {
+        x: last.x + Math.sin(rad(h)) * stepLen,
+        y: last.y - Math.cos(rad(h)) * stepLen,
+        heading: h, hex: color.hex, shape: geo.shape,
+      };
+    };
+
+    const refreshTotals = () => {
+      $('rsCount').textContent = tiles.length;
+      $('rsTotal').textContent = (tiles.length * PRICE).toLocaleString('ru-RU');
+      $('rsApply').disabled = tiles.length === 0;
+      $('rsHint').style.display = tiles.length ? 'none' : 'block';
+    };
+
+    const toLocal = (e) => {
+      const r = canvas.getBoundingClientRect();
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
+    };
+
+    canvas.addEventListener('mousemove', (e) => {
+      const p = toLocal(e);
+      hover = nextTile(p.x, p.y);
+      draw();
+    });
+    canvas.addEventListener('mouseleave', () => { hover = null; draw(); });
+    canvas.addEventListener('click', (e) => {
+      const p = toLocal(e);
+      const t = nextTile(p.x, p.y);
+      tiles.push(t);
+      heading = t.heading;
+      hover = null;
+      refreshTotals();
+      draw();
+    });
+
+    // Панель геометрии
+    const geoBox = $('rsGeo');
+    GEO.forEach((g) => {
+      const b = document.createElement('button');
+      b.className = 'rs-cat-item' + (g.id === geo.id ? ' selected' : '');
+      b.innerHTML = '<div style="flex:1;display:flex;align-items:center;justify-content:center">' + geoIcon(g) + '</div><div class="lab">' + g.label + '</div>';
+      b.addEventListener('click', () => {
+        geo = g;
+        geoBox.querySelectorAll('.rs-cat-item').forEach((x) => x.classList.remove('selected'));
+        b.classList.add('selected');
+        $('rsShapeName').textContent = g.name;
+        paintPreview();
+      });
+      geoBox.appendChild(b);
+    });
+
+    function geoIcon(g) {
+      if (g.shape === 'tri') {
+        return '<svg width="30" height="22" viewBox="0 0 30 22"><path d="M2 19h26L15 3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+      }
+      const t = g.turn;
+      return '<svg width="30" height="22" viewBox="0 0 30 22"><g transform="rotate(' + (-t) + ' 15 11)">' +
+        '<rect x="3" y="6" width="24" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/></g>' +
+        (t ? '<path d="M15 20a12 12 0 0 1 0-18" fill="none" stroke="currentColor" stroke-width="1" opacity=".45"/>' : '') +
+        '</svg>';
+    }
+
+    // Палитра
+    const colBox = $('rsColors');
+    COLORS.forEach((c) => {
+      const b = document.createElement('button');
+      b.className = 'rs-swatch' + (c.id === color.id ? ' selected' : '');
+      b.innerHTML = '<i style="background:' + c.hex + '"></i><span>' + c.name + '</span>';
+      b.addEventListener('click', () => {
+        color = c;
+        colBox.querySelectorAll('.rs-swatch').forEach((x) => x.classList.remove('selected'));
+        b.classList.add('selected');
+        paintPreview();
+      });
+      colBox.appendChild(b);
+    });
+
+    function paintPreview() {
+      const p = $('rsPreview');
+      p.innerHTML = geo.shape === 'tri'
+        ? '<path d="M8 48h48L32 12z" fill="' + color.hex + '" stroke="rgba(0,0,0,.35)"/>'
+        : '<rect x="6" y="20" width="52" height="26" rx="4" fill="' + color.hex + '" stroke="rgba(0,0,0,.35)"/>';
+    }
+    paintPreview();
+
+    $('rsApply').addEventListener('click', () => {
+      tiles.forEach((t) => { t.hex = color.hex; });
+      draw();
+    });
+    $('rsUndo').addEventListener('click', () => {
+      tiles.pop();
+      heading = tiles.length ? tiles[tiles.length - 1].heading : 0;
+      refreshTotals();
+      draw();
+    });
+    $('rsClear').addEventListener('click', () => {
+      tiles = [];
+      heading = 0;
+      refreshTotals();
+      draw();
+    });
+
+    const setZoom = (z) => {
+      zoom = Math.min(2, Math.max(0.5, z));
+      $('rsZoomVal').textContent = Math.round(zoom * 100) + '%';
+      draw();
+    };
+    ['rsZoomIn', 'rsZoomIn2'].forEach((id) => $(id).addEventListener('click', () => setZoom(zoom + 0.1)));
+    ['rsZoomOut', 'rsZoomOut2'].forEach((id) => $(id).addEventListener('click', () => setZoom(zoom - 0.1)));
+
+    // Табы шагов — в демо активна только «Укладка»
+    document.querySelectorAll('.rs-tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.rs-tab').forEach((x) => x.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+
+    this._resize = resize;
+    window.addEventListener('resize', this._resize);
+    resize();
+    refreshTotals();
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this._resize); }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

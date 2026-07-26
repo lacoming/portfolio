@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
+<script src="./analytics.js" defer></script>
 </head>
 <body>
 <x-dc>
@@ -11,6 +12,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;700&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+/* Leotaro Regular — Ekayasa | Authentype, authentype.com. Держит только
+   логотип, поэтому в сабсете одна латиница: 110 КБ OTF → 7 КБ woff2. */
+@font-face{font-family:'Leotaro';src:url('fonts/Leotaro-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
 html{scroll-behavior:smooth}
 body{margin:0;background:#060609;-webkit-font-smoothing:antialiased}
 a{text-decoration:none}
@@ -24,18 +28,69 @@ a{text-decoration:none}
 .vz-win>.vz-lbl{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:8px;padding:9px 13px;background:linear-gradient(transparent,rgba(6,6,9,.9) 40%);opacity:0;transition:opacity .25s;pointer-events:none}
 .vz-win.vz-hot{border-color:var(--acc,#B7524A);transform:scale(1.025);box-shadow:0 14px 44px rgba(var(--acc-rgb,183,82,74),.22)}
 .vz-win.vz-hot>.vz-lbl{opacity:1}
+/* Логотип. Широкая разрядка даёт слову ширину, сопоставимую с эмблемой,
+   а тонкая линия акцента под ним тянется во всю колонку: начинается у первой
+   буквы и растворяется к последним буквам девиза, связывая обе строки в один
+   лок. Слово не обжимаем по тексту — ширину линии задаёт девиз. */
+#vzMark{position:relative;font-family:'Leotaro',sans-serif;font-weight:400;font-size:36px;letter-spacing:.02em;line-height:1;color:#F2F2F7;padding-bottom:11px;transition:text-shadow .3s}
+#vzMark::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:linear-gradient(90deg,var(--acc,#B7524A) 0%,rgba(var(--acc-rgb,183,82,74),.92) 46%,rgba(var(--acc-rgb,183,82,74),0) 100%)}
+#vzBrand:hover #vzMark{text-shadow:0 0 18px rgba(var(--acc-rgb,183,82,74),.45)}
+/* Раздел «Работы» повторяет геометрию хиро: та же max-width и те же 67px
+   по бокам. За счёт этого секции одинаково центруются на любой ширине,
+   и левый край страницы остаётся одной линией.
+   Заголовок с подписью стоят по центру, сетка отступает на те же 56px,
+   что и текст хиро, — карточки встают одной линией со «Смотреть работы»
+   и «×6». Отступ у сетки симметричный, поэтому центр колонки совпадает
+   с центром заголовка. */
+.vz-works-head{text-align:center}
+#vzGrid{padding:0 56px}
+
+/* ---------- бургер и мобильное меню ---------- */
+/* На десктопе кнопки нет: там навигация, язык и CTA стоят в самой шапке. */
+#vzBurger{display:none;width:42px;height:42px;padding:0;flex-direction:column;align-items:center;justify-content:center;gap:5px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);cursor:pointer}
+#vzBurger span{display:block;width:18px;height:2px;border-radius:2px;background:#F2F2F7;transition:transform .25s ease,opacity .15s ease}
+#vzBurger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+#vzBurger[aria-expanded="true"] span:nth-child(2){opacity:0}
+#vzBurger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+#vzMenu[hidden]{display:none}
+/* Панель перекрывает страницу целиком, но не шапку: у шапки z-index выше,
+   поэтому логотип и крестик остаются на месте и кликабельны. */
+#vzMenu{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;padding:25px;background:rgba(6,6,9,.97);backdrop-filter:blur(12px);animation:vzFade .25s ease-out both}
+#vzMenu>a{font-family:'Unbounded',sans-serif;font-weight:400;font-size:22px;color:#F2F2F7;padding:18px 2px;border-bottom:1px solid rgba(255,255,255,.08);transition:color .2s}
+#vzMenu>a:active{color:var(--acc,#B7524A)}
+#vzMenuFoot{margin-top:30px;display:flex;align-items:center;gap:16px}
+#vzLangM{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.06em;color:#F2F2F7;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:11px 18px;cursor:pointer}
 @media (max-width:1120px){
 #vzHero{grid-template-columns:1fr !important;min-height:0 !important;padding-top:24px !important}
 #vzHeroText{padding-left:0 !important}
-#vzMarquee{height:54vh !important;min-height:380px !important}
-#vzGrid{grid-template-columns:repeat(2,1fr) !important}
+/* хиро схлопывается в одну колонку, «Работы» теряют свои 56px — барабану
+   тоже нечего сдвигать, он снова во всю ширину секции */
+#vzMarquee{height:54vh !important;min-height:380px !important;right:0 !important}
+#vzGrid{grid-template-columns:repeat(2,1fr) !important;padding:0 !important}
 #vzAboutGrid{grid-template-columns:1fr !important;gap:36px !important}
+/* Ниже 1120px навигация отъедает у логотипа ширину, и девиз ломается в три
+   строки. Оставляем эмблему со словом — линия акцента тогда заканчивается
+   на последней букве LACOMING. Сдвиг меньше: без девиза лок короче, слову
+   до линии навигации остаётся 6px. */
+#vzBrand{transform:translateY(5.5px) !important}
+#vzBrand [data-l10n="slogan"]{display:none !important}
 }
 @media (max-width:720px){
-#vzHeader{flex-wrap:wrap !important;padding:14px 25px !important;gap:12px 14px !important}
-#vzNav{order:5;width:100%;margin-left:0 !important;gap:20px !important}
-#vzLang{margin-left:auto}
+/* Навигация, переключатель языка и CTA уезжают в бургер: в одну строку с
+   логотипом они не помещались и раньше переносились на второй ряд.
+   Шапка поднята над панелью меню, чтобы логотип и крестик оставались
+   видимыми и кликабельными поверх неё. */
+#vzHeader{padding:14px 25px !important;gap:14px !important;z-index:95 !important}
+/* на мобильном равнять логотип не по чему — навигации в шапке больше нет */
+#vzBrand{transform:none !important}
+/* на узком экране слово в исходном кегле упиралось бы в правый край
+   рядом с 96-пиксельной эмблемой */
+#vzMark{font-size:26px !important;padding-bottom:9px !important}
+#vzNav{display:none !important}
+#vzLang{display:none !important}
 #vzHeadCta{display:none !important}
+#vzBurger{display:flex;margin-left:auto;flex:none}
 #vzHero{padding:14px 25px 44px !important;gap:30px !important}
 #vzH1{font-size:32px !important}
 #vzSub{font-size:15px !important}
@@ -45,9 +100,8 @@ a{text-decoration:none}
 #vzMarqueeGrid{gap:12px !important}
 .vz-col{gap:12px !important}
 #works{padding:52px 25px 8px !important}
-#vzWorksTitle{font-size:24px !important}
-#vzWorksHint{display:none !important}
-#vzGrid{grid-template-columns:1fr !important;gap:16px !important}
+#vzWorksTitle{font-size:28px !important}
+#vzGrid{grid-template-columns:1fr !important;gap:16px !important;padding:0 !important}
 #about{padding:56px 25px !important}
 #vzAboutTitle{font-size:25px !important}
 #vzFacts{flex-direction:column !important;gap:16px !important}
@@ -74,10 +128,10 @@ a{text-decoration:none}
   <canvas id="vzStarsMain" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0"></canvas>
 
   <header id="vzHeader" style="position:relative;z-index:20;display:flex;align-items:center;gap:24px;max-width:1440px;margin:0 auto;padding:20px 67px">
-    <a href="#" id="vzBrand" style="display:flex;align-items:center;gap:18px;color:#F2F2F7;padding-left:clamp(0px,calc(100vw - 1120px),56px)">
+    <a href="#about" id="vzBrand" style="display:flex;align-items:center;gap:18px;color:#F2F2F7;padding-left:clamp(0px,calc(100vw - 1120px),56px);transform:translateY(20.5px)">
       <img src="uploads/logo-prince-emblem.png" alt="Маленький принц с розой" style="width:96px;height:96px;object-fit:contain;flex:none">
-      <span style="display:flex;flex-direction:column;gap:16px;line-height:1">
-        <span style="font-family:'Unbounded',sans-serif;font-weight:400;font-size:19.5px;letter-spacing:.02em">Александр Вострухин</span>
+      <span style="display:flex;flex-direction:column;gap:13px;line-height:1">
+        <span id="vzMark">Lacoming</span>
         <span data-l10n="slogan" style="font-size:17px;color:#B9BDCC;letter-spacing:.01em">«Есть время любоваться прекрасным»</span>
       </span>
     </a>
@@ -88,11 +142,21 @@ a{text-decoration:none}
     </nav>
     <button id="vzLang" style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:#F2F2F7;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:8px 14px;cursor:pointer;transition:border-color .2s" style-hover="border-color:var(--acc,#B7524A)">RU / <span style="color:#8E93A8">EN</span></button>
     <a href="#contact" id="vzHeadCta" data-l10n="cta" style="font-size:13px;font-weight:600;color:#060609;background:#F2F2F7;padding:10px 20px;border-radius:999px;transition:background .2s,transform .2s" style-hover="background:var(--acc,#B7524A);color:var(--acc-ink,#fff);transform:translateY(-1px)">Обсудить проект</a>
+    <button id="vzBurger" aria-label="Меню" aria-expanded="false" aria-controls="vzMenu"><span></span><span></span><span></span></button>
   </header>
 
+  <div id="vzMenu" hidden>
+    <a href="#works" data-l10n="navWorks">Работы</a>
+    <a href="#about" data-l10n="navAbout">Обо мне</a>
+    <a href="#contact" data-l10n="navContact">Контакты</a>
+    <div id="vzMenuFoot">
+      <button id="vzLangM">RU / <span style="color:#8E93A8">EN</span></button>
+    </div>
+  </div>
+
   <section id="vzHero" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:48px 67px 40px;display:grid;grid-template-columns:0.92fr 1.08fr;gap:40px;align-items:center;min-height:78vh">
-    <div id="vzHeroText" style="animation:vzFade .8s ease-out both;padding-left:56px">
-      <h1 id="vzH1" data-l10n="h1" style="margin:0 0 22px;font-family:'Unbounded',sans-serif;font-weight:500;font-size:47px;line-height:1.12;letter-spacing:-.01em;text-wrap:balance">Сайты и сервисы под ключ — <span style="color:var(--acc,#B7524A)">в короткие сроки</span></h1>
+    <div id="vzHeroText" style="align-self:start;animation:vzFade .8s ease-out both;padding-left:56px">
+      <h1 id="vzH1" data-l10n="h1" style="margin:0 0 22px;font-family:'Unbounded',sans-serif;font-weight:400;font-size:47px;line-height:1.12;letter-spacing:-.01em;text-wrap:balance">Сайты и сервисы под ключ — <span style="color:var(--acc,#B7524A)">в короткие сроки</span></h1>
       <p id="vzSub" data-l10n="sub" style="margin:0 0 32px;font-size:16.5px;line-height:1.65;color:#B9BDCC;max-width:470px;text-wrap:pretty">Fullstack-разработка, усиленная AI-агентами: от идеи до продакшена за дни, а не месяцы. Каждое окно справа — реальный проект. Наведите и кликните — сайт откроется, его можно полистать.</p>
       <div id="vzHeroBtns" style="display:flex;gap:12px;flex-wrap:wrap">
         <a href="#works" data-l10n="btnWorks" style="background:var(--acc,#B7524A);color:var(--acc-ink,#fff);font-weight:600;font-size:14.5px;padding:15px 30px;border-radius:999px;box-shadow:0 10px 34px rgba(var(--acc-rgb,183,82,74),.25);transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 16px 44px rgba(var(--acc-rgb,183,82,74),.38)">Смотреть работы</a>
@@ -105,15 +169,15 @@ a{text-decoration:none}
       </div>
     </div>
 
-    <div id="vzMarquee" style="position:relative;height:76vh;min-height:540px;overflow:hidden;border-radius:20px;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent 100%)">
+    <div id="vzMarquee" style="align-self:start;position:relative;right:56px;height:76vh;min-height:540px;overflow:hidden;border-radius:20px;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent 100%)">
       <div id="vzMarqueeGrid" style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:0 4px">
         <div class="vz-col" style="display:flex;flex-direction:column;gap:18px;will-change:transform">
           <div class="vz-win" data-open-site="sites/rentsale-altay/index.html" data-site-title="Недвижимость Горного Алтая" data-site-url="rentsale-altay.ru"></div>
-          <div class="vz-win" data-open-site="sites/flexpath/index.dc.html" data-site-title="Radius Step — конструктор дорожек" data-site-url="radius-step.ru"></div>
+          <div class="vz-win" data-open-site="https://web-landscape-2-d.vercel.app/" data-site-key="flexpath" data-site-live="1" data-site-title="Radius Step — конструктор дорожек" data-site-url="radius-step.ru"></div>
           <div class="vz-win" data-open-site="sites/tersk/index.dc.html" data-site-title="Терский конный завод" data-site-url="terskarabian.com"></div>
           <div class="vz-win" data-open-site="sites/concepts/gastro.dc.html" data-site-title="Ресторан «Сад»" data-site-url="sad-garden.ru"></div>
           <div class="vz-win" data-open-site="sites/rentsale-altay/index.html" data-site-title="Недвижимость Горного Алтая" data-site-url="rentsale-altay.ru"></div>
-          <div class="vz-win" data-open-site="sites/flexpath/index.dc.html" data-site-title="Radius Step — конструктор дорожек" data-site-url="radius-step.ru"></div>
+          <div class="vz-win" data-open-site="https://web-landscape-2-d.vercel.app/" data-site-key="flexpath" data-site-live="1" data-site-title="Radius Step — конструктор дорожек" data-site-url="radius-step.ru"></div>
           <div class="vz-win" data-open-site="sites/tersk/index.dc.html" data-site-title="Терский конный завод" data-site-url="terskarabian.com"></div>
           <div class="vz-win" data-open-site="sites/concepts/gastro.dc.html" data-site-title="Ресторан «Сад»" data-site-url="sad-garden.ru"></div>
         </div>
@@ -134,12 +198,11 @@ a{text-decoration:none}
   </section>
 
   <section id="works" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:72px 67px 30px;scroll-margin-top:20px">
-    <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:8px;flex-wrap:wrap">
-      <h2 id="vzWorksTitle" data-l10n="worksTitle" style="margin:0;font-family:'Unbounded',sans-serif;font-weight:500;font-size:30px">Работы</h2>
-      <span id="vzWorksHint" data-l10n="worksHint" style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#8E93A8">кликните карточку — сайт откроется внутри витрины</span>
+    <div class="vz-works-head" style="display:flex;justify-content:center;align-items:baseline;gap:18px;margin-bottom:18px;flex-wrap:wrap">
+      <h2 id="vzWorksTitle" data-l10n="worksTitle" style="margin:0;font-family:'Unbounded',sans-serif;font-weight:500;font-size:38px">Работы</h2>
     </div>
-    <p data-l10n="worksNote" style="margin:0 0 34px;font-size:13.5px;color:#8E93A8;max-width:640px">От финтеха и недвижимости до гастрономии и фэшна — каждый сайт открывается живьём прямо внутри витрины.</p>
-    <div id="vzGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px"></div>
+    <p class="vz-works-head" data-l10n="worksNote" style="margin:0 auto 54px;font-size:13.5px;color:#8E93A8;max-width:640px">От финтеха и недвижимости до гастрономии и фэшна — каждый сайт открывается живьём прямо внутри витрины.</p>
+    <div id="vzGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:30px"></div>
   </section>
 
   <section id="about" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:80px 67px;scroll-margin-top:20px">
@@ -225,7 +288,7 @@ class Component extends DCLogic {
     // ---------- данные проектов ----------
     const SITES = [
       { src: 'sites/rentsale-altay/index.html', title: 'Недвижимость Горного Алтая', url: 'rentsale-altay.ru', tags: 'Next.js 14 · Tailwind · лидоген', desc: 'Лендинг-агрегатор трёх курортных проектов: сравнение, калькулятор доходности.', accent: '#C2A36B' },
-      { src: 'sites/flexpath/index.dc.html', title: 'Radius Step', url: 'radius-step.ru', tags: 'Next.js · Konva · FastAPI · DXF', desc: 'Лендинг конструктора садовых дорожек с онлайн-редактором, тёмная тема.', accent: '#D9BF9E' },
+      { src: 'https://web-landscape-2-d.vercel.app/', key: 'flexpath', live: true, title: 'Radius Step', url: 'radius-step.ru', tags: 'Next.js · Konva · FastAPI · DXF', desc: 'Лендинг конструктора садовых дорожек с онлайн-редактором, тёмная тема.', accent: '#D9BF9E' },
       { src: 'sites/tersk/index.dc.html', title: 'Терский конный завод', url: 'terskarabian.com', tags: 'Nuxt 3 · Directus · RU/EN', desc: 'Сайт старейшего конезавода России (1889): интерактивный хиро, события, новости.', accent: '#87CEFA' },
       { src: 'sites/concepts/gastro.dc.html', title: 'Ресторан «Сад»', url: 'sad-garden.ru', tags: 'Гастро · сезонное меню', desc: 'Тёплый editorial-лендинг ресторана сезонной кухни с меню-строками.', accent: '#3E5233' },
       { src: 'sites/concepts/atelier.dc.html', title: 'Ателье «Форма»', url: 'forma-atelier.ru', tags: 'Фэшн · editorial', desc: 'Модный лукбук-лендинг: гигантская типографика, марквиз, ч/б.', accent: '#141414' },
@@ -236,12 +299,21 @@ class Component extends DCLogic {
     ];
 
     // ---------- марквиз ----------
-    const previewFor = (src) => {
-      const keys = ['tokeon', 'rentsale-altay', 'flexpath', 'univer-zakupok', 'tersk', 'termy', 'last-signal', 'gastro', 'atelier'];
-      for (const k of keys) if (src.indexOf(k) !== -1) return 'previews/' + k + '.jpg?v=2';
-      return '';
+    const SITE_KEYS = ['tokeon', 'rentsale-altay', 'flexpath', 'univer-zakupok', 'tersk', 'termy', 'last-signal', 'gastro', 'atelier'];
+    // Ключ проекта — им подписаны превью и события аналитики. Обычно выводится
+    // из пути к копии, но у проектов, которые открываются с боевого адреса,
+    // в пути ключа нет — для них он задаётся явно.
+    const keyFor = (src, explicit) => explicit || SITE_KEYS.find((k) => src.indexOf(k) !== -1) || 'unknown';
+    const previewFor = (src, explicit) => {
+      const k = keyFor(src, explicit);
+      return k === 'unknown' ? '' : 'previews/' + k + '.jpg?v=2';
     };
     this.previewFor = previewFor;
+    // Аналитика подключается отдельным файлом и может быть отключена
+    // посетителем — поэтому всегда через проверку.
+    const track = (type, target, context, value) => {
+      if (window.vzTrack) window.vzTrack(type, target, context, value);
+    };
     // Оформление окна витрины. Вынесено в функцию: барабан доклонирует карточки
     // под высоту вьюпорта, и клонам нужны те же превью и обработчики.
     // Подсветка и hover живут в CSS (класс .vz-hot) — барабан включает её сам,
@@ -252,7 +324,8 @@ class Component extends DCLogic {
       const src = win.getAttribute('data-open-site');
       const title = win.getAttribute('data-site-title');
       const url = win.getAttribute('data-site-url');
-      const prev = previewFor(src);
+      const key = keyFor(src, win.getAttribute('data-site-key'));
+      const prev = previewFor(src, key);
       const img = document.createElement('img');
       img.className = 'vz-prev';
       img.src = prev;
@@ -274,7 +347,8 @@ class Component extends DCLogic {
       win.appendChild(label);
       win.addEventListener('click', () => {
         if (this._drum && this._drum.suppress) return;
-        openModal(src, title, url, win.hasAttribute('data-site-live'));
+        track('project_open', key, 'drum');
+        openModal(src, title, url, win.hasAttribute('data-site-live'), key);
       });
     };
     this._decorateWin = decorate;
@@ -287,29 +361,35 @@ class Component extends DCLogic {
       card.style.cssText = 'position:relative;border:1px solid rgba(255,255,255,.1);border-radius:16px;background:rgba(255,255,255,.025);overflow:hidden;cursor:pointer;transition:border-color .25s,transform .25s,box-shadow .25s';
       card.innerHTML =
         '<div style="position:relative;aspect-ratio:16/9;overflow:hidden;background:#0D0D14;border-bottom:1px solid rgba(255,255,255,.08)">' +
-        '<img src="' + this.previewFor(s.src) + '" loading="lazy" alt="' + s.title + '" draggable="false" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">' +
-        (this.previewFor(s.src).indexOf('tokeon') !== -1 ? '<img src="previews/tokeon-sphere.png" alt="" draggable="false" style="position:absolute;left:57.55%;top:22.02%;width:36.72%;height:auto;animation:vzBob 5s ease-in-out infinite;will-change:transform;pointer-events:none">' : '') +
+        '<img src="' + this.previewFor(s.src, s.key) + '" loading="lazy" alt="' + s.title + '" draggable="false" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">' +
+        (this.previewFor(s.src, s.key).indexOf('tokeon') !== -1 ? '<img src="previews/tokeon-sphere.png" alt="" draggable="false" style="position:absolute;left:57.55%;top:22.02%;width:36.72%;height:auto;animation:vzBob 5s ease-in-out infinite;will-change:transform;pointer-events:none">' : '') +
         '</div>' +
-        '<div style="padding:16px 18px 18px">' +
+        '<div style="padding:20px 22px 22px">' +
         '<div style="display:flex;align-items:center;gap:10px"><span style="width:9px;height:9px;border-radius:3px;background:' + s.accent + ';flex:none"></span><span style="font-weight:600;font-size:15.5px;color:#F2F2F7">' + s.title + '</span><span style="margin-left:auto;font-family:JetBrains Mono,monospace;font-size:10.5px;color:#8E93A8">' + s.url + '</span></div>' +
-        '<p style="margin:9px 0 12px;font-size:13px;line-height:1.55;color:#B9BDCC">' + s.desc + '</p>' +
+        '<p style="margin:12px 0 16px;font-size:13px;line-height:1.6;color:#B9BDCC">' + s.desc + '</p>' +
         '<div style="font-family:JetBrains Mono,monospace;font-size:10.5px;letter-spacing:.03em;color:#8E93A8">' + s.tags + '</div>' +
         '</div>';
       card.addEventListener('mouseenter', () => { card.style.borderColor = 'var(--acc)'; card.style.transform = 'translateY(-5px)'; card.style.boxShadow = '0 22px 54px rgba(0,0,0,.5)'; });
       card.addEventListener('mouseleave', () => { card.style.borderColor = 'rgba(255,255,255,.1)'; card.style.transform = 'none'; card.style.boxShadow = 'none'; });
-      card.addEventListener('click', () => openModal(s.src, s.title, s.url, !!s.live));
+      card.addEventListener('click', () => {
+        track('project_open', keyFor(s.src, s.key), 'grid');
+        openModal(s.src, s.title, s.url, !!s.live, keyFor(s.src, s.key));
+      });
       grid.appendChild(card);
     });
 
     // ---------- модалка ----------
     const modal = $('vzModal'), frame = $('vzModalFrame');
-    const openModal = (src, title, url, live) => {
+    let openedKey = null, openedAt = 0;
+    const openModal = (src, title, url, live, key) => {
       frame.src = src;
       $('vzModalTitle').textContent = title;
       $('vzModalUrl').textContent = url;
       $('vzModalExt').setAttribute('href', src);
       modal.style.display = 'flex';
       document.body.style.overflow = 'hidden';
+      openedKey = keyFor(src, key);
+      openedAt = Date.now();
       // пока внутри модалки грузится целый сайт, барабану и звёздам делать нечего
       if (this._drum) { this._drum.modal = true; this._drumPause(); }
     };
@@ -317,8 +397,14 @@ class Component extends DCLogic {
       modal.style.display = 'none';
       frame.src = 'about:blank';
       document.body.style.overflow = '';
+      // сколько секунд реально смотрели сайт — главный признак интереса к работе
+      if (openedKey && openedAt) {
+        track('modal_time', openedKey, null, Math.round((Date.now() - openedAt) / 1000));
+        openedKey = null; openedAt = 0;
+      }
       if (this._drum) { this._drum.modal = false; this._drumPause(); }
     };
+    $('vzModalExt').addEventListener('click', () => track('external_open', openedKey, 'modal'));
     this._openModal = openModal;
     $('vzModalClose').addEventListener('click', closeModal);
     modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
@@ -331,7 +417,7 @@ class Component extends DCLogic {
       ru: {
         role: 'FULLSTACK · AI-ИНЖЕНЕРИЯ', slogan: '«Есть время любоваться прекрасным»', navWorks: 'Работы', navAbout: 'Обо мне', navContact: 'Контакты', cta: 'Обсудить проект',
         badge: 'ОТКРЫТ К ЗАКАЗАМ · 2026',
-        h1: 'Сайты и сервисы под ключ — в короткие сроки',
+        h1: 'Сайты и сервисы под ключ — {в короткие сроки}',
         sub: 'Fullstack-разработка, усиленная AI-агентами: от идеи до продакшена за дни, а не месяцы. Каждое окно справа — реальный проект. Наведите и кликните — сайт откроется, его можно полистать.',
         btnWorks: 'Смотреть работы', btnAbout: 'Кто я такой',
         stat1: 'живых проектов в витрине', stat2: 'быстрее с AI-пайплайнами', stat3: 'двуязычные продукты',
@@ -358,7 +444,7 @@ class Component extends DCLogic {
       en: {
         role: 'FULLSTACK · AI ENGINEERING', slogan: '“There is time to admire the beautiful”', navWorks: 'Work', navAbout: 'About', navContact: 'Contact', cta: 'Start a project',
         badge: 'OPEN FOR PROJECTS · 2026',
-        h1: 'Turn-key websites and services — on tight deadlines',
+        h1: 'Turn-key websites and services — {on tight deadlines}',
         sub: 'Fullstack development boosted by AI agents: idea to production in days, not months. Every window on the right is a real project. Hover and click — the site opens and you can browse it.',
         btnWorks: 'View work', btnAbout: 'Who I am',
         stat1: 'live projects in this gallery', stat2: 'faster with AI pipelines', stat3: 'bilingual products',
@@ -383,16 +469,83 @@ class Component extends DCLogic {
         openTab: 'open in new tab ↗', footNote: 'built by hand — from design to deploy',
       },
     };
-    const langBtn = $('vzLang');
-    langBtn.addEventListener('click', () => {
+    // ---------- клики по контактам и призывам к действию ----------
+    // Делегирование: ссылки живут в разных секциях, но правило одно —
+    // куда ведёт href, то и записываем.
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest && e.target.closest('a[href]');
+      if (!a) return;
+      const href = a.getAttribute('href') || '';
+      if (href.indexOf('t.me/') !== -1) track('contact_click', 'telegram');
+      else if (href.indexOf('mailto:') === 0) track('contact_click', 'email');
+      else if (href.indexOf('github.com/lacoming') !== -1) track('contact_click', 'github');
+      else if (href === '#contact') track('cta_click', a.id === 'vzHeadCta' ? 'header' : 'section');
+      else if (href === '#works') track('cta_click', 'works');
+      // логотип ведёт туда же, куда пункт «Обо мне» — в статистике их
+      // стоит различать, иначе непонятно, чем на самом деле пользуются
+      else if (href === '#about') track('cta_click', a.id === 'vzBrand' ? 'logo' : 'about');
+    });
+
+    // Раньше здесь стоял простой el.textContent = строка, и он сносил вложенный
+    // <span> с акцентом: после первого же переключения языка заголовок хиро
+    // становился одноцветным. Теперь часть в фигурных скобках собирается
+    // отдельным узлом — акцент переживает любое число переключений.
+    const setL10n = (el, val) => {
+      const i = val.indexOf('{');
+      if (i === -1) { el.textContent = val; return; }
+      const j = val.indexOf('}', i);
+      el.textContent = '';
+      if (i) el.appendChild(document.createTextNode(val.slice(0, i)));
+      const acc = document.createElement('span');
+      acc.style.color = 'var(--acc,#B7524A)';
+      acc.textContent = val.slice(i + 1, j);
+      el.appendChild(acc);
+      if (j + 1 < val.length) el.appendChild(document.createTextNode(val.slice(j + 1)));
+    };
+
+    // Переключателей языка два: в шапке на десктопе и в бургер-меню на
+    // мобильном. Оба зовут одну функцию и оба перерисовываются вместе,
+    // иначе после переключения в меню кнопка в шапке показывала бы старое.
+    const langBtns = [$('vzLang'), $('vzLangM')].filter(Boolean);
+    const paintLang = () => {
+      const html = this.locale === 'ru'
+        ? 'RU / <span style="color:#8E93A8">EN</span>'
+        : '<span style="color:#8E93A8">RU</span> / EN';
+      langBtns.forEach((b) => { b.innerHTML = html; });
+    };
+    const switchLang = () => {
       this.locale = this.locale === 'ru' ? 'en' : 'ru';
+      window.vzLocale = this.locale;
+      track('lang_switch', this.locale);
       const d = L10N[this.locale];
       document.querySelectorAll('[data-l10n]').forEach((el) => {
         const k = el.getAttribute('data-l10n');
-        if (d[k]) el.textContent = d[k];
+        if (d[k]) setL10n(el, d[k]);
       });
-      langBtn.innerHTML = this.locale === 'ru' ? 'RU / <span style="color:#8E93A8">EN</span>' : '<span style="color:#8E93A8">RU</span> / EN';
-    });
+      paintLang();
+    };
+    langBtns.forEach((b) => b.addEventListener('click', switchLang));
+
+    // ---------- бургер-меню ----------
+    const burger = $('vzBurger'), menu = $('vzMenu'), header = $('vzHeader');
+    const setMenu = (open) => {
+      menu.hidden = !open;
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Меню');
+      document.body.style.overflow = open ? 'hidden' : '';
+      // ссылки не должны залезать под шапку, а её высота зависит от вёрстки
+      if (open) menu.style.paddingTop = (header.getBoundingClientRect().height + 18) + 'px';
+    };
+    // рантайм разметки не переносит голый атрибут hidden — задаём состояние сами
+    setMenu(false);
+    burger.addEventListener('click', () => setMenu(menu.hidden));
+    // клик по пункту уводит на якорь — панель обязана уйти с дороги
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+    this._escMenu = (e) => { if (e.key === 'Escape' && !menu.hidden) setMenu(false); };
+    window.addEventListener('keydown', this._escMenu);
+    // возврат на десктоп при открытом меню оставлял body заблокированным
+    this._menuResize = () => { if (!menu.hidden && window.innerWidth > 720) setMenu(false); };
+    window.addEventListener('resize', this._menuResize);
 
     this._applyAccent();
     this._initStars();

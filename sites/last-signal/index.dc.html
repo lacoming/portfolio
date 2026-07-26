@@ -55,6 +55,44 @@ h2{margin:0}
 .ls-m-album h2{font-size:24px !important;line-height:30px !important}
 .ls-m-streams img{height:32px !important}
 }
+/* --- Плеер --- */
+.ls-tracks{list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,196,.14)}
+.ls-track{display:flex;align-items:center;gap:14px;padding:12px 8px;border-bottom:1px solid rgba(255,255,196,.14);
+  cursor:pointer;transition:background .18s}
+.ls-track:hover{background:rgba(254,89,7,.08)}
+.ls-track.is-current{background:rgba(254,89,7,.12)}
+.ls-track.is-missing{opacity:.4;cursor:not-allowed}
+.ls-track .num{font-family:'NeueMachina';font-size:13px;color:#FE5907;width:22px;flex:none;letter-spacing:.05em}
+.ls-track .name{flex:1;min-width:0;font-family:Helvetica,Arial,sans-serif;font-weight:700;font-size:14px;
+  letter-spacing:.1em;color:#FFFFC5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ls-track .dur{font-family:'NeueMachina';font-size:12px;color:rgba(255,255,196,.55);flex:none}
+.ls-track .eq{display:flex;align-items:flex-end;gap:2px;width:14px;height:12px;flex:none}
+.ls-track .eq i{display:block;width:3px;background:#FE5907;height:3px}
+.ls-track.is-playing .eq i{animation:lsEq .9s ease-in-out infinite}
+.ls-track.is-playing .eq i:nth-child(2){animation-delay:.18s}
+.ls-track.is-playing .eq i:nth-child(3){animation-delay:.36s}
+@keyframes lsEq{0%,100%{height:3px}50%{height:12px}}
+#lsBar{position:fixed;left:0;right:0;bottom:0;z-index:2000;transform:translateY(110%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+  background:rgba(23,23,23,.96);backdrop-filter:blur(14px);border-top:2px solid #FE5907}
+#lsBar.is-open{transform:translateY(0)}
+.ls-bar-in{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:12px 16px}
+.ls-bar-btn{display:flex;align-items:center;justify-content:center;background:transparent;border:none;color:#FFFFC5;cursor:pointer;
+  padding:6px;transition:color .18s}
+.ls-bar-btn:hover{color:#FE5907}
+.ls-bar-btn:disabled{opacity:.3;cursor:default}
+#lsPlay{width:44px;height:44px;flex:none;border:2px solid #FE5907;color:#FE5907}
+#lsPlay:hover{background:#FE5907;color:#171717}
+#lsSeek,#lsVol{-webkit-appearance:none;appearance:none;height:3px;background:rgba(255,255,196,.22);outline:none;cursor:pointer}
+#lsSeek{flex:1;min-width:60px}
+#lsVol{width:80px}
+#lsSeek::-webkit-slider-thumb,#lsVol::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;background:#FE5907;cursor:pointer}
+#lsSeek::-moz-range-thumb,#lsVol::-moz-range-thumb{width:11px;height:11px;border:none;background:#FE5907;cursor:pointer}
+@media (max-width:768px){
+  .ls-bar-in{gap:10px;padding:10px 12px;flex-wrap:wrap}
+  .ls-bar-meta{order:-1;width:100%}
+  #lsVol,.ls-vol-wrap{display:none !important}
+  .ls-track .name{font-size:13px;letter-spacing:.06em}
+}
 </style>
 </helmet>
 <div id="top" data-screen-label="LAST SIGNAL — главная" style="background-color:#171717;min-height:100vh;overflow-x:hidden">
@@ -157,8 +195,9 @@ h2{margin:0}
               ЭТО ЗВУК ПЕРЕГРУЗКИ, ПРОТОКОЛ СОПРОТИВЛЕНИЯ И ФИДБЭК ОТ РЕАЛЬНОСТИ, КОТОРОЙ БОЛЬШЕ НЕТ.
             </div>
             <div style="display:flex;justify-content:flex-start">
-              <a href="#albums" class="ls-m-btn" style="display:flex;align-items:center;justify-content:center;border:2px solid #FE5907;width:380px;height:48px;font-family:'NeueMachina';font-weight:800;font-size:18px;letter-spacing:.03em;line-height:24px;color:#FE5907;text-align:center">ВСЕ ТРЕКИ</a>
+              <button class="ls-m-btn ls-toggle" data-list="lsListNoFuture" style="display:flex;align-items:center;justify-content:center;background:transparent;border:2px solid #FE5907;width:380px;height:48px;font-family:'NeueMachina';font-weight:800;font-size:18px;letter-spacing:.03em;line-height:24px;color:#FE5907;text-align:center;cursor:pointer">ВСЕ ТРЕКИ</button>
             </div>
+            <ul id="lsListNoFuture" class="ls-tracks" data-album="no-future" style="margin-top:24px"></ul>
           </div>
           <div style="max-width:380px;width:100%;height:auto;aspect-ratio:1;background-color:transparent;padding:12px">
             <img src="no-future.png" alt="album-1" style="width:100%;height:100%;object-fit:cover">
@@ -178,8 +217,9 @@ h2{margin:0}
               ПЕРВОЕ ПРОЯВЛЕНИЕ. ЗВУК ПУСТОТЫ ПОСЛЕ ОБРЫВА СВЯЗИ. БОЛЬШЕ ЭМБИЕНТА И ДАБОВОГО ВЛИЯНИЯ.
             </div>
             <div style="display:flex;justify-content:flex-start">
-              <a href="#albums" class="ls-m-btn" style="display:flex;align-items:center;justify-content:center;border:2px solid #FE5907;width:380px;height:48px;font-family:'NeueMachina';font-weight:800;font-size:18px;letter-spacing:.03em;line-height:24px;color:#FE5907;text-align:center">ВСЕ ТРЕКИ</a>
+              <button class="ls-m-btn ls-toggle" data-list="lsListProtocol" style="display:flex;align-items:center;justify-content:center;background:transparent;border:2px solid #FE5907;width:380px;height:48px;font-family:'NeueMachina';font-weight:800;font-size:18px;letter-spacing:.03em;line-height:24px;color:#FE5907;text-align:center;cursor:pointer">ВСЕ ТРЕКИ</button>
             </div>
+            <ul id="lsListProtocol" class="ls-tracks" data-album="protocol-silence" style="margin-top:24px"></ul>
           </div>
           <div style="max-width:580px;width:100%;height:auto;aspect-ratio:1;background-color:transparent;padding:12px">
             <img src="protocol-silence-zip.png" alt="album-2" style="width:100%;height:100%;object-fit:cover">
@@ -208,11 +248,210 @@ h2{margin:0}
       ВДОХНОВИТЕЛЬ: РОМАН НОСКОВ
     </div>
   </footer>
+
+  <div id="lsBar">
+    <div class="ls-bar-in">
+      <button id="lsPlay" class="ls-bar-btn" aria-label="Играть">
+        <svg id="lsIconPlay" width="16" height="18" viewBox="0 0 16 18" fill="currentColor"><path d="M0 0l16 9-16 9z"></path></svg>
+        <svg id="lsIconPause" width="14" height="18" viewBox="0 0 14 18" fill="currentColor" style="display:none"><path d="M0 0h4.5v18H0zM9.5 0H14v18H9.5z"></path></svg>
+      </button>
+      <button id="lsPrev" class="ls-bar-btn" aria-label="Предыдущий">
+        <svg width="16" height="14" viewBox="0 0 16 14" fill="currentColor"><path d="M0 0h2.5v14H0zM16 0L4.5 7 16 14z"></path></svg>
+      </button>
+      <button id="lsNext" class="ls-bar-btn" aria-label="Следующий">
+        <svg width="16" height="14" viewBox="0 0 16 14" fill="currentColor"><path d="M13.5 0H16v14h-2.5zM0 0l11.5 7L0 14z"></path></svg>
+      </button>
+
+      <canvas id="lsViz" width="72" height="26" style="width:72px;height:26px;flex:none"></canvas>
+
+      <div class="ls-bar-meta" style="min-width:0;width:230px;flex:none">
+        <div id="lsNowTitle" style="font-family:Helvetica,Arial,sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;color:#FFFFC5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">—</div>
+        <div id="lsNowAlbum" style="font-family:'NeueMachina';font-size:11px;letter-spacing:.08em;color:#FE5907;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">LAST SIGNAL</div>
+      </div>
+
+      <span id="lsCur" style="font-family:'NeueMachina';font-size:11px;color:rgba(255,255,196,.6);flex:none;min-width:38px">0:00</span>
+      <input id="lsSeek" type="range" min="0" max="1000" value="0" step="1" aria-label="Позиция">
+      <span id="lsDur" style="font-family:'NeueMachina';font-size:11px;color:rgba(255,255,196,.6);flex:none;min-width:38px">--:--</span>
+
+      <div class="ls-vol-wrap" style="display:flex;align-items:center;gap:8px;flex:none">
+        <svg width="16" height="14" viewBox="0 0 20 16" fill="none" stroke="#FFFFC5" stroke-width="1.6" stroke-linecap="round"><path d="M2 5.5h3L9 2v12L5 10.5H2z" fill="#FFFFC5"></path><path d="M12.5 5a4 4 0 0 1 0 6"></path><path d="M15 2.5a7.5 7.5 0 0 1 0 11"></path></svg>
+        <input id="lsVol" type="range" min="0" max="100" value="80" aria-label="Громкость">
+      </div>
+
+      <button id="lsClose" class="ls-bar-btn" aria-label="Закрыть плеер" style="flex:none">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"></path></svg>
+      </button>
+    </div>
+  </div>
+
+  <audio id="lsAudio" preload="metadata"></audio>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   componentDidMount() {
+    // ─── Плейлист ────────────────────────────────────────────────────────────
+    // Файлы кладутся в sites/last-signal/audio/ под именем из поля file.
+    // Хронометраж не задаём — плеер читает его из самого файла.
+    const TRACKS = [
+      { album: 'no-future', title: 'ПЕРЕГРУЗКА', file: 'audio/no-future-01.mp3' },
+      { album: 'no-future', title: 'ПРОТОКОЛ СОПРОТИВЛЕНИЯ', file: 'audio/no-future-02.mp3' },
+      { album: 'no-future', title: 'БЕЛЫЙ ШУМ', file: 'audio/no-future-03.mp3' },
+      { album: 'no-future', title: 'NO_FUTURE', file: 'audio/no-future-04.mp3' },
+      { album: 'no-future', title: 'ФИДБЭК ОТ РЕАЛЬНОСТИ', file: 'audio/no-future-05.mp3' },
+      { album: 'protocol-silence', title: 'ОБРЫВ СВЯЗИ', file: 'audio/protocol-silence-01.mp3' },
+      { album: 'protocol-silence', title: 'ЭХО В ПУСТОТЕ', file: 'audio/protocol-silence-02.mp3' },
+      { album: 'protocol-silence', title: 'ТИШИНА.EXE', file: 'audio/protocol-silence-03.mp3' },
+      { album: 'protocol-silence', title: 'ПОСЛЕДНИЙ СИГНАЛ', file: 'audio/protocol-silence-04.mp3' },
+    ];
+    const ALBUM_NAME = { 'no-future': 'NO_FUTURE', 'protocol-silence': 'PROTOCOL_SILENCE.ZIP' };
+
+    const $ = (id) => document.getElementById(id);
+    const audio = $('lsAudio');
+    const bar = $('lsBar');
+    let current = -1;
+    const rows = [];
+
+    const fmt = (s) => {
+      if (!isFinite(s) || s < 0) return '--:--';
+      const m = Math.floor(s / 60);
+      return m + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+    };
+
+    // Раскладываем треки по спискам альбомов
+    document.querySelectorAll('.ls-tracks').forEach((ul) => {
+      const album = ul.getAttribute('data-album');
+      TRACKS.forEach((t, i) => {
+        if (t.album !== album) return;
+        const li = document.createElement('li');
+        li.className = 'ls-track';
+        li.innerHTML =
+          '<span class="num">' + String(rows.filter((r) => r.track.album === album).length + 1).padStart(2, '0') + '</span>' +
+          '<span class="eq"><i></i><i></i><i></i></span>' +
+          '<span class="name">' + t.title + '</span>' +
+          '<span class="dur">--:--</span>';
+        li.addEventListener('click', () => { if (!li.classList.contains('is-missing')) play(i); });
+        ul.appendChild(li);
+        rows[i] = { li, track: t, dur: li.querySelector('.dur') };
+      });
+    });
+
+    // Читаем хронометраж из файлов; чего нет — помечаем и не даём кликнуть
+    rows.forEach((r) => {
+      if (!r) return;
+      const probe = new Audio();
+      probe.preload = 'metadata';
+      probe.addEventListener('loadedmetadata', () => { r.dur.textContent = fmt(probe.duration); });
+      probe.addEventListener('error', () => {
+        r.li.classList.add('is-missing');
+        r.dur.textContent = 'НЕТ ФАЙЛА';
+      });
+      probe.src = r.track.file;
+    });
+
+    const markRows = () => {
+      rows.forEach((r, i) => {
+        if (!r) return;
+        r.li.classList.toggle('is-current', i === current);
+        r.li.classList.toggle('is-playing', i === current && !audio.paused);
+      });
+      $('lsIconPlay').style.display = audio.paused ? 'block' : 'none';
+      $('lsIconPause').style.display = audio.paused ? 'none' : 'block';
+    };
+
+    const play = (i) => {
+      if (i < 0 || i >= TRACKS.length) return;
+      if (i === current) {
+        if (audio.paused) audio.play().catch(() => {}); else audio.pause();
+        markRows();
+        return;
+      }
+      current = i;
+      const t = TRACKS[i];
+      audio.src = t.file;
+      $('lsNowTitle').textContent = t.title;
+      $('lsNowAlbum').textContent = ALBUM_NAME[t.album] || 'LAST SIGNAL';
+      $('lsDur').textContent = '--:--';
+      bar.classList.add('is-open');
+      audio.play().catch(() => {});
+      startViz();
+      markRows();
+    };
+
+    const step = (dir) => {
+      for (let n = current + dir; n >= 0 && n < TRACKS.length; n += dir) {
+        if (rows[n] && !rows[n].li.classList.contains('is-missing')) { play(n); return; }
+      }
+    };
+
+    $('lsPlay').addEventListener('click', () => play(current < 0 ? 0 : current));
+    $('lsPrev').addEventListener('click', () => step(-1));
+    $('lsNext').addEventListener('click', () => step(1));
+    $('lsClose').addEventListener('click', () => { audio.pause(); bar.classList.remove('is-open'); markRows(); });
+
+    audio.addEventListener('play', markRows);
+    audio.addEventListener('pause', markRows);
+    audio.addEventListener('ended', () => step(1));
+    audio.addEventListener('loadedmetadata', () => { $('lsDur').textContent = fmt(audio.duration); });
+    audio.addEventListener('timeupdate', () => {
+      $('lsCur').textContent = fmt(audio.currentTime);
+      if (audio.duration && !seeking) $('lsSeek').value = Math.round(audio.currentTime / audio.duration * 1000);
+    });
+
+    let seeking = false;
+    const seek = $('lsSeek');
+    seek.addEventListener('input', () => { seeking = true; });
+    seek.addEventListener('change', () => {
+      if (audio.duration) audio.currentTime = seek.value / 1000 * audio.duration;
+      seeking = false;
+    });
+    const vol = $('lsVol');
+    audio.volume = vol.value / 100;
+    vol.addEventListener('input', () => { audio.volume = vol.value / 100; });
+
+    // Кнопки «ВСЕ ТРЕКИ» сворачивают/разворачивают список
+    document.querySelectorAll('.ls-toggle').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const ul = $(btn.getAttribute('data-list'));
+        if (ul) ul.style.display = ul.style.display === 'none' ? 'block' : 'none';
+      });
+    });
+
+    // Визуализатор — тот самый «визуализатор вокала в реальном времени» из [01] ГЛАС
+    const viz = $('lsViz');
+    const vctx = viz.getContext('2d');
+    let analyser = null, vdata = null, vraf = 0;
+    const startViz = () => {
+      if (analyser) return;
+      try {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        const ac = new AC();
+        const src = ac.createMediaElementSource(audio);
+        analyser = ac.createAnalyser();
+        analyser.fftSize = 64;
+        src.connect(analyser);
+        analyser.connect(ac.destination);
+        vdata = new Uint8Array(analyser.frequencyBinCount);
+        if (ac.state === 'suspended') ac.resume();
+        loopViz();
+      } catch (e) { analyser = null; }
+    };
+    const loopViz = () => {
+      vraf = requestAnimationFrame(loopViz);
+      if (!analyser) return;
+      analyser.getByteFrequencyData(vdata);
+      vctx.clearRect(0, 0, viz.width, viz.height);
+      const bars = 12, bw = viz.width / bars;
+      for (let i = 0; i < bars; i++) {
+        const v = audio.paused ? 2 : vdata[i * 2] / 255 * viz.height;
+        vctx.fillStyle = i % 3 === 0 ? '#FE5907' : '#FFFFC5';
+        vctx.fillRect(i * bw, viz.height - Math.max(2, v), bw - 2, Math.max(2, v));
+      }
+    };
+    this._vizStop = () => cancelAnimationFrame(vraf);
+    markRows();
+
     this._onScroll = () => {
       const h = document.getElementById('lsHeader');
       if (!h) return;
@@ -225,6 +464,7 @@ class Component extends DCLogic {
   }
   componentWillUnmount() {
     window.removeEventListener('scroll', this._onScroll);
+    if (this._vizStop) this._vizStop();
   }
   renderVals() { return {}; }
 }

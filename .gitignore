@@ -8,3 +8,12 @@ uploads/*
 !uploads/planet-cosmos.png
 !uploads/logo-prince-emblem.png
 .gstack/
+
+# зависимости и локальные артефакты Vercel
+node_modules/
+.vercel/
+
+# служебное и черновики, в публичный репозиторий не нужны
+.claude/
+Vitrina.live-demo.dc.html
+logo-variants.html

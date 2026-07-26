@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Витрина — аналитика</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060609; --panel:rgba(255,255,255,.025); --line:rgba(255,255,255,.1);
+  --ink:#F2F2F7; --muted:#B9BDCC; --dim:#8E93A8; --acc:#B7524A;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Golos Text',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2{font-family:'Unbounded',sans-serif;font-weight:500;margin:0}
+.mono{font-family:'JetBrains Mono',monospace}
+.wrap{max-width:1280px;margin:0 auto;padding:26px 26px 80px}
+
+/* ---------- вход ---------- */
+#gate{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+#gateBox{width:100%;max-width:380px;border:1px solid var(--line);border-radius:20px;padding:38px 32px;background:var(--panel)}
+#gateBox h1{font-size:21px;margin-bottom:8px}
+#gateBox p{margin:0 0 24px;font-size:13.5px;color:var(--dim);line-height:1.6}
+input[type=password]{width:100%;padding:13px 16px;border-radius:11px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--ink);font-size:15px;font-family:inherit;outline:none;transition:border-color .2s}
+input[type=password]:focus{border-color:var(--acc)}
+button{font-family:inherit;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.btn-main{width:100%;margin-top:12px;padding:13px;border:none;border-radius:11px;background:var(--acc);color:#fff;font-weight:600;font-size:14.5px}
+.btn-main:hover{filter:brightness(1.12)}
+.err{margin-top:14px;font-size:13px;color:#FF7A6E;min-height:18px}
+
+/* ---------- шапка ---------- */
+header{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-bottom:22px;border-bottom:1px solid var(--line);margin-bottom:26px}
+header h1{font-size:19px}
+.periods{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.periods button{padding:8px 14px;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--muted);font-size:12.5px}
+.periods button:hover{border-color:var(--acc);color:var(--ink)}
+.periods button[aria-pressed=true]{background:var(--acc);border-color:var(--acc);color:#fff}
+#logout{padding:8px 14px;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--dim);font-size:12.5px}
+#logout:hover{border-color:#FF7A6E;color:#FF7A6E}
+
+/* ---------- плитки ---------- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:14px;margin-bottom:26px}
+.kpi{border:1px solid var(--line);border-radius:15px;padding:18px 20px;background:var(--panel)}
+.kpi b{display:block;font-family:'Unbounded',sans-serif;font-weight:500;font-size:29px;line-height:1.1}
+.kpi span{display:block;margin-top:7px;font-size:12.5px;color:var(--dim)}
+
+/* ---------- блоки ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;margin-bottom:16px}
+.card{border:1px solid var(--line);border-radius:16px;padding:20px 22px;background:var(--panel);min-width:0}
+.card>h2{font-size:14.5px;margin-bottom:4px}
+.card>.hint{margin:0 0 16px;font-size:12px;color:var(--dim);line-height:1.5}
+.full{grid-column:1/-1}
+
+/* ---------- таблицы ---------- */
+.tbl-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-weight:500;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);padding:0 10px 9px 0;white-space:nowrap}
+td{padding:9px 10px 9px 0;border-top:1px solid rgba(255,255,255,.06);color:var(--muted);white-space:nowrap}
+td:first-child{color:var(--ink)}
+td.num,th.num{text-align:right;padding-right:0;font-family:'JetBrains Mono',monospace}
+
+/* ---------- график по дням ---------- */
+.chart{display:flex;align-items:flex-end;gap:3px;height:150px;padding-top:8px}
+.chart .col{flex:1;min-width:3px;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;height:100%;position:relative}
+.chart .bar{background:var(--acc);border-radius:2px 2px 0 0;min-height:1px;transition:filter .15s}
+.chart .col:hover .bar{filter:brightness(1.35)}
+.chart .col:hover::after{content:attr(data-tip);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:6px;background:#15151F;border:1px solid var(--line);border-radius:7px;padding:6px 10px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--ink);white-space:pre;z-index:5;pointer-events:none}
+.axis{display:flex;justify-content:space-between;margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim)}
+
+/* ---------- горизонтальные полосы ---------- */
+.rows{display:flex;flex-direction:column;gap:9px}
+.row{position:relative;padding:8px 12px;border-radius:8px;overflow:hidden;background:rgba(255,255,255,.03)}
+.row i{position:absolute;inset:0 auto 0 0;background:rgba(183,82,74,.28);border-radius:8px}
+.row span{position:relative;display:flex;gap:12px;font-size:12.5px}
+.row span em{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row span b{margin-left:auto;font-family:'JetBrains Mono',monospace;font-weight:500;flex:none}
+
+/* ---------- воронка ---------- */
+.funnel{display:flex;flex-direction:column;gap:10px}
+.step{display:flex;align-items:center;gap:14px}
+.step .bar{height:34px;border-radius:8px;background:linear-gradient(90deg,var(--acc),rgba(183,82,74,.45));min-width:3px}
+.step .lbl{font-size:13px;flex:none;width:160px;color:var(--muted)}
+.step .val{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--ink)}
+.step .pct{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--dim)}
+
+.empty{padding:22px 0;font-size:13px;color:var(--dim);text-align:center}
+#err{margin-bottom:18px;padding:14px 18px;border:1px solid rgba(255,122,110,.4);border-radius:12px;background:rgba(255,122,110,.07);color:#FF9A90;font-size:13.5px;line-height:1.6;display:none}
+@media(max-width:720px){.wrap{padding:18px 16px 60px}.step .lbl{width:110px;font-size:12px}}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div id="gateBox">
+    <h1>Аналитика витрины</h1>
+    <p>Страница закрыта паролем. Он хранится в переменных окружения Vercel и на клиент не попадает.</p>
+    <form id="gateForm">
+      <input type="password" id="pw" placeholder="Пароль" autocomplete="current-password" autofocus>
+      <button class="btn-main" type="submit">Войти</button>
+    </form>
+    <div class="err" id="gateErr"></div>
+  </div>
+</div>
+
+<div class="wrap" id="app" hidden>
+  <header>
+    <h1>Аналитика витрины</h1>
+    <div class="periods" id="periods"></div>
+    <button id="logout">Выйти</button>
+  </header>
+
+  <div id="err"></div>
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid">
+    <div class="card full">
+      <h2>Посещения по дням</h2>
+      <p class="hint">Столбец — визиты за сутки по московскому времени. Наведите на столбец, чтобы увидеть цифры.</p>
+      <div id="chart"></div>
+    </div>
+
+    <div class="card">
+      <h2>Воронка</h2>
+      <p class="hint">Сколько визитов доходит до каждого шага. Проценты считаются от общего числа визитов.</p>
+      <div class="funnel" id="funnel"></div>
+    </div>
+
+    <div class="card">
+      <h2>Клики по контактам</h2>
+      <p class="hint">Главное действие витрины: посетитель решил написать.</p>
+      <div class="rows" id="contacts"></div>
+    </div>
+
+    <div class="card full">
+      <h2>Интерес к проектам</h2>
+      <p class="hint">Открытия по каждой работе и сколько секунд её в среднем смотрели внутри витрины. «Барабан» — клик по окну в хиро, «грид» — по карточке в разделе «Работы».</p>
+      <div class="tbl-scroll"><table id="projects"></table></div>
+    </div>
+
+    <div class="card">
+      <h2>Источники</h2>
+      <p class="hint">Откуда пришли. «Прямые заходы» — из закладок, мессенджеров и набранного вручную адреса.</p>
+      <div class="rows" id="referrers"></div>
+    </div>
+
+    <div class="card">
+      <h2>UTM-кампании</h2>
+      <p class="hint">Заходы по ссылкам с метками — если раздаёте их в рекламе или в отклике на вакансию.</p>
+      <div class="rows" id="utm"></div>
+    </div>
+
+    <div class="card">
+      <h2>География</h2>
+      <p class="hint">Страна и город определяются на стороне Vercel по IP. Сам IP в базу не пишется.</p>
+      <div class="tbl-scroll"><table id="geo"></table></div>
+    </div>
+
+    <div class="card">
+      <h2>Устройства</h2>
+      <p class="hint">Доля мобильных подсказывает, насколько критичен адаптив.</p>
+      <div class="rows" id="devices"></div>
+      <div style="height:14px"></div>
+      <div class="rows" id="browsers"></div>
+      <div style="height:14px"></div>
+      <div class="rows" id="oses"></div>
+    </div>
+
+    <div class="card">
+      <h2>Глубина скролла</h2>
+      <p class="hint">Сколько визитов докрутило страницу до четверти, половины, трёх четвертей и до конца.</p>
+      <div class="rows" id="scroll"></div>
+    </div>
+
+    <div class="card">
+      <h2>Переключения языка</h2>
+      <p class="hint">Как часто жмут RU / EN. Пусто — значит английская версия не востребована.</p>
+      <div class="rows" id="langs"></div>
+    </div>
+
+    <div class="card full">
+      <h2>Последние события</h2>
+      <p class="hint">Сырая лента — полезна, чтобы убедиться, что счётчик живой.</p>
+      <div class="tbl-scroll"><table id="recent"></table></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var days = 30;
+
+  // ---------- утилиты ----------
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+  function nfmt(n) { return (n == null ? 0 : n).toLocaleString('ru-RU'); }
+  function dur(sec) {
+    sec = Math.max(0, Math.round(sec || 0));
+    if (sec < 60) return sec + ' с';
+    var m = Math.floor(sec / 60), s = sec % 60;
+    return m + ' мин ' + (s < 10 ? '0' : '') + s + ' с';
+  }
+  function pct(part, whole) { return whole ? Math.round((part / whole) * 100) : 0; }
+  function host(u) {
+    if (!u || u === 'прямые заходы') return u || '—';
+    try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return u; }
+  }
+
+  // Горизонтальные полосы: подпись, число, ширина — от максимума в списке.
+  function bars(el, items, labelKey, valueKey, fmt) {
+    var max = items.reduce(function (m, it) { return Math.max(m, it[valueKey] || 0); }, 0);
+    if (!items.length) { el.innerHTML = '<div class="empty">Пока нет данных</div>'; return; }
+    el.innerHTML = items.map(function (it) {
+      var v = it[valueKey] || 0;
+      return '<div class="row"><i style="width:' + (max ? (v / max) * 100 : 0) + '%"></i>' +
+        '<span><em>' + esc(it[labelKey]) + '</em><b>' + (fmt ? fmt(v) : nfmt(v)) + '</b></span></div>';
+    }).join('');
+  }
+
+  function table(el, cols, rows, cell) {
+    var head = '<thead><tr>' + cols.map(function (c, i) {
+      return '<th' + (i ? ' class="num"' : '') + '>' + esc(c) + '</th>';
+    }).join('') + '</tr></thead>';
+    // Заглушку рисуем строкой внутри таблицы, а не поверх неё: сам элемент
+    // должен пережить смену периода, иначе следующий рендер не найдёт его.
+    var body = rows.length
+      ? rows.map(function (r) {
+          return '<tr>' + cell(r).map(function (v, i) {
+            return '<td' + (i ? ' class="num"' : '') + '>' + v + '</td>';
+          }).join('') + '</tr>';
+        }).join('')
+      : '<tr><td colspan="' + cols.length + '"><div class="empty">Пока нет данных</div></td></tr>';
+    el.innerHTML = head + '<tbody>' + body + '</tbody>';
+  }
+
+  // ---------- вход ----------
+  function showApp() { $('gate').hidden = true; $('gate').style.display = 'none'; $('app').hidden = false; load(); }
+
+  $('gateForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    $('gateErr').textContent = '';
+    fetch('/api/auth', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: $('pw').value }),
+    }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (res.ok) showApp();
+        else $('gateErr').textContent = res.j.error || 'Не удалось войти';
+      })
+      .catch(function () { $('gateErr').textContent = 'Сервер недоступен'; });
+  });
+
+  $('logout').addEventListener('click', function () {
+    fetch('/api/auth', { method: 'DELETE' }).then(function () { location.reload(); });
+  });
+
+  // ---------- переключатель периода ----------
+  [[7, '7 дней'], [30, '30 дней'], [90, '90 дней'], [365, 'Год']].forEach(function (p) {
+    var b = document.createElement('button');
+    b.textContent = p[1];
+    b.setAttribute('aria-pressed', p[0] === days);
+    b.addEventListener('click', function () {
+      days = p[0];
+      [].forEach.call($('periods').children, function (x) { x.setAttribute('aria-pressed', x === b); });
+      load();
+    });
+    $('periods').appendChild(b);
+  });
+
+  // ---------- загрузка и отрисовка ----------
+  function load() {
+    fetch('/api/stats?days=' + days, { headers: { Accept: 'application/json' } })
+      .then(function (r) {
+        if (r.status === 401) { location.reload(); throw new Error('401'); }
+        return r.json();
+      })
+      .then(function (d) {
+        if (d.error) { $('err').style.display = 'block'; $('err').textContent = 'Ошибка базы: ' + d.error; return; }
+        $('err').style.display = 'none';
+        render(d);
+      })
+      .catch(function (e) {
+        if (e.message === '401') return;
+        $('err').style.display = 'block';
+        $('err').textContent = 'Не удалось загрузить статистику: ' + e.message;
+      });
+  }
+
+  function render(d) {
+    var t = d.totals || {};
+
+    $('kpis').innerHTML = [
+      [nfmt(t.visits), 'визитов'],
+      [nfmt(t.visitors), 'уникальных посетителей'],
+      [nfmt(t.project_opens), 'открытий проектов'],
+      [nfmt(t.contacts), 'кликов по контактам'],
+      [dur(t.avg_seconds), 'среднее время на странице'],
+    ].map(function (k) { return '<div class="kpi"><b>' + k[0] + '</b><span>' + k[1] + '</span></div>'; }).join('');
+
+    // график по дням
+    var daily = d.daily || [];
+    if (!daily.length) {
+      $('chart').innerHTML = '<div class="empty">Пока нет данных — счётчик начнёт заполнять её после первых визитов</div>';
+    } else {
+      var max = daily.reduce(function (m, x) { return Math.max(m, x.visits); }, 0) || 1;
+      $('chart').innerHTML =
+        '<div class="chart">' + daily.map(function (x) {
+          var tip = x.d + '\nвизитов: ' + x.visits + '\nоткрытий: ' + x.opens + '\nконтактов: ' + x.contacts;
+          return '<div class="col" data-tip="' + esc(tip) + '"><div class="bar" style="height:' +
+            Math.max(1, (x.visits / max) * 100) + '%"></div></div>';
+        }).join('') + '</div>' +
+        '<div class="axis"><span>' + esc(daily[0].d) + '</span><span>' + esc(daily[daily.length - 1].d) + '</span></div>';
+    }
+
+    // воронка
+    var f = d.funnel || {};
+    var steps = [
+      ['Зашли на сайт', f.visits],
+      ['Долистали до работ', f.works],
+      ['Открыли проект', f.projects],
+      ['Дошли до контактов', f.contact_section],
+      ['Кликнули написать', f.contact_click],
+    ];
+    var base = f.visits || 0;
+    $('funnel').innerHTML = base
+      ? steps.map(function (s) {
+          var p = pct(s[1] || 0, base);
+          return '<div class="step"><span class="lbl">' + s[0] + '</span>' +
+            '<div class="bar" style="width:' + Math.max(2, p) + '%"></div>' +
+            '<span class="val">' + nfmt(s[1] || 0) + '</span><span class="pct">' + p + '%</span></div>';
+        }).join('')
+      : '<div class="empty">Пока нет данных</div>';
+
+    // контакты
+    var names = { telegram: 'Telegram', email: 'Почта', github: 'GitHub' };
+    bars($('contacts'), (d.contacts || []).map(function (c) {
+      return { k: names[c.target] || c.target, n: c.n };
+    }), 'k', 'n');
+
+    // проекты
+    table($('projects'), ['Проект', 'Открытий', 'Барабан', 'Грид', 'В новой вкладке', 'Визитов', 'Смотрели в среднем'],
+      d.projects || [], function (p) {
+        return [esc(p.key), nfmt(p.opens), nfmt(p.drum), nfmt(p.grid), nfmt(p.external), nfmt(p.sessions), dur(p.avg_seconds)];
+      });
+
+    bars($('referrers'), (d.referrers || []).map(function (r) { return { k: host(r.src), n: r.n }; }), 'k', 'n');
+
+    bars($('utm'), (d.utm || []).map(function (u) {
+      return { k: [u.source, u.medium, u.campaign].filter(Boolean).join(' · '), n: u.n };
+    }), 'k', 'n');
+
+    table($('geo'), ['Страна', 'Город', 'Визитов'], d.geo || [], function (g) {
+      return [esc(g.country), esc(g.city), nfmt(g.n)];
+    });
+
+    var devNames = { desktop: 'Компьютер', mobile: 'Телефон', tablet: 'Планшет' };
+    bars($('devices'), (d.devices || []).map(function (x) { return { k: devNames[x.k] || x.k, n: x.n }; }), 'k', 'n');
+    bars($('browsers'), d.browsers || [], 'k', 'n');
+    bars($('oses'), d.oses || [], 'k', 'n');
+
+    bars($('scroll'), (d.scroll || []).map(function (s) { return { k: s.depth + '% страницы', n: s.n }; }), 'k', 'n');
+    bars($('langs'), (d.langs || []).map(function (l) { return { k: String(l.k).toUpperCase(), n: l.n }; }), 'k', 'n');
+
+    var typeNames = {
+      pageview: 'просмотр', project_open: 'открыл проект', modal_time: 'смотрел проект',
+      external_open: 'открыл в новой вкладке', contact_click: 'клик по контакту',
+      cta_click: 'клик по кнопке', lang_switch: 'сменил язык', scroll: 'долистал',
+      section_view: 'увидел секцию', session_end: 'ушёл',
+    };
+    table($('recent'), ['Когда', 'Что', 'Что именно', 'Значение', 'Откуда', 'Устройство'],
+      d.recent || [], function (r) {
+        var val = r.value == null ? '—' : (r.type === 'scroll' ? r.value + '%' : dur(r.value));
+        var place = [r.country, r.city].filter(function (x) { return x && x !== '—'; }).join(', ') || '—';
+        return [
+          esc(r.at), esc(typeNames[r.type] || r.type),
+          esc([r.target, r.context].filter(Boolean).join(' / ') || '—'),
+          val, esc(place), esc((r.device || '—') + ' · ' + (r.browser || '')),
+        ];
+      });
+  }
+
+  // ---------- старт ----------
+  fetch('/api/auth')
+    .then(function (r) { return r.json(); })
+    .then(function (j) { if (j.authed) showApp(); })
+    .catch(function () {});
+})();
+</script>
+</body>
+</html>
