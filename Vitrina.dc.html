@@ -32,7 +32,7 @@ a{text-decoration:none}
    а тонкая линия акцента под ним тянется во всю колонку: начинается у первой
    буквы и растворяется к последним буквам девиза, связывая обе строки в один
    лок. Слово не обжимаем по тексту — ширину линии задаёт девиз. */
-#vzMark{position:relative;font-family:'Leotaro',sans-serif;font-weight:400;font-size:36px;letter-spacing:.02em;line-height:1;color:#F2F2F7;padding-bottom:11px;transition:text-shadow .3s}
+#vzMark{position:relative;font-family:'Leotaro',sans-serif;font-weight:400;font-size:28px;letter-spacing:.02em;line-height:1;color:#F2F2F7;padding-bottom:11px;transition:text-shadow .3s}
 #vzMark::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;
   background:linear-gradient(90deg,var(--acc,#B7524A) 0%,rgba(var(--acc-rgb,183,82,74),.92) 46%,rgba(var(--acc-rgb,183,82,74),0) 100%)}
 #vzBrand:hover #vzMark{text-shadow:0 0 18px rgba(var(--acc-rgb,183,82,74),.45)}
@@ -45,6 +45,37 @@ a{text-decoration:none}
    с центром заголовка. */
 .vz-works-head{text-align:center}
 #vzGrid{padding:0 56px}
+
+/* ---------- форма обратной связи ---------- */
+/* Живёт внутри CTA-блока, под кнопками контактов: человеку, который не хочет
+   писать в мессенджер, нужен способ оставить задачу прямо здесь. */
+#vzForm{max-width:620px;margin:38px auto 0;display:grid;gap:17px;text-align:left}
+#vzForm .vz-fl{display:block;margin-bottom:8px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#8E93A8}
+/* box-sizing в витрине не глобальный: без него поля добирают ширину паддингами
+   и на узком экране вылезают за правый край CTA-блока. */
+#vzForm input[type=text],#vzForm textarea{width:100%;box-sizing:border-box;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:#F2F2F7;font-family:inherit;font-size:15px;outline:none;transition:border-color .2s,background .2s}
+#vzForm textarea{min-height:118px;resize:vertical;line-height:1.55}
+#vzForm input[type=text]::placeholder,#vzForm textarea::placeholder{color:#6E7387}
+#vzForm input[type=text]:focus,#vzForm textarea:focus{border-color:var(--acc,#B7524A);background:rgba(255,255,255,.06)}
+/* Переключатель канала связи: одна дорожка, внутри четыре равные кнопки.
+   Выбранная заливается акцентом — то же поведение, что у периода в админке. */
+#vzChannels{display:flex;gap:4px;padding:4px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:rgba(255,255,255,.03)}
+#vzChannels button{flex:1;padding:11px 8px;border:none;border-radius:999px;background:transparent;color:#B9BDCC;font-family:inherit;font-size:13.5px;font-weight:500;cursor:pointer;transition:background .2s,color .2s}
+#vzChannels button:hover{color:#F2F2F7}
+#vzChannels button[aria-pressed=true]{background:var(--acc,#B7524A);color:var(--acc-ink,#fff)}
+/* Ловушка для ботов: человек её не видит и не может сфокусировать с клавиатуры. */
+#vzTrap{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
+#vzConsent{display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.55;color:#B9BDCC;cursor:pointer}
+#vzConsent input{flex:none;width:18px;height:18px;margin:1px 0 0;accent-color:var(--acc,#B7524A);cursor:pointer}
+#vzConsentMore{background:none;border:none;padding:0;font:inherit;font-size:13px;color:var(--acc,#B7524A);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+#vzConsentText{margin:0;padding:14px 16px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(255,255,255,.03);font-size:12.5px;line-height:1.65;color:#8E93A8}
+#vzConsentText[hidden]{display:none}
+#vzSend{justify-self:start;padding:15px 34px;border:none;border-radius:999px;background:var(--acc,#B7524A);color:var(--acc-ink,#fff);font-family:inherit;font-weight:600;font-size:15px;cursor:pointer;box-shadow:0 10px 34px rgba(var(--acc-rgb,183,82,74),.28);transition:transform .2s,box-shadow .2s,opacity .2s}
+#vzSend:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 16px 44px rgba(var(--acc-rgb,183,82,74),.4)}
+#vzSend:disabled{opacity:.55;cursor:default;box-shadow:none}
+#vzFormMsg{min-height:20px;font-size:13.5px;line-height:1.5}
+#vzFormMsg.vz-ok{color:#5FD08A}
+#vzFormMsg.vz-err{color:#FF7A6E}
 
 /* ---------- бургер и мобильное меню ---------- */
 /* На десктопе кнопки нет: там навигация, язык и CTA стоят в самой шапке. */
@@ -174,11 +205,11 @@ a{text-decoration:none}
         <div class="vz-col" style="display:flex;flex-direction:column;gap:18px;will-change:transform">
           <div class="vz-win" data-open-site="sites/rentsale-altay/index.html" data-site-title="Недвижимость Горного Алтая" data-site-url="rentsale-altay.ru"></div>
           <div class="vz-win" data-open-site="https://web-landscape-2-d.vercel.app/" data-site-key="flexpath" data-site-live="1" data-site-title="Radius Step — конструктор дорожек" data-site-url="radius-step.ru"></div>
-          <div class="vz-win" data-open-site="sites/tersk/index.dc.html" data-site-title="Терский конный завод" data-site-url="terskarabian.com"></div>
+          <div class="vz-win" data-open-site="sites/bastard-world/index.html" data-site-title="Бастард" data-site-url="bastard.world"></div>
           <div class="vz-win" data-open-site="sites/concepts/gastro.dc.html" data-site-title="Ресторан «Сад»" data-site-url="sad-garden.ru"></div>
           <div class="vz-win" data-open-site="sites/rentsale-altay/index.html" data-site-title="Недвижимость Горного Алтая" data-site-url="rentsale-altay.ru"></div>
           <div class="vz-win" data-open-site="https://web-landscape-2-d.vercel.app/" data-site-key="flexpath" data-site-live="1" data-site-title="Radius Step — конструктор дорожек" data-site-url="radius-step.ru"></div>
-          <div class="vz-win" data-open-site="sites/tersk/index.dc.html" data-site-title="Терский конный завод" data-site-url="terskarabian.com"></div>
+          <div class="vz-win" data-open-site="sites/bastard-world/index.html" data-site-title="Бастард" data-site-url="bastard.world"></div>
           <div class="vz-win" data-open-site="sites/concepts/gastro.dc.html" data-site-title="Ресторан «Сад»" data-site-url="sad-garden.ru"></div>
         </div>
         <div class="vz-col" style="display:flex;flex-direction:column;gap:18px;will-change:transform">
@@ -186,12 +217,12 @@ a{text-decoration:none}
           <div class="vz-win" data-open-site="sites/concepts/termy.dc.html" data-site-title="Термы «Пар»" data-site-url="par-termy.ru"></div>
           <div class="vz-win" data-open-site="sites/tokeon/index.html" data-site-title="Токеон" data-site-url="tokeon.ru" data-site-live="1"></div>
           <div class="vz-win" data-open-site="sites/univer-zakupok/glavnaya.dc.html" data-site-title="Университет закупок" data-site-url="u-gz.ru"></div>
-          <div class="vz-win" data-open-site="sites/last-signal/index.dc.html" data-site-title="LAST SIGNAL" data-site-url="last-signal.ru"></div>
+          <div class="vz-win" data-open-site="sites/tersk/index.dc.html" data-site-title="Терский конный завод" data-site-url="terskarabian.com"></div>
           <div class="vz-win" data-open-site="sites/concepts/atelier.dc.html" data-site-title="Ателье «Форма»" data-site-url="forma-atelier.ru"></div>
           <div class="vz-win" data-open-site="sites/concepts/termy.dc.html" data-site-title="Термы «Пар»" data-site-url="par-termy.ru"></div>
           <div class="vz-win" data-open-site="sites/tokeon/index.html" data-site-title="Токеон" data-site-url="tokeon.ru" data-site-live="1"></div>
           <div class="vz-win" data-open-site="sites/univer-zakupok/glavnaya.dc.html" data-site-title="Университет закупок" data-site-url="u-gz.ru"></div>
-          <div class="vz-win" data-open-site="sites/last-signal/index.dc.html" data-site-title="LAST SIGNAL" data-site-url="last-signal.ru"></div>
+          <div class="vz-win" data-open-site="sites/tersk/index.dc.html" data-site-title="Терский конный завод" data-site-url="terskarabian.com"></div>
         </div>
       </div>
     </div>
@@ -249,13 +280,39 @@ a{text-decoration:none}
 
   <section id="contact" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:30px 67px 90px;scroll-margin-top:20px">
     <div id="vzCtaBox" style="position:relative;border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:64px 48px;text-align:center;overflow:hidden;background:radial-gradient(60% 120% at 50% 0%,rgba(68,56,202,.25),transparent 70%),linear-gradient(rgba(6,6,9,.52),rgba(6,6,9,.52))">
-      <p data-l10n="ctaBadge" style="margin:0 0 16px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:#8E93A8">СВОБОДНЫЕ СЛОТЫ НА ИЮЛЬ ЕСТЬ</p>
       <h2 id="vzCtaTitle" data-l10n="ctaTitle" style="margin:0 auto 30px;font-family:'Unbounded',sans-serif;font-weight:500;font-size:36px;line-height:1.2;max-width:720px;text-wrap:balance">Расскажите про задачу — верну план и смету за день</h2>
       <div id="vzCtaBtns" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
         <a href="https://t.me/lacomingsoon" target="_blank" rel="noopener" style="background:var(--acc,#B7524A);color:var(--acc-ink,#fff);font-weight:600;font-size:15px;padding:16px 34px;border-radius:999px;box-shadow:0 10px 34px rgba(var(--acc-rgb,183,82,74),.28);transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 16px 44px rgba(var(--acc-rgb,183,82,74),.4)">Telegram · @lacomingsoon</a>
         <a href="mailto:lacoming@yandex.ru" style="border:1px solid rgba(255,255,255,.2);color:#F2F2F7;font-weight:500;font-size:15px;padding:16px 34px;border-radius:999px;transition:border-color .2s,background .2s" style-hover="border-color:#fff;background:rgba(255,255,255,.06)">lacoming@yandex.ru</a>
         <a href="https://github.com/lacoming" target="_blank" rel="noopener" style="border:1px solid rgba(255,255,255,.2);color:#F2F2F7;font-weight:500;font-size:15px;padding:16px 34px;border-radius:999px;transition:border-color .2s,background .2s" style-hover="border-color:#fff;background:rgba(255,255,255,.06)">GitHub ↗</a>
       </div>
+
+      <form id="vzForm" novalidate>
+        <div>
+          <label class="vz-fl" for="vzName" data-l10n="fName">Как вас зовут</label>
+          <input type="text" id="vzName" name="name" maxlength="80" autocomplete="name" data-l10n-ph="fNamePh" placeholder="Имя">
+        </div>
+        <div>
+          <span class="vz-fl" data-l10n="fChannel">Как удобнее связаться</span>
+          <div id="vzChannels" role="group"></div>
+        </div>
+        <div>
+          <label class="vz-fl" for="vzContact" id="vzContactLabel" data-l10n="fPhone">Телефон</label>
+          <input type="text" id="vzContact" name="contact" maxlength="120" autocomplete="tel" placeholder="+7 (___) ___-__-__">
+        </div>
+        <div>
+          <label class="vz-fl" for="vzTask" data-l10n="fTask">Задача</label>
+          <textarea id="vzTask" name="task" maxlength="4000" data-l10n-ph="fTaskPh" placeholder="Что нужно сделать, в какие сроки, есть ли примеры того, как должно выглядеть"></textarea>
+        </div>
+        <input type="text" id="vzTrap" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <label id="vzConsent">
+          <input type="checkbox" id="vzAgree">
+          <span><span data-l10n="fConsent">Согласен на обработку моих данных</span> · <button type="button" id="vzConsentMore" data-l10n="fConsentMore">текст согласия</button></span>
+        </label>
+        <p id="vzConsentText" data-l10n="fConsentText" hidden>Отправляя форму, вы даёте согласие на обработку данных, которые в ней указали: имени, контакта и описания задачи. Они нужны только для ответа по вашей задаче. Уведомление о заявке приходит мне в Telegram, больше данные никуда не передаются и нигде не публикуются. Чтобы их удалить, напишите на lacoming@yandex.ru — удалю в течение суток.</p>
+        <button type="submit" id="vzSend" data-l10n="fSend">Отправить заявку</button>
+        <p id="vzFormMsg" role="status" aria-live="polite"></p>
+      </form>
     </div>
     <p style="margin:26px 0 0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:#7B8197">© 2026 Александр Вострухин · lacoming · <span data-l10n="footNote">собрано вручную — от дизайна до деплоя</span></p>
   </section>
@@ -289,17 +346,19 @@ class Component extends DCLogic {
     const SITES = [
       { src: 'sites/rentsale-altay/index.html', title: 'Недвижимость Горного Алтая', url: 'rentsale-altay.ru', tags: 'Next.js 14 · Tailwind · лидоген', desc: 'Лендинг-агрегатор трёх курортных проектов: сравнение, калькулятор доходности.', accent: '#C2A36B' },
       { src: 'https://web-landscape-2-d.vercel.app/', key: 'flexpath', live: true, title: 'Radius Step', url: 'radius-step.ru', tags: 'Next.js · Konva · FastAPI · DXF', desc: 'Лендинг конструктора садовых дорожек с онлайн-редактором, тёмная тема.', accent: '#D9BF9E' },
-      { src: 'sites/tersk/index.dc.html', title: 'Терский конный завод', url: 'terskarabian.com', tags: 'Nuxt 3 · Directus · RU/EN', desc: 'Сайт старейшего конезавода России (1889): интерактивный хиро, события, новости.', accent: '#87CEFA' },
+      { src: 'sites/bastard-world/index.html', title: 'Бастард', url: 'bastard.world', tags: 'Next.js 16 · Prisma · Т-Банк · 18+', desc: 'Магазин цифрового издательства: покупка книг, чтение фрагмента, письмо с файлом и водяным знаком. Копия главной страницы.', accent: '#7C3AED' },
       { src: 'sites/concepts/gastro.dc.html', title: 'Ресторан «Сад»', url: 'sad-garden.ru', tags: 'Гастро · сезонное меню', desc: 'Тёплый editorial-лендинг ресторана сезонной кухни с меню-строками.', accent: '#3E5233' },
       { src: 'sites/concepts/atelier.dc.html', title: 'Ателье «Форма»', url: 'forma-atelier.ru', tags: 'Фэшн · editorial', desc: 'Модный лукбук-лендинг: гигантская типографика, марквиз, ч/б.', accent: '#141414' },
       { src: 'sites/concepts/termy.dc.html', title: 'Термы «Пар»', url: 'par-termy.ru', tags: 'Wellness · городские термы', desc: 'Светлый концепт городских терм: четыре зоны тепла, парения с мастерами, тарифы.', accent: '#A6845A' },
       { src: 'sites/tokeon/index.html', title: 'Токеон', url: 'tokeon.ru', tags: 'Финтех · платформа ЦФА', desc: 'Платформа цифровых финансовых активов (ЦФА): выпуск и покупка токенов. Копия главной страницы.', accent: '#00A24A', live: true },
       { src: 'sites/univer-zakupok/glavnaya.dc.html', title: 'Университет закупок', url: 'u-gz.ru', tags: 'WordPress FSE · 13 страниц · SEO', desc: 'Каталог курсов по госзакупкам для учебного центра: 44-ФЗ, 223-ФЗ, ГОЗ.', accent: '#D4A745' },
-      { src: 'sites/last-signal/index.dc.html', title: 'LAST SIGNAL', url: 'last-signal.ru', tags: 'Nuxt · кастомная типографика', desc: 'Промо вымышленной группы: эстетика цифрового сбоя, IFKica + Neue Machina.', accent: '#FE5907' },
+      { src: 'sites/tersk/index.dc.html', title: 'Терский конный завод', url: 'terskarabian.com', tags: 'Nuxt 3 · Directus · RU/EN', desc: 'Сайт старейшего конезавода России (1889): интерактивный хиро, события, новости.', accent: '#87CEFA' },
+      // LAST SIGNAL временно снят с витрины — сайт переделывается. Копия лежит
+      // в sites/last-signal/, превью — previews/last-signal.jpg.
     ];
 
     // ---------- марквиз ----------
-    const SITE_KEYS = ['tokeon', 'rentsale-altay', 'flexpath', 'univer-zakupok', 'tersk', 'termy', 'last-signal', 'gastro', 'atelier'];
+    const SITE_KEYS = ['tokeon', 'rentsale-altay', 'flexpath', 'univer-zakupok', 'tersk', 'termy', 'bastard-world', 'gastro', 'atelier'];
     // Ключ проекта — им подписаны превью и события аналитики. Обычно выводится
     // из пути к копии, но у проектов, которые открываются с боевого адреса,
     // в пути ключа нет — для них он задаётся явно.
@@ -438,7 +497,17 @@ class Component extends DCLogic {
         tl2026: '15+ реальных проектов за полгода: от сайтов крупных фирм до 1С-расширений, от частных предпринимателей до крупных госзаказов. С частью работ можно ознакомиться на витрине выше',
         aboutP4: 'Берусь за задачи любой сложности, закрываю полный цикл: frontend + backend + deploy. Отдельно люблю нетривиальные кейсы, где готового решения нет.',
         fact1t: 'Индивидуально', fact1s: 'никаких шаблонов — под задачу', fact2t: 'Быстро', fact2s: 'прототип за дни, не недели', fact3t: 'Под ключ', fact3s: 'дизайн → код → деплой → поддержка',
-        ctaBadge: 'СВОБОДНЫЕ СЛОТЫ НА ИЮЛЬ ЕСТЬ', ctaTitle: 'Расскажите про задачу — верну план и смету за день',
+        ctaTitle: 'Расскажите про задачу — верну план и смету за день',
+        fName: 'Как вас зовут', fNamePh: 'Имя', fChannel: 'Как удобнее связаться',
+        fPhone: 'Телефон', fTelegram: 'Telegram', fVk: 'VK', fEmail: 'Почта',
+        fTask: 'Задача', fTaskPh: 'Что нужно сделать, в какие сроки, есть ли примеры того, как должно выглядеть',
+        fConsent: 'Согласен на обработку моих данных', fConsentMore: 'текст согласия',
+        fConsentText: 'Отправляя форму, вы даёте согласие на обработку данных, которые в ней указали: имени, контакта и описания задачи. Они нужны только для ответа по вашей задаче. Уведомление о заявке приходит мне в Telegram, больше данные никуда не передаются и нигде не публикуются. Чтобы их удалить, напишите на lacoming@yandex.ru — удалю в течение суток.',
+        fSend: 'Отправить заявку', fSending: 'Отправляю…',
+        fOk: 'Заявка у меня. Отвечу в течение дня.',
+        fErrName: 'Напишите, как к вам обращаться', fErrContact: 'Проверьте контакт — по нему я буду отвечать',
+        fErrTask: 'Опишите задачу хотя бы парой фраз', fErrAgree: 'Нужно согласие на обработку данных',
+        fErrSend: 'Не получилось отправить. Напишите в Telegram — отвечу сразу',
         openTab: 'в новой вкладке ↗', footNote: 'собрано вручную — от дизайна до деплоя',
       },
       en: {
@@ -465,7 +534,17 @@ class Component extends DCLogic {
         tl2026: '15+ real projects in half a year: from corporate websites to 1C extensions, from individual entrepreneurs to major government orders — some of them are in the gallery above',
         aboutP4: 'I take on tasks of any complexity and cover the full cycle: frontend + backend + deploy. I especially enjoy non-trivial cases with no off-the-shelf solution.',
         fact1t: 'Custom', fact1s: 'no templates — built for the task', fact2t: 'Fast', fact2s: 'prototype in days, not weeks', fact3t: 'Turn-key', fact3s: 'design → code → deploy → support',
-        ctaBadge: 'JULY SLOTS AVAILABLE', ctaTitle: 'Tell me about your task — plan and estimate within a day',
+        ctaTitle: 'Tell me about your task — plan and estimate within a day',
+        fName: 'Your name', fNamePh: 'Name', fChannel: 'Best way to reach you',
+        fPhone: 'Phone', fTelegram: 'Telegram', fVk: 'VK', fEmail: 'Email',
+        fTask: 'Your task', fTaskPh: 'What needs to be done, by when, and any examples of how it should look',
+        fConsent: 'I agree to the processing of my data', fConsentMore: 'consent text',
+        fConsentText: 'By sending this form you agree to the processing of the data you entered: your name, contact and task description. They are used only to reply about your task. A notification about your request reaches me via Telegram; beyond that the data is never shared and never published. To have it deleted, write to lacoming@yandex.ru — I will remove it within a day.',
+        fSend: 'Send request', fSending: 'Sending…',
+        fOk: 'Got it. I will reply within a day.',
+        fErrName: 'Tell me how to address you', fErrContact: 'Check the contact — this is where I will reply',
+        fErrTask: 'Describe the task in a sentence or two', fErrAgree: 'Consent to data processing is required',
+        fErrSend: 'Could not send. Write me on Telegram — I reply right away',
         openTab: 'open in new tab ↗', footNote: 'built by hand — from design to deploy',
       },
     };
@@ -522,9 +601,133 @@ class Component extends DCLogic {
         const k = el.getAttribute('data-l10n');
         if (d[k]) setL10n(el, d[k]);
       });
+      // Подсказки в полях формы живут в атрибуте, а не в тексте узла.
+      document.querySelectorAll('[data-l10n-ph]').forEach((el) => {
+        const k = el.getAttribute('data-l10n-ph');
+        if (d[k]) el.setAttribute('placeholder', d[k]);
+      });
+      if (this._paintForm) this._paintForm();
       paintLang();
     };
     langBtns.forEach((b) => b.addEventListener('click', switchLang));
+
+    // ---------- форма обратной связи ----------
+    // Канал связи задаёт всё поведение поля контакта: подпись, подсказку,
+    // клавиатуру на телефоне и правило проверки. Правила те же, что на сервере
+    // в api/lead.js — здесь они только чтобы человек увидел ошибку сразу.
+    const CHANNELS = [
+      { key: 'phone', label: 'fPhone', ph: '+7 (___) ___-__-__', mode: 'tel', auto: 'tel',
+        ok: (v) => { const d = v.replace(/\D/g, ''); return d.length >= 10 && d.length <= 15; } },
+      // Ссылочные варианты заякорены целиком, как и на сервере: иначе проверку
+      // проходит строка, где ссылка лишь встречается среди прочего текста.
+      { key: 'telegram', label: 'fTelegram', ph: '@username', mode: 'text', auto: 'off',
+        ok: (v) => /^@?[a-z0-9_]{4,32}$/i.test(v) || /^(https?:\/\/)?t\.me\/[a-z0-9_]{4,32}\/?$/i.test(v) },
+      { key: 'vk', label: 'fVk', ph: 'vk.com/username', mode: 'text', auto: 'off',
+        ok: (v) => /^@?[a-z0-9_.]{3,64}$/i.test(v) || /^(https?:\/\/)?vk\.com\/[a-z0-9_.]{3,64}\/?$/i.test(v) },
+      { key: 'email', label: 'fEmail', ph: 'name@example.com', mode: 'email', auto: 'email',
+        ok: (v) => /^[^\s@]+@[^\s@]+\.[a-zа-я]{2,}$/i.test(v) },
+    ];
+    const form = $('vzForm');
+    const channelsBox = $('vzChannels'), contact = $('vzContact'), contactLabel = $('vzContactLabel');
+    const msg = $('vzFormMsg'), sendBtn = $('vzSend'), agree = $('vzAgree');
+    let channel = CHANNELS[0];
+
+    CHANNELS.forEach((c) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.dataset.channel = c.key;
+      b.addEventListener('click', () => { channel = c; contact.value = ''; this._paintForm(); contact.focus(); });
+      channelsBox.appendChild(b);
+    });
+
+    // Один проход по всему, что зависит от языка и выбранного канала.
+    this._paintForm = () => {
+      const d = L10N[this.locale] || L10N.ru;
+      [].forEach.call(channelsBox.children, (b) => {
+        const c = CHANNELS.find((x) => x.key === b.dataset.channel);
+        b.textContent = d[c.label] || c.key;
+        b.setAttribute('aria-pressed', String(c === channel));
+      });
+      contactLabel.textContent = d[channel.label] || '';
+      contact.setAttribute('placeholder', channel.ph);
+      contact.setAttribute('inputmode', channel.mode);
+      contact.setAttribute('autocomplete', channel.auto);
+    };
+    this._paintForm();
+
+    // Телефон форматируем только когда курсор в конце: иначе правка середины
+    // номера превращается в борьбу с прыгающей кареткой.
+    contact.addEventListener('input', () => {
+      if (channel.key !== 'phone') return;
+      if (contact.selectionStart !== contact.value.length) return;
+      let d = contact.value.replace(/\D/g, '');
+      if (!d) { contact.value = ''; return; }
+      if (d[0] === '8') d = '7' + d.slice(1);
+      if (d[0] !== '7') d = '7' + d;
+      d = d.slice(0, 11);
+      let out = '+7';
+      if (d.length > 1) out += ' (' + d.slice(1, 4);
+      if (d.length >= 4) out += ') ' + d.slice(4, 7);
+      if (d.length >= 8) out += '-' + d.slice(7, 9);
+      if (d.length >= 10) out += '-' + d.slice(9, 11);
+      contact.value = out;
+    });
+
+    // Как и у мобильного меню: рантайм разметки не переносит голый атрибут
+    // hidden — стартовое состояние задаём сами, иначе текст согласия висит
+    // раскрытым и разрывает форму.
+    const consentText = $('vzConsentText');
+    consentText.hidden = true;
+    $('vzConsentMore').addEventListener('click', () => { consentText.hidden = !consentText.hidden; });
+
+    const say = (text, kind) => {
+      msg.textContent = text;
+      msg.className = kind ? 'vz-' + kind : '';
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const d = L10N[this.locale] || L10N.ru;
+      const name = $('vzName').value.trim();
+      const task = $('vzTask').value.trim();
+      const contactVal = contact.value.trim();
+
+      if (!name) return say(d.fErrName, 'err');
+      if (!channel.ok(contactVal)) return say(d.fErrContact, 'err');
+      if (task.length < 10) return say(d.fErrTask, 'err');
+      if (!agree.checked) return say(d.fErrAgree, 'err');
+
+      sendBtn.disabled = true;
+      say(d.fSending, '');
+      const q = new URLSearchParams(location.search);
+      // Идентификатор визита ставит аналитика; в приватном режиме его может
+      // не быть — заявка от этого не должна ломаться.
+      let session = null;
+      try { session = sessionStorage.getItem('vz_sid'); } catch (err) { session = null; }
+      fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name, channel: channel.key, contact: contactVal, task,
+          consent: true, company: $('vzTrap').value,
+          session, path: location.pathname,
+          referrer: document.referrer || null, lang: this.locale,
+          utm: { source: q.get('utm_source'), medium: q.get('utm_medium'), campaign: q.get('utm_campaign') },
+        }),
+      })
+        .then((r) => r.json().then((j) => ({ ok: r.ok, j })))
+        .then((res) => {
+          if (!res.ok) { say(res.j.error || d.fErrSend, 'err'); sendBtn.disabled = false; return; }
+          track('lead_submit', channel.key, 'form');
+          form.reset();
+          this._paintForm();
+          say(d.fOk, 'ok');
+          // Кнопку возвращаем не сразу: иначе двойной клик по инерции
+          // отправляет заявку второй раз.
+          setTimeout(() => { sendBtn.disabled = false; }, 4000);
+        })
+        .catch(() => { say(d.fErrSend, 'err'); sendBtn.disabled = false; });
+    });
 
     // ---------- бургер-меню ----------
     const burger = $('vzBurger'), menu = $('vzMenu'), header = $('vzHeader');
@@ -811,9 +1014,25 @@ class Component extends DCLogic {
     this._paintMain();
 
     const root = document.getElementById('vzRoot');
+    // Звёзды раскладываются случайно, поэтому каждый пересчёт — это новое небо.
+    // Раскрытие текста согласия или мобильного меню меняет высоту документа на
+    // сотню-другую пикселей, и небо перетасовывалось у человека на глазах.
+    // Пересчитываем, только когда изменилась ширина (раскладка поехала целиком)
+    // или когда высота ушла больше чем на пол-экрана. Мелкий прирост высоты
+    // оставляет внизу узкую полосу без звёзд — она приходится на подвал и
+    // в глаза не бросается, в отличие от перетасовки всего неба.
     this._ro = new ResizeObserver(() => {
       clearTimeout(this._rt);
-      this._rt = setTimeout(() => { this._genStars(); this._paintFar(); this._paintMain(); }, 180);
+      this._rt = setTimeout(() => {
+        const de = document.documentElement;
+        const w = de.clientWidth;
+        const h = Math.max(root ? root.scrollHeight : 0, de.scrollHeight);
+        const was = this._genSize;
+        if (was && w === was.w && Math.abs(h - was.h) < window.innerHeight * 0.5) return;
+        this._genStars();
+        this._paintFar();
+        this._paintMain();
+      }, 180);
     });
     if (root) this._ro.observe(root);
 
@@ -924,6 +1143,18 @@ class Component extends DCLogic {
     const H = Math.max(root ? root.scrollHeight : 0, de.scrollHeight);
     if (!W || !H) return;
     this._docH = H;
+    // Размер, под который разложено текущее небо: с ним сверяется наблюдатель
+    // размера, чтобы не пересчитывать звёзды на каждое мелкое изменение высоты.
+    this._genSize = { w: W, h: H };
+    // Канвас держим на явной высоте в пикселях, а не на height:100%. С резиновой
+    // высотой любое удлинение страницы (раскрыли текст согласия, открыли меню)
+    // сначала растягивало уже нарисованный битмап, а следующим кадром canvas
+    // перерисовывался под новый размер - на глаз фон дёргался дважды. Теперь
+    // высота меняется только вместе с пересчётом неба.
+    if (this._cvMain) {
+      this._cvMain.style.height = H + 'px';
+      this._cvMain.style.width = W + 'px';
+    }
     const p = this._starParams();
 
     // якорь — центр картинки планеты

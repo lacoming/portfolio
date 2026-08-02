@@ -54,3 +54,47 @@ export function ensureSchema() {
   });
   return _schema;
 }
+
+// Заявки с формы обратной связи. Отдельная таблица и отдельная ленивая схема:
+// события с формой не связаны, и приём заявки не должен зависеть от того,
+// поднялась ли схема аналитики.
+let _leadsSchema = null;
+
+export function ensureLeadsSchema() {
+  if (_leadsSchema) return _leadsSchema;
+  _leadsSchema = (async () => {
+    const sql = db();
+    await sql`
+      CREATE TABLE IF NOT EXISTS leads (
+        id          BIGSERIAL PRIMARY KEY,
+        ts          TIMESTAMPTZ NOT NULL DEFAULT now(),
+        name        TEXT NOT NULL,
+        channel     TEXT NOT NULL,
+        contact     TEXT NOT NULL,
+        task        TEXT NOT NULL,
+        consent     BOOLEAN NOT NULL DEFAULT false,
+        status      TEXT NOT NULL DEFAULT 'new',
+        session_id  TEXT,
+        ip_hash     TEXT,
+        path        TEXT,
+        referrer    TEXT,
+        utm_source  TEXT,
+        utm_medium  TEXT,
+        utm_campaign TEXT,
+        country     TEXT,
+        city        TEXT,
+        device      TEXT,
+        browser     TEXT,
+        os          TEXT,
+        lang        TEXT,
+        notified    BOOLEAN NOT NULL DEFAULT false
+      )`;
+    await sql`CREATE INDEX IF NOT EXISTS leads_ts_idx ON leads (ts DESC)`;
+    // Частота заявок считается по ip_hash за последний час — индекс под этот запрос.
+    await sql`CREATE INDEX IF NOT EXISTS leads_ip_ts_idx ON leads (ip_hash, ts DESC)`;
+  })().catch((e) => {
+    _leadsSchema = null;
+    throw e;
+  });
+  return _leadsSchema;
+}

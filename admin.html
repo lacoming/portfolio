@@ -86,6 +86,20 @@ td.num,th.num{text-align:right;padding-right:0;font-family:'JetBrains Mono',mono
 .step .pct{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--dim)}
 
 .empty{padding:22px 0;font-size:13px;color:var(--dim);text-align:center}
+
+/* ---------- заявки ---------- */
+.lead{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:rgba(255,255,255,.03)}
+.lead + .lead{margin-top:10px}
+.lead-done{opacity:.5}
+.lead-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.lead-head b{font-size:14.5px}
+.lead-contact{font-size:12.5px;color:var(--acc);text-decoration:none;border-bottom:1px solid rgba(183,82,74,.4)}
+.lead-contact:hover{color:var(--ink);border-color:var(--ink)}
+.lead-head button{margin-left:auto;padding:7px 13px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--muted);font-size:12px}
+.lead-head button:hover:not(:disabled){border-color:var(--acc);color:var(--ink)}
+.lead-head button:disabled{opacity:.5;cursor:default}
+.lead-task{margin:10px 0 9px;font-size:13.5px;line-height:1.6;color:var(--muted);white-space:pre-wrap;word-break:break-word}
+.lead-meta{font-size:11px;color:var(--dim)}
 #err{margin-bottom:18px;padding:14px 18px;border:1px solid rgba(255,122,110,.4);border-radius:12px;background:rgba(255,122,110,.07);color:#FF9A90;font-size:13.5px;line-height:1.6;display:none}
 @media(max-width:720px){.wrap{padding:18px 16px 60px}.step .lbl{width:110px;font-size:12px}}
 </style>
@@ -115,6 +129,12 @@ td.num,th.num{text-align:right;padding-right:0;font-family:'JetBrains Mono',mono
   <div class="kpis" id="kpis"></div>
 
   <div class="grid">
+    <div class="card full">
+      <h2>Заявки с формы <span id="leadsNew" class="mono"></span></h2>
+      <p class="hint">Что человек оставил в форме внизу витрины. «Обработана» — отметка для себя, на сайт она не влияет.</p>
+      <div id="leads"></div>
+    </div>
+
     <div class="card full">
       <h2>Посещения по дням</h2>
       <p class="hint">Столбец — визиты за сутки по московскому времени. Наведите на столбец, чтобы увидеть цифры.</p>
@@ -290,6 +310,88 @@ td.num,th.num{text-align:right;padding-right:0;font-family:'JetBrains Mono',mono
         $('err').style.display = 'block';
         $('err').textContent = 'Не удалось загрузить статистику: ' + e.message;
       });
+    loadLeads();
+  }
+
+  // ---------- заявки ----------
+  // Период на заявки не распространяется: пропустить заявку из-за выбранных
+  // «7 дней» хуже, чем показать лишнюю.
+  function loadLeads() {
+    fetch('/api/leads?limit=200', { headers: { Accept: 'application/json' } })
+      .then(function (r) {
+        if (r.status === 401) { location.reload(); throw new Error('401'); }
+        return r.json();
+      })
+      .then(function (d) {
+        if (d.error) { $('leads').innerHTML = '<div class="empty">Не удалось загрузить заявки: ' + esc(d.error) + '</div>'; return; }
+        renderLeads(d);
+      })
+      .catch(function (e) {
+        if (e.message === '401') return;
+        $('leads').innerHTML = '<div class="empty">Не удалось загрузить заявки: ' + esc(e.message) + '</div>';
+      });
+  }
+
+  function renderLeads(d) {
+    var rows = d.leads || [];
+    $('leadsNew').textContent = d.newCount ? '· новых: ' + nfmt(d.newCount) : '';
+    if (!rows.length) { $('leads').innerHTML = '<div class="empty">Заявок пока нет</div>'; return; }
+
+    $('leads').innerHTML = rows.map(function (l) {
+      var when = new Date(l.ts).toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+      var where = [l.city, l.country].filter(Boolean).join(', ');
+      var utm = [l.utm_source, l.utm_medium, l.utm_campaign].filter(Boolean).join(' / ');
+      var meta = [when, CHANNEL_NAMES[l.channel] || l.channel, where, l.device, utm && 'utm: ' + utm]
+        .filter(Boolean).map(esc).join(' · ');
+      return '<div class="lead' + (l.status === 'done' ? ' lead-done' : '') + '">' +
+        '<div class="lead-head">' +
+          '<b>' + esc(l.name) + '</b>' +
+          '<a class="mono lead-contact" href="' + contactHref(l) + '"' + (l.channel === 'email' ? '' : ' target="_blank" rel="noopener"') + '>' + esc(l.contact) + '</a>' +
+          '<button data-id="' + l.id + '" data-status="' + (l.status === 'done' ? 'new' : 'done') + '">' +
+            (l.status === 'done' ? 'Вернуть в работу' : 'Обработана') + '</button>' +
+        '</div>' +
+        '<p class="lead-task">' + esc(l.task) + '</p>' +
+        '<div class="lead-meta mono">' + meta + (l.notified ? '' : ' · <span title="Уведомление в Телеграм не ушло">без уведомления</span>') + '</div>' +
+      '</div>';
+    }).join('');
+
+    [].forEach.call($('leads').querySelectorAll('button'), function (b) {
+      b.addEventListener('click', function () {
+        b.disabled = true;
+        fetch('/api/leads', {
+          method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: Number(b.dataset.id), status: b.dataset.status }),
+        }).then(function () { loadLeads(); })
+          .catch(function () { b.disabled = false; });
+      });
+    });
+  }
+
+  var CHANNEL_NAMES = { phone: 'телефон', telegram: 'telegram', vk: 'vk', email: 'почта' };
+
+  // Контакт кликабельный: из админки сразу набрать, написать или открыть профиль.
+  // Ссылку собираем сами из разобранного значения, а не подклеиваем к нему схему:
+  // в поле лежит текст постороннего человека, и он не должен решать, какая схема
+  // окажется в href. Что не разобрали — оставляем нерабочей ссылкой.
+  function contactHref(l) {
+    var v = String(l.contact || '').trim();
+    var m;
+    if (l.channel === 'phone') {
+      m = v.replace(/[^\d+]/g, '');
+      return /^\+?\d{10,15}$/.test(m) ? 'tel:' + m : '#';
+    }
+    if (l.channel === 'email') {
+      // encodeURI, а не encodeURIComponent: собаку кодировать нельзя, часть
+      // почтовых клиентов не разбирает mailto с %40. Кавычки и угловые скобки
+      // encodeURI при этом всё равно экранирует.
+      return /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(v) ? 'mailto:' + encodeURI(v) : '#';
+    }
+    if (l.channel === 'telegram') {
+      m = v.match(/^(?:https?:\/\/)?(?:t\.me\/)?@?([a-zA-Z0-9_]{4,32})\/?$/);
+      return m ? 'https://t.me/' + encodeURIComponent(m[1]) : '#';
+    }
+    m = v.match(/^(?:https?:\/\/)?(?:vk\.com\/)?@?([a-zA-Z0-9_.]{3,64})\/?$/);
+    return m ? 'https://vk.com/' + encodeURIComponent(m[1]) : '#';
   }
 
   function render(d) {

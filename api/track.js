@@ -1,7 +1,7 @@
 // Приём событий с витрины. Открытый эндпоинт: пишет только то, что описано
 // в белом списке TYPES, всё остальное молча отбрасывает.
-import { createHash } from 'node:crypto';
 import { db, ensureSchema } from './_db.js';
+import { clientIp, parseUA, sameOrigin, visitorId } from './_client.js';
 
 const TYPES = new Set([
   'pageview',       // загрузка страницы
@@ -9,6 +9,7 @@ const TYPES = new Set([
   'modal_time',     // сколько секунд смотрели сайт в модалке
   'external_open',  // «в новой вкладке ↗»
   'contact_click',  // telegram / email / github
+  'lead_submit',    // форма обратной связи отправлена
   'cta_click',      // «Обсудить проект», кнопки в хиро
   'lang_switch',    // RU / EN
   'scroll',         // докрутка до 25 / 50 / 75 / 100 %
@@ -18,42 +19,6 @@ const TYPES = new Set([
 
 const str = (v, max) => (v == null || v === '' ? null : String(v).slice(0, max));
 
-function parseUA(ua = '') {
-  const s = ua.toLowerCase();
-  const tablet = /ipad|tablet|playbook|silk|(android(?!.*mobile))/.test(s);
-  const mobile = /mobi|iphone|ipod|android|blackberry|windows phone/.test(s);
-  const device = tablet ? 'tablet' : mobile ? 'mobile' : 'desktop';
-
-  let browser = 'прочие';
-  if (/edg\//.test(s)) browser = 'Edge';
-  else if (/yabrowser/.test(s)) browser = 'Yandex';
-  else if (/opr\/|opera/.test(s)) browser = 'Opera';
-  else if (/firefox/.test(s)) browser = 'Firefox';
-  else if (/chrome|crios/.test(s)) browser = 'Chrome';
-  else if (/safari/.test(s)) browser = 'Safari';
-
-  let os = 'прочие';
-  if (/windows/.test(s)) os = 'Windows';
-  else if (/iphone|ipad|ipod/.test(s)) os = 'iOS';
-  else if (/mac os x/.test(s)) os = 'macOS';
-  else if (/android/.test(s)) os = 'Android';
-  else if (/linux/.test(s)) os = 'Linux';
-
-  return { device, browser, os };
-}
-
-// Идентификатор посетителя — соль + IP + UA + дата, прогнанные через SHA-256.
-// Сырой IP в базу не попадает, а хеш сам протухает через сутки: сопоставить
-// посетителя с человеком по такой базе нельзя.
-function visitorId(req, ip) {
-  const salt = process.env.ADMIN_SECRET || 'vz';
-  const day = new Date().toISOString().slice(0, 10);
-  return createHash('sha256')
-    .update(`${salt}|${ip}|${req.headers['user-agent'] || ''}|${day}`)
-    .digest('hex')
-    .slice(0, 32);
-}
-
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -61,11 +26,7 @@ export default async function handler(req, res) {
   }
 
   // Считаем события только со своей же страницы — отсекает случайный внешний шум.
-  const origin = req.headers.origin || req.headers.referer || '';
-  const host = req.headers['x-forwarded-host'] || req.headers.host || '';
-  if (origin && host && !origin.includes(host)) {
-    return res.status(204).end();
-  }
+  if (!sameOrigin(req)) return res.status(204).end();
 
   let body = req.body;
   if (typeof body === 'string') {
@@ -79,7 +40,7 @@ export default async function handler(req, res) {
   const sessionId = str(body.s, 64);
   if (!sessionId) return res.status(204).end();
 
-  const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() || '0.0.0.0';
+  const ip = clientIp(req);
   const { device, browser, os } = parseUA(req.headers['user-agent'] || '');
   const utm = body.q && typeof body.q === 'object' ? body.q : {};
 
