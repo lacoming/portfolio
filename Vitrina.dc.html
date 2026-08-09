@@ -60,7 +60,11 @@ a{text-decoration:none}
 .vz-wtab[aria-selected=true]::after{opacity:1}
 /* touch-action:pan-y — вертикальный скролл страницы остаётся за браузером,
    горизонтальное движение забирает слайдер */
-#vzSlider{overflow:hidden;touch-action:pan-y;cursor:grab;margin:-8px 0 -34px}
+/* Высоту слайдер берёт по активной вкладке (её ставит скрипт). Без этого
+   контейнер тянулся по самой высокой из двух сеток, и под короткой зияла
+   дыра в пол-экрана — особенно заметно на телефоне, где карточки идут
+   в один-два столбца и разница вкладок набегает сотнями пикселей. */
+#vzSlider{overflow:hidden;touch-action:pan-y;cursor:grab;margin:-8px 0 -34px;transition:height .55s cubic-bezier(.22,.8,.28,1)}
 #vzSlider.vz-sliding{cursor:grabbing}
 #vzTrack{display:flex;align-items:flex-start;transition:transform .55s cubic-bezier(.22,.8,.28,1);will-change:transform}
 #vzTrack.vz-drag{transition:none}
@@ -149,13 +153,17 @@ a{text-decoration:none}
 #vzFlipGameBox iframe{display:block;width:100%;height:100%;border:0;background:#03030a}
 #vzFlipClose{position:absolute;top:10px;right:10px;z-index:2;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(6,6,9,.7);color:#F2F2F7;font-size:14px;cursor:pointer;transition:background .2s,border-color .2s}
 #vzFlipClose:hover{background:rgba(var(--acc-rgb,183,82,74),.35);border-color:#fff}
-/* На телефоне планета почти квадратная, и мини-игре в её обороте тесно: грядки
-   ужимаются до трети размера. Перевёрнутой карточке отдаём высоту сверх
-   квадрата — лицевая сторона в этот момент всё равно не видна. */
-@media (max-width:760px){
-#vzFlip.flipped{height:150vw;max-height:76vh}
+/* Планета квадратная, а мини-игре на её обороте нужна высота: в квадрате
+   грядки ужимаются вдвое-втрое. Перевёрнутой карточке даём вытянуться —
+   лицевая сторона в этот момент всё равно не видна. Пропорция, а не пиксели:
+   ширина карточки зависит от колонки, и высота должна идти за ней. */
+#vzFlip.flipped{aspect-ratio:1/1.12}
 #vzFlip.flipped #vzFlipInner{height:100%}
 #vzFlip.flipped #vzFlipFront{position:absolute;inset:0}
+/* На телефоне карточка во всю ширину экрана, запас по высоте больше, но не
+   в ущерб остальной странице — отсюда потолок в три четверти экрана. */
+@media (max-width:760px){
+#vzFlip.flipped{aspect-ratio:1/1.5;max-height:76vh}
 }
 @media (max-width:1120px){
 #vzHero{grid-template-columns:1fr !important;min-height:0 !important;padding-top:24px !important}
@@ -735,6 +743,11 @@ class Component extends DCLogic {
     const wTabs = Array.from(document.querySelectorAll('#vzWorksTabs .vz-wtab'));
     const wNotes = Array.from(document.querySelectorAll('.vz-wnote'));
     const sl = this._slider = { idx: 0, drag: null, suppress: false };
+    // Высота контейнера идёт за активной вкладкой: сетки разной длины, и без
+    // этого под короткой оставалась пустота высотой в разницу между ними.
+    const sPanes = Array.from(document.querySelectorAll('.vz-pane'));
+    const paneH = (i) => (sPanes[i] ? sPanes[i].offsetHeight : 0);
+    const syncH = () => { if (sPanes.length) slider.style.height = paneH(sl.idx) + 'px'; };
     const setTab = (i, src) => {
       i = Math.max(0, Math.min(wTabs.length - 1, i));
       if (i !== sl.idx && src) track('works_tab', i === 0 ? 'sites' : 'other', src);
@@ -742,8 +755,17 @@ class Component extends DCLogic {
       sTrack.style.transform = 'translateX(' + (-i * 100) + '%)';
       wTabs.forEach((b, k) => b.setAttribute('aria-selected', String(k === i)));
       wNotes.forEach((n, k) => { n.style.display = k === i ? '' : 'none'; });
+      syncH();
     };
     setTab(0);
+    // Пересчёт: карточки переливаются по колонкам при смене ширины, а до
+    // загрузки шрифтов высота текста ещё не та.
+    window.addEventListener('resize', syncH);
+    window.addEventListener('load', syncH);
+    if (window.ResizeObserver) {
+      this._paneRO = new ResizeObserver(syncH);
+      sPanes.forEach((p) => this._paneRO.observe(p));
+    }
     wTabs.forEach((b, k) => b.addEventListener('click', () => setTab(k, 'tab')));
     slider.addEventListener('pointerdown', (e) => {
       if (sl.drag || (e.pointerType === 'mouse' && e.button !== 0)) return;
@@ -760,6 +782,9 @@ class Component extends DCLogic {
         g.captured = true;
         sTrack.classList.add('vz-drag');
         slider.classList.add('vz-sliding');
+        // Пока тянут, держим высоту по самой длинной сетке — иначе соседняя
+        // вкладка выезжает обрезанной снизу.
+        slider.style.height = Math.max(paneH(0), paneH(1)) + 'px';
         try { slider.setPointerCapture(e.pointerId); } catch (_) {}
       }
       const w = slider.clientWidth || 1;
@@ -1758,6 +1783,7 @@ class Component extends DCLogic {
     window.removeEventListener('keydown', this._escDetail);
     if (this._raf) cancelAnimationFrame(this._raf);
     if (this._ro) this._ro.disconnect();
+    if (this._paneRO) this._paneRO.disconnect();
     if (this._drumRaf) cancelAnimationFrame(this._drumRaf);
     if (this._drumRO) this._drumRO.disconnect();
     if (this._drumIO) this._drumIO.disconnect();
