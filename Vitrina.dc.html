@@ -1981,6 +1981,28 @@ class Component extends DCLogic {
 // загрузки, и обработчик, повешенный на сам узел, пропадает вместе с ним.
 (function () {
   var track = function (type, target) { if (window.vzTrack) window.vzTrack(type, target); };
+
+  /* Iframe вставляется ПОСЛЕ переворота, а не вместе с ним. Раньше эти две
+     строки стояли рядом, и браузер получал их одним куском работы: разобрать
+     бандл игры, раскодировать картинки - и всё это на том же потоке, где
+     крутится трёхмерный переворот на 1.05 секунды. На телефоне выходило две-
+     четыре десятых секунды тяжёлой работы поверх анимации, то есть ровно тот
+     рывок, который видно при первом открытии.
+
+     Ждём transitionend от самой карточки; таймер - подстраховка на случай,
+     когда события не будет вовсе. Главный такой случай проверен: если вкладку
+     увели в фон, переходы в ней не идут и transitionend не приходит - без
+     таймера игра не появилась бы вообще. Флаг снимает гонку между ними: чей бы
+     сигнал ни пришёл первым, вставка одна. */
+  var mount = function (flip) {
+    var box = flip.querySelector('#vzFlipGameBox');
+    if (!box || box.firstChild) return;
+    var f = document.createElement('iframe');
+    f.src = 'sites/zen-garden/index.html?lang=' + (window.vzLocale || 'ru');
+    f.title = 'Космический дзен-сад';
+    box.appendChild(f);
+  };
+
   document.addEventListener('click', function (e) {
     if (!e.target.closest) return;
     var flip = e.target.closest('#vzFlip');
@@ -1988,13 +2010,23 @@ class Component extends DCLogic {
     // Открылась один раз - дальше живёт как есть: клики внутри принадлежат
     // самой игре, обратно планету не показываем.
     if (flip.classList.contains('flipped')) return;
-    var box = flip.querySelector('#vzFlipGameBox');
-    if (box && !box.firstChild) {
-      var f = document.createElement('iframe');
-      f.src = 'sites/zen-garden/index.html?lang=' + (window.vzLocale || 'ru');
-      f.title = 'Космический дзен-сад';
-      box.appendChild(f);
-    }
+
+    var inner = flip.querySelector('#vzFlipInner');
+    var done  = false;
+    var onEnd = function (ev) {
+      // Только собственный поворот карточки: внутри есть свои переходы.
+      // Поэтому не once - его бы снял первый же чужой transitionend.
+      if (ev.target === inner && ev.propertyName === 'transform') go();
+    };
+    var go = function () {
+      if (done) return;
+      done = true;
+      if (inner) inner.removeEventListener('transitionend', onEnd);
+      mount(flip);
+    };
+    if (inner) inner.addEventListener('transitionend', onEnd);
+    setTimeout(go, 1200);
+
     flip.classList.add('flipped');
     track('game_flip', 'open');
   });
