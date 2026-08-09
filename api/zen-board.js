@@ -149,5 +149,23 @@ export default async function handler(req, res) {
     }
   }
 
+  // ── Уйти из топа ──────────────────────────────────────────────────────────
+  // Удаляет ровно свою строку и освобождает забронированный ник. Условие —
+  // первичный ключ, поэтому больше одной строки удалить нельзя в принципе:
+  // ни массового удаления, ни отбора по признаку тут нет и не должно быть.
+  // Чужую строку не достать — player_id наружу не отдаётся.
+  if (body.action === 'forget') {
+    try {
+      const done = await sql`
+        DELETE FROM zen_players WHERE player_id = ${body.playerId}
+        RETURNING nickname`;
+      if (done.length === 0) return res.status(200).json({ ok: false, reason: 'no-nick' });
+      return res.status(200).json({ ok: true, nick: done[0].nickname });
+    } catch (e) {
+      console.error('zen-board forget:', e.message);
+      return res.status(503).json({ error: 'База недоступна' });
+    }
+  }
+
   return res.status(400).json({ error: 'Неизвестное действие' });
 }
