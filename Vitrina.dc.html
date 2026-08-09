@@ -157,13 +157,20 @@ a{text-decoration:none}
    грядки ужимаются вдвое-втрое. Перевёрнутой карточке даём вытянуться —
    лицевая сторона в этот момент всё равно не видна. Пропорция, а не пиксели:
    ширина карточки зависит от колонки, и высота должна идти за ней. */
-#vzFlip.flipped{aspect-ratio:1/1.12}
-#vzFlip.flipped #vzFlipInner{height:100%}
+/* Обе стороны выключены из потока: высоту карточки задаёт она сама, а
+   содержимое растягивается по ней через inset. Через height:100% нельзя —
+   у карточки высота берётся из пропорции, а такую высоту не каждый браузер
+   считает определённой, и тогда оборот вылезает за карточку на заголовок. */
+#vzFlip.flipped #vzFlipInner{position:absolute;inset:0}
 #vzFlip.flipped #vzFlipFront{position:absolute;inset:0}
-/* На телефоне карточка во всю ширину экрана, запас по высоте больше, но не
-   в ущерб остальной странице — отсюда потолок в три четверти экрана. */
+/* На телефоне высота в vw: карточка там во всю ширину экрана, и это точная
+   величина, не зависящая от трактовки пропорций. Потолок — три четверти
+   экрана, чтобы игра не выдавливала собой всю остальную страницу. */
 @media (max-width:760px){
-#vzFlip.flipped{aspect-ratio:1/1.5;max-height:76vh}
+#vzFlip.flipped{height:150vw;max-height:76vh}
+}
+@media (min-width:761px){
+#vzFlip.flipped{aspect-ratio:1/1.12}
 }
 @media (max-width:1120px){
 #vzHero{grid-template-columns:1fr !important;min-height:0 !important;padding-top:24px !important}
