@@ -22,6 +22,9 @@ a{text-decoration:none}
 @keyframes vzFade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @keyframes vzGlow{0%,100%{opacity:.7}50%{opacity:1}}
 @keyframes vzBob{0%,100%{transform:translateY(0)}50%{transform:translateY(4.19%)}}
+/* Подсказка над снимком: сказала своё и растворилась, чтобы не висеть
+   над кадром всё время, пока его рассматривают. */
+@keyframes vzHintFade{0%,72%{opacity:1}100%{opacity:0}}
 .vz-win{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:#0D0D14;cursor:pointer;flex:none;transition:border-color .25s,transform .25s,box-shadow .25s}
 .vz-win>img.vz-prev{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;pointer-events:none}
 .vz-win>img.vz-sphere{position:absolute;left:57.55%;top:22.02%;width:36.72%;height:auto;animation:vzBob 5s ease-in-out infinite;will-change:transform;pointer-events:none}
@@ -83,6 +86,27 @@ a{text-decoration:none}
 #vzDetailList li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:2px;background:var(--det-acc,var(--acc,#B7524A))}
 #vzDetailShots{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .vz-shot{aspect-ratio:16/9;border:1px dashed rgba(255,255,255,.16);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:#6E7387;background:rgba(255,255,255,.02)}
+/* Кадр вписывается целиком (contain): у скриншотов пропорции разные, а
+   кадрирование по краю режет как раз то, ради чего снимок и взят. Клик
+   открывает снимок в полный размер — в плитке текст интерфейса не прочесть. */
+.vz-pic{display:block;width:100%;margin:0;padding:0;aspect-ratio:16/9;border:1px solid rgba(255,255,255,.12);border-radius:12px;overflow:hidden;background:#08080D;cursor:zoom-in;transition:border-color .2s}
+/* Подсветку спрашиваем у устройства: на тач-экране :hover залипает после
+   нажатия, и кадр остаётся обведённым акцентом, будто что-то сломалось. */
+@media (hover:hover){.vz-pic:hover{border-color:var(--det-acc,var(--acc,#B7524A))}}
+.vz-pic img{display:block;width:100%;height:100%;object-fit:contain}
+/* Широкий кадр (панель статистики) занимает обе колонки и живёт своей высотой */
+.vz-pic.vz-pic-wide{grid-column:1/-1;aspect-ratio:auto}
+.vz-pic.vz-pic-wide img{height:auto}
+/* CTA карточки — та же таблетка, что кнопка «Отправить заявку» под формой:
+   в модалке это такое же действие, и выглядеть оно должно так же. Цвет берём
+   общий акцент, а не акцент проекта: на светлых акцентах белый текст тонет. */
+#vzDetailCta{display:inline-block;margin-top:26px;padding:15px 34px;border-radius:999px;background:var(--acc,#B7524A);color:var(--acc-ink,#fff);font-weight:600;font-size:15px;box-shadow:0 10px 34px rgba(var(--acc-rgb,183,82,74),.28);transition:transform .2s,box-shadow .2s}
+#vzDetailCta:hover{transform:translateY(-2px);box-shadow:0 16px 44px rgba(var(--acc-rgb,183,82,74),.4)}
+#vzZoom{display:none;position:fixed;inset:0;z-index:110;background:rgba(4,4,7,.93);align-items:center;justify-content:center;padding:34px;cursor:zoom-out}
+#vzZoom img{max-width:100%;max-height:100%;border-radius:10px;box-shadow:0 30px 90px rgba(0,0,0,.7)}
+/* Крестик и подсказки нужны только на телефоне: там нет ни клавиатуры с Escape,
+   ни свободного поля вокруг снимка, по которому можно кликнуть. */
+#vzZoomClose,.vz-zhint{display:none}
 
 /* ---------- форма обратной связи ---------- */
 /* Живёт внутри CTA-блока, под кнопками контактов: человеку, который не хочет
@@ -226,8 +250,11 @@ a{text-decoration:none}
 #vzCtaBtns a{text-align:center}
 #vzModal{padding:0 !important}
 #vzModalBox{width:100% !important;height:100vh !important;height:100dvh !important;border-radius:0 !important;border:none !important}
+#vzModalTitle{display:none !important}
+#vzModalExt{display:none !important}
+/* ---------- карточка кейса «1С и автоматизация» на телефоне ---------- */
 /* Высоту коробка берёт от подложки (она fixed inset:0), а не в vh/dvh.
-   С dvh она получалась выше экрана, а подложка центрирует по вертикали —
+   С dvh она получалась выше экрана, а подложка центрирует по вертикали,
    и карточке срезало заголовок с крестиком сверху и кнопку «обсудить» снизу.
    flex:1 при align-items:stretch даёт ровно высоту экрана, прокрутка своя. */
 #vzDetail{padding:0 !important;align-items:stretch !important}
@@ -236,12 +263,29 @@ a{text-decoration:none}
    а закрыть карточку на телефоне больше нечем: подложки вокруг неё нет,
    Escape нажать негде. Держим его липкой полосой в цвет карточки - текст
    уходит под неё, как под шапку, и ни одно слово не прячется за кнопкой. */
-#vzDetailBar{display:block;position:sticky;top:0;z-index:3;height:56px;margin:0 -20px;background:#0D0D14}
+/* Нижние 14px полосы - растворение: под ним текст уходит без ступеньки.
+   Отступ снизу ровно на его высоту, иначе растворение легло бы на заголовок. */
+#vzDetailBar{display:block;position:sticky;top:0;z-index:3;height:56px;margin:0 -20px 14px;background:#0D0D14}
 #vzDetailBar::after{content:'';position:absolute;left:0;right:0;top:100%;height:14px;background:linear-gradient(#0D0D14,rgba(13,13,20,0));pointer-events:none}
 #vzDetailClose{top:11px !important;right:12px !important;width:44px !important;height:44px !important;border-radius:13px !important;font-size:16px !important}
-#vzDetailTitle{padding-right:0 !important}
-#vzModalTitle{display:none !important}
-#vzModalExt{display:none !important}
+#vzDetailTitle{font-size:20px !important;line-height:1.3 !important;padding-right:0 !important}
+#vzDetailTags{margin-bottom:16px !important;line-height:1.7 !important}
+#vzDetailTask{font-size:15px !important;line-height:1.62 !important;margin-bottom:16px !important}
+#vzDetailList{gap:12px !important;margin-bottom:22px !important}
+#vzDetailList li{font-size:14.5px !important;line-height:1.55 !important;padding-left:16px !important}
+#vzDetailList li::before{top:7px;width:6px;height:6px}
+/* на узком экране кадры идут в столбик: в две колонки от них остаются марки.
+   Пропорции 16/9 тоже снимаем: снимок занимает всю ширину по своей высоте,
+   без полей по бокам, которые в столбике съедали половину кадра. */
+#vzDetailShots{grid-template-columns:1fr !important;gap:12px !important}
+.vz-pic{aspect-ratio:auto !important;position:relative}
+.vz-pic img{height:auto !important}
+.vz-pic.vz-pic-wide{grid-column:auto !important}
+/* Лупа в углу кадра: в столбике снимок выглядит картинкой, а не кнопкой,
+   и без метки не видно, что по нему можно открыть исходный размер. */
+.vz-pic::after{content:'';position:absolute;right:9px;bottom:9px;width:34px;height:34px;border-radius:50%;background:rgba(6,6,9,.86) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F2F2F7' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='M15.4 15.4l4.6 4.6'/%3E%3C/svg%3E") center/20px no-repeat;border:1px solid rgba(255,255,255,.22);box-shadow:0 2px 10px rgba(0,0,0,.45)}
+/* Кнопка внизу тянется во всю ширину: на телефоне в неё целятся пальцем. */
+#vzDetailCta{display:block !important;margin-top:22px !important;padding:15px 18px}
 }
 /* Телефон в ландшафте: ширина уже за 720px, а высоты под карточку нет -
    в настольной геометрии от неё остаётся полоса в треть экрана. Отдаём почти
@@ -249,10 +293,29 @@ a{text-decoration:none}
 @media (max-width:1000px) and (max-height:520px){
 #vzDetail{padding:10px !important;align-items:stretch !important}
 #vzDetailBox{max-height:none !important;padding:0 26px 26px !important;overscroll-behavior:contain}
-#vzDetailBar{display:block;position:sticky;top:0;z-index:3;height:48px;margin:0 -26px;background:#0D0D14}
+#vzDetailBar{display:block;position:sticky;top:0;z-index:3;height:48px;margin:0 -26px 12px;background:#0D0D14}
 #vzDetailBar::after{content:'';position:absolute;left:0;right:0;top:100%;height:12px;background:linear-gradient(#0D0D14,rgba(13,13,20,0));pointer-events:none}
 #vzDetailClose{top:9px !important;right:12px !important;width:40px !important;height:40px !important;border-radius:12px !important}
-#vzDetailTitle{padding-right:0 !important}
+#vzDetailTitle{font-size:19px !important;padding-right:0 !important}
+#vzDetailCta{display:block !important;margin-top:20px !important;padding:13px 18px}
+}
+/* ---------- снимок целиком, телефон ---------- */
+/* Вписанный в 320px кадр Excel не читается вообще, поэтому на телефоне просмотр
+   двухрежимный: сначала снимок целиком, нажатие открывает исходный размер
+   и снимок двигают пальцем. Условие то же, что у zoomPhone() в скрипте:
+   портрет до 720px и телефон в ландшафте. */
+@media (max-width:720px),(max-width:1000px) and (max-height:520px){
+#vzZoom{padding:14px !important;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+#vzZoom img{border-radius:6px !important;box-shadow:none !important}
+#vzZoom.vz-zoom-full{padding:0 !important;align-items:flex-start !important;justify-content:flex-start !important}
+#vzZoom.vz-zoom-full img{max-width:none !important;max-height:none !important;width:auto;height:auto;border-radius:0 !important}
+#vzZoomClose{display:flex;align-items:center;justify-content:center;position:fixed;top:12px;right:12px;z-index:2;width:44px;height:44px;border-radius:13px;background:rgba(13,13,20,.88);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.16);color:#F2F2F7;font-size:16px;cursor:pointer}
+.vz-zhint{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);max-width:calc(100% - 28px);padding:9px 15px;border-radius:999px;background:rgba(13,13,20,.86);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.14);font-family:'JetBrains Mono',monospace;font-size:10.5px;line-height:1.5;letter-spacing:.03em;color:#B9BDCC;text-align:center;pointer-events:none;animation:vzHintFade 5s ease forwards}
+/* Подсказка меняется вместе с режимом: во весь размер попасть просто,
+   а вот про обратный ход без строки никто не догадается. */
+#vzZoomHint{display:block}
+#vzZoom.vz-zoom-full #vzZoomHint{display:none}
+#vzZoom.vz-zoom-full #vzZoomBack{display:block}
 }
 </style>
 </helmet>
@@ -466,12 +529,16 @@ a{text-decoration:none}
       <p id="vzDetailTags"></p>
       <p id="vzDetailTask"></p>
       <ul id="vzDetailList"></ul>
-      <div id="vzDetailShots">
-        <div class="vz-shot">место под скриншот</div>
-        <div class="vz-shot">место под скриншот</div>
-      </div>
-      <a id="vzDetailCta" href="#contact" data-l10n="detailCta" style="display:inline-block;margin-top:26px;font-size:14px;font-weight:600;color:var(--acc,#B7524A)">Обсудить похожую задачу →</a>
+      <div id="vzDetailShots"></div>
+      <a id="vzDetailCta" href="#contact" data-l10n="detailCta">Обсудить похожую задачу →</a>
     </div>
+  </div>
+
+  <div id="vzZoom">
+    <button id="vzZoomClose" aria-label="Закрыть">✕</button>
+    <img alt="">
+    <span id="vzZoomHint" class="vz-zhint" data-l10n="zoomHint">нажмите на снимок, чтобы рассмотреть</span>
+    <span id="vzZoomBack" class="vz-zhint" data-l10n="zoomBack">нажмите ещё раз, чтобы увидеть целиком</span>
   </div>
 </div>
 </x-dc>
@@ -634,7 +701,11 @@ class Component extends DCLogic {
     const OTHERS = [
       { mark: '1С', key: '1c-autoservice', img: 'previews/1c-autoservice.jpg', title: 'Автоматизация сети автосервисов', tags: '1С:УНФ · расширение · Bitrix24 · TG-бот', desc: 'Три подразделения на одной базе 1С:УНФ: заказ-наряды, склад, зарплата механиков, отчёты. Переезд с «Автодилера»: 2612 заказ-нарядов перенесены и сверены до копейки.', accent: '#E8B33D',
         task: 'Сеть автосервисов из трёх подразделений переезжала со старой учётной программы «Автодилер» на 1С:УНФ. Условие — сохранить всю историю работ.',
-        points: ['Вся логика в расширении .cfe: типовая конфигурация не меняется, обновления 1С ставятся штатно', 'Заказ-наряды с воронкой этапов, своей для каждого подразделения', 'Склад, расчёт зарплаты механиков, 7 управленческих отчётов, печатные формы', 'Обмен с Bitrix24 и телеграм-бот приёмщика', 'Перенос данных: 2612 заказ-нарядов, 1270 контрагентов, 1812 позиций каталога, сверка сумм до копейки', 'Развёртывание на сервере клиента, обучение сотрудников через веб-портал'] },
+        points: ['Вся логика в расширении .cfe: типовая конфигурация не меняется, обновления 1С ставятся штатно', 'Заказ-наряды с воронкой этапов, своей для каждого подразделения', 'Склад, расчёт зарплаты механиков, 7 управленческих отчётов, печатные формы', 'Обмен с Bitrix24 и телеграм-бот приёмщика', 'Перенос данных: 2612 заказ-нарядов, 1270 контрагентов, 1812 позиций каталога, сверка сумм до копейки', 'Развёртывание на сервере клиента, обучение сотрудников через веб-портал'],
+        shots: [
+          { src: 'shots/1c-autoservice-1.jpg', alt: 'Заказ-наряд в 1С:УНФ: строки работ с нормой времени, ценой и суммой' },
+          { src: 'shots/1c-autoservice-2.jpg', alt: 'Воронка этапов заказ-наряда: от «Принят» до «Завершён»' },
+        ] },
       { mark: '1С', key: '1c-sv-webhook', preview:
           '<div style="position:absolute;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;gap:3%;padding:5% 6%">' +
           '<img src="previews/1c-unf-logo.jpg" alt="1С:УНФ" style="max-height:74%;max-width:38%;object-fit:contain">' +
@@ -659,19 +730,27 @@ class Component extends DCLogic {
         points: ['Структура кампании и группы объявлений под локальную аудиторию', 'Креативы и тексты объявлений', 'Запуски циклами с фиксированным дневным бюджетом', 'После каждого цикла — разбор статистики кабинета и сообщества', 'Отчёт клиенту: цифры цикла и решение по следующему запуску'] },
       { mark: 'РК', key: 'direct-altay', img: 'previews/ya-direct.png', title: 'Яндекс.Директ · настройка и ведение', tags: 'Директ · Метрика · ОРД · отчёты', desc: 'Реклама в Директе под ключ: анализ ниши и прогноз бюджета, кампании на поиске и в РСЯ, маркировка через ОРД, ведение по статистике и ежемесячный отчёт с графиками.', accent: '#FC3F1D',
         task: 'Беру рекламу в Яндекс.Директе под ключ: от анализа ниши и медиаплана до регулярного ведения с отчётами, в которых видно, куда ушёл каждый рубль.',
-        points: ['Анализ ниши и конкурентов, спрос по Вордстату, медиаплан с прогнозом бюджета', 'Семантика, объявления, быстрые ссылки: кампании на поиске и в РСЯ', 'Связка с Яндекс.Метрикой: цели, сегменты, электронная торговля', 'Маркировка объявлений через ОРД: реклама легальна с первого показа', 'Ведение: ставки, минус-слова, чистка площадок, корректировки по накопленной статистике', 'Ежемесячный отчёт: цифры, графики, рекомендации и план на следующий месяц'] },
+        points: ['Анализ ниши и конкурентов, спрос по Вордстату, медиаплан с прогнозом бюджета', 'Семантика, объявления, быстрые ссылки: кампании на поиске и в РСЯ', 'Связка с Яндекс.Метрикой: цели, сегменты, электронная торговля', 'Маркировка объявлений через ОРД: реклама легальна с первого показа', 'Ведение: ставки, минус-слова, чистка площадок, корректировки по накопленной статистике', 'Ежемесячный отчёт: цифры, графики, рекомендации и план на следующий месяц'],
+        shots: [
+          { src: 'shots/direct-altay-1.jpg', alt: 'Титульный лист презентации рекламной кампании для согласования с клиентом' },
+          { src: 'shots/direct-altay-2.jpg', alt: 'Макеты объявлений с фотографией для сетей Яндекса' },
+          { src: 'shots/direct-altay-3.jpg', alt: 'Яндекс.Метрика: просмотры, визиты, посетители, время на сайте, отказы' },
+        ] },
       { mark: 'РК', key: 'direct-dresses', img: 'previews/katya-dorogina.jpg', demo: 'https://katyadorogina.ru/', demoUrl: 'katyadorogina.ru', live: true, title: 'Аналитика и Директ для интернет-магазина', tags: 'Метрика · Директ · WooCommerce', desc: 'Магазин авторских платьев: аудит сайта и аналитики на 15 страниц, настройка целей, Вебвизора и электронной торговли, месяц ведения Директа.', accent: '#B76E79',
         task: 'Магазину авторских платьев нужно было понять, где теряются покупатели, и запустить рекламу с понятной отчётностью.',
         points: ['Входной аудит сайта и аналитики на 15 страниц', 'В аудите нашёлся поп-ап, который закрывали без клика: 3434 посетителя из 3435', 'Яндекс.Метрика: цели, Вебвизор, электронная торговля для WooCommerce', 'Кампании в Директе, включая AI-объявления', 'Месяц ведения, по каждому решению — отчёт клиенту'] },
       { mark: 'PY', key: 'parser-bets', img: 'previews/parser.png', title: 'Парсеры и сбор данных', tags: 'Python · Excel · Telegram', desc: 'Программы для сбора открытых данных с сайтов: парсинг источников, обработка по правилам под задачу, выгрузка в Excel, уведомления в Telegram. Только в рамках закона РФ.', accent: '#3776AB',
         task: 'Делаю парсеры под задачу: программа сама обходит источники, собирает открытые данные, применяет правила клиента и отдаёт результат в удобном виде. Работаю в рамках закона РФ.',
-        points: ['Сбор открытых данных с сайтов и из API: каталоги, цены, статистика, объявления', 'Обработка по правилам клиента: фильтры, условия, расчёты', 'Результат в удобном виде: Excel, база данных, уведомления в Telegram', 'Готовое Windows-приложение одним exe-файлом меньше 10 МБ, без установки окружения', 'Работа по расписанию без участия человека', 'Только легальный сбор: открытые данные, без обхода защит и персональных данных'] },
+        points: ['Сбор открытых данных с сайтов и из API: каталоги, цены, статистика, объявления', 'Обработка по правилам клиента: фильтры, условия, расчёты', 'Результат в удобном виде: Excel, база данных, уведомления в Telegram', 'Готовое Windows-приложение одним exe-файлом меньше 10 МБ, без установки окружения', 'Работа по расписанию без участия человека', 'Только легальный сбор: открытые данные, без обхода защит и персональных данных'],
+        shots: [{ src: 'shots/parser-bets-1.jpg', alt: 'Пример выгрузки парсера в Excel: цены конкурентов по товарам' }] },
       { mark: 'N8N', key: 'n8n-orchestrator', img: 'previews/n8n.webp', title: 'ИИ-агент бронирования на n8n', tags: 'n8n · PostgreSQL · AI-агент', desc: 'Два сценария n8n для телеграм-агента бронирования: запрос обычной фразой приходит по вебхуку, в ответ уходят подобранные варианты в готовом для бота виде.', accent: '#EA4B71',
         task: 'Телеграм-агенту бронирования ресторанов нужен был серверный контур: человек пишет обычной фразой, система возвращает подобранные варианты.',
-        points: ['Два сценария в n8n: оркестратор и поисковый воркер', 'Приём запроса по вебхуку', 'Состояние диалога хранится в PostgreSQL', 'Согласованный JSON между узлами, проверка ответа и повтор при сбое', 'Логирование каждого шага для разбора сбоев'] },
+        points: ['Два сценария в n8n: оркестратор и поисковый воркер', 'Приём запроса по вебхуку', 'Состояние диалога хранится в PostgreSQL', 'Согласованный JSON между узлами, проверка ответа и повтор при сбое', 'Логирование каждого шага для разбора сбоев'],
+        shots: [{ src: 'shots/n8n-orchestrator-1.jpg', alt: 'Канвас n8n: сценарий оркестратора от вебхука до ответа, с ветками валидации и ошибок' }] },
       { mark: 'PY', key: 'scanner-odds', img: 'previews/scanner.jpg', title: 'Сканер живых матчей и сигналы в Telegram', tags: 'Python · aiogram · SQLite', desc: 'Сканер в реальном времени: ловит резкие падения коэффициента, снимает статистику матча на нужной минуте, шлёт сигнал в Telegram. Покрыт 603 автотестами.', accent: '#5A9FD4',
         task: 'Второй проект для того же клиента: следить за живыми матчами и ловить моменты, когда коэффициент резко падает.',
-        points: ['Обход сохранённых в сканере шаблонов и сбор живых матчей', 'Отлов «прогрузов» — резких падений коэффициентов П1/П2', 'Статистика матча на заданной минуте: удары, владение, угловые', 'Условия по каждой лиге задаются в Excel-файле клиента', 'Сигналы в Telegram, помесячные отчёты в Excel', '603 автотеста; сбор данных переведён с браузерной автоматизации на HTTP API'] },
+        points: ['Обход сохранённых в сканере шаблонов и сбор живых матчей', 'Отлов «прогрузов» — резких падений коэффициентов П1/П2', 'Статистика матча на заданной минуте: удары, владение, угловые', 'Условия по каждой лиге задаются в Excel-файле клиента', 'Сигналы в Telegram, помесячные отчёты в Excel', '603 автотеста; сбор данных переведён с браузерной автоматизации на HTTP API'],
+        shots: [{ src: 'shots/scanner-odds-1.jpg', alt: 'Пример отчёта сканера в Excel: найденные прогрузы с падением коэффициента' }] },
     ];
     const grid2 = $('vzGrid2');
     OTHERS.forEach((s) => {
@@ -740,6 +819,44 @@ class Component extends DCLogic {
 
     // ---------- модалка проекта без сайта ----------
     const detail = $('vzDetail');
+    // Снимок целиком поверх карточки: в плитке интерфейс 1С и цифры отчётов
+    // не читаются. Своего запирания скролла не просит — карточка уже заперла.
+    const zoom = $('vzZoom'), zoomImg = zoom.querySelector('img');
+    // Телефон: снимок сначала виден целиком, нажатие открывает исходный размер
+    // и его двигают пальцем. Вписанная в 320px таблица Excel не читается, а
+    // масштаб страницы щипком поверх fixed-слоя ведёт себя по-разному в
+    // браузерах, поэтому масштаб переключаем сами.
+    const zoomPhone = () => window.matchMedia('(max-width:720px),(max-width:1000px) and (max-height:520px)').matches;
+    const openZoom = (src, alt) => {
+      zoom.classList.remove('vz-zoom-full');
+      zoomImg.src = src;
+      zoomImg.alt = alt || '';
+      zoom.style.display = 'flex';
+      zoom.scrollTo(0, 0);
+    };
+    const closeZoom = () => {
+      zoom.style.display = 'none';
+      zoom.classList.remove('vz-zoom-full');
+      zoomImg.removeAttribute('src');
+    };
+    // Точку нажатия держим в кадре: после перехода в исходный размер снимок
+    // шире экрана в несколько раз, и без наводки человек оказывается в его углу.
+    const toggleZoomFull = (e) => {
+      if (zoom.classList.contains('vz-zoom-full')) {
+        zoom.classList.remove('vz-zoom-full');
+        zoom.scrollTo(0, 0);
+        return;
+      }
+      const r = zoomImg.getBoundingClientRect();
+      const fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height;
+      zoom.classList.add('vz-zoom-full');
+      zoom.scrollLeft = zoomImg.offsetWidth * fx - zoom.clientWidth / 2;
+      zoom.scrollTop = zoomImg.offsetHeight * fy - zoom.clientHeight / 2;
+    };
+    zoom.addEventListener('click', (e) => {
+      if (zoomPhone() && e.target === zoomImg) toggleZoomFull(e);
+      else closeZoom();
+    });
     const openDetail = (s, ctx) => {
       $('vzDetailTitle').textContent = s.title;
       $('vzDetailTags').textContent = s.tags;
@@ -751,6 +868,27 @@ class Component extends DCLogic {
         li.textContent = p;
         ul.appendChild(li);
       });
+      // Скриншоты кейса. Их пока нет не у всех — тогда остаются пунктирные
+      // заглушки, чтобы карточка не обрывалась сразу после списка.
+      const shots = $('vzDetailShots');
+      shots.innerHTML = '';
+      if (s.shots && s.shots.length) {
+        s.shots.forEach((sh, i) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          // единственный кадр и третий в тройке рисуются во всю ширину карточки
+          b.className = 'vz-pic' + (s.shots.length === 1 || i === 2 ? ' vz-pic-wide' : '');
+          const img = document.createElement('img');
+          img.src = sh.src;
+          img.alt = sh.alt;
+          img.loading = 'lazy';
+          b.appendChild(img);
+          b.addEventListener('click', () => openZoom(sh.src, sh.alt));
+          shots.appendChild(b);
+        });
+      } else {
+        shots.innerHTML = '<div class="vz-shot">место под скриншот</div><div class="vz-shot">место под скриншот</div>';
+      }
       $('vzDetailBox').style.setProperty('--det-acc', s.accent);
       $('vzDetailBox').scrollTop = 0;
       detail.style.display = 'flex';
@@ -758,13 +896,19 @@ class Component extends DCLogic {
       track('project_open', s.key, ctx || 'grid2');
     };
     const closeDetail = () => {
+      closeZoom();
       detail.style.display = 'none';
       lockScroll(false);
     };
     $('vzDetailClose').addEventListener('click', closeDetail);
     $('vzDetailCta').addEventListener('click', closeDetail);
     detail.addEventListener('click', (e) => { if (e.target === detail) closeDetail(); });
-    this._escDetail = (e) => { if (e.key === 'Escape') closeDetail(); };
+    // Escape закрывает верхний слой: сначала снимок, потом саму карточку
+    this._escDetail = (e) => {
+      if (e.key !== 'Escape') return;
+      if (zoom.style.display === 'flex') closeZoom();
+      else closeDetail();
+    };
     window.addEventListener('keydown', this._escDetail);
 
     // ---------- слайдер блоков «Работ» ----------
@@ -899,6 +1043,7 @@ class Component extends DCLogic {
         worksTab1: 'Веб-сайты', worksTab2: '1С и автоматизация',
         worksNote2: '1С-расширения, рекламные кампании в Директе и ВК, парсеры и автоматизация процессов. Заказы 2025–2026 годов, у каждой карточки есть подробности — кликните.',
         detailCta: 'Обсудить похожую задачу →',
+        zoomHint: 'нажмите на снимок, чтобы рассмотреть', zoomBack: 'нажмите ещё раз, чтобы увидеть целиком',
         aboutTitle: '«Есть время любоваться прекрасным»',
         aboutP1: 'Маленький принц вернулся на свою планету и полностью её автоматизировал: вулканы очищают роботы, баобабы ликвидируют ещё в зачатке команда агентов — а принц теперь круглые сутки любуется и ухаживает за своей прекрасной Розой.',
         aboutP2: 'Вдохновившись его примером, я автоматизировал все процессы разработки приложений и сайтов: AI-агенты берут рутину, я отвечаю за архитектуру, качество и результат.',
@@ -940,6 +1085,7 @@ class Component extends DCLogic {
         worksTab1: 'Websites', worksTab2: '1C & automation',
         worksNote2: '1C extensions, ad campaigns in Yandex Direct and VK Ads, parsers and process automation. Client work from 2025–2026 — click a card for details.',
         detailCta: 'Discuss a similar task →',
+        zoomHint: 'tap the image to zoom in', zoomBack: 'tap again to fit the screen',
         aboutTitle: '“There is time to admire the beautiful”',
         aboutP1: 'The Little Prince returned to his planet and automated it completely: robots clean the volcanoes, a team of agents eliminates baobabs while they are still sprouts — and now the prince spends his days admiring and caring for his beautiful Rose.',
         aboutP2: 'Inspired by his example, I automated the whole process of building websites and apps: AI agents take the routine, I own architecture, quality and outcome.',
