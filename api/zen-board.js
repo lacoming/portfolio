@@ -20,6 +20,9 @@ const RANKS = new Set([
 // чтобы не сломать тех, у кого в localStorage лежит id из прошлых версий.
 const isPlayerId = (v) => typeof v === 'string' && /^[a-zA-Z0-9_-]{8,64}$/.test(v);
 
+// id растения из данных игры: строчная латиница и дефисы, вроде 'quasar-lily'.
+const isPlantId = (v) => typeof v === 'string' && /^[a-z0-9-]{1,40}$/.test(v);
+
 const clampInt = (v, max) => {
   const n = Number(v);
   if (!Number.isFinite(n)) return 0;
@@ -32,16 +35,17 @@ const clampInt = (v, max) => {
 async function readBoard(limit) {
   const sql = db();
   const rows = await sql`
-    SELECT nickname, score, harvests, best_rank
+    SELECT nickname, score, harvests, best_rank, best_plant
       FROM zen_players
      ORDER BY score DESC, harvests DESC, created_at ASC
      LIMIT ${limit}`;
   // score в базе BIGINT — драйвер отдаёт его строкой, а на клиенте это число.
   return rows.map((r) => ({
-    nickname:  r.nickname,
-    score:     Number(r.score),
-    harvests:  Number(r.harvests),
-    best_rank: r.best_rank,
+    nickname:   r.nickname,
+    score:      Number(r.score),
+    harvests:   Number(r.harvests),
+    best_rank:  r.best_rank,
+    best_plant: r.best_plant ?? '',
   }));
 }
 
@@ -131,6 +135,10 @@ export default async function handler(req, res) {
     const score    = clampInt(body.score, 1e12);
     const harvests = clampInt(body.harvests, 1e7);
     const bestRank = RANKS.has(body.bestRank) ? body.bestRank : 'common';
+    // id растения — слаг из данных игры. Полный список живёт во фронте, здесь
+    // проверяем только форму: клиент всё равно рисует значок лишь для тех id,
+    // которые знает, а незнакомый просто останется без картинки.
+    const bestPlant = isPlantId(body.bestPlant) ? body.bestPlant : '';
 
     try {
       // Именно UPDATE, а не upsert: счёт без забронированного ника не нужен —
@@ -138,7 +146,8 @@ export default async function handler(req, res) {
       const done = await sql`
         UPDATE zen_players
            SET score = ${score}, harvests = ${harvests},
-               best_rank = ${bestRank}, updated_at = now()
+               best_rank = ${bestRank}, best_plant = ${bestPlant},
+               updated_at = now()
          WHERE player_id = ${body.playerId}
         RETURNING player_id`;
       if (done.length === 0) return res.status(200).json({ ok: false, reason: 'no-nick' });

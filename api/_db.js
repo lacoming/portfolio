@@ -116,13 +116,17 @@ export function ensureZenSchema() {
         score      BIGINT  NOT NULL DEFAULT 0,
         harvests   INTEGER NOT NULL DEFAULT 0,
         best_rank  TEXT    NOT NULL DEFAULT 'common',
+        best_plant TEXT    NOT NULL DEFAULT '',
         ip_hash    TEXT,
         created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
         updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
       )`;
-    // Колонка добавлена позже таблицы — на уже созданной базе CREATE TABLE
+    // Колонки добавлены позже таблицы — на уже созданной базе CREATE TABLE
     // молчит, поэтому досыпаем отдельно.
     await sql`ALTER TABLE zen_players ADD COLUMN IF NOT EXISTS ip_hash TEXT`;
+    // id самого дорогого собранного растения: в таблице лидеров вместо числа
+    // сборов показывается его значок.
+    await sql`ALTER TABLE zen_players ADD COLUMN IF NOT EXISTS best_plant TEXT NOT NULL DEFAULT ''`;
     // Бронь имени: два садовника с одним ником в топе жить не могут.
     await sql`CREATE UNIQUE INDEX IF NOT EXISTS zen_players_nick_key_idx ON zen_players (nick_key)`;
     await sql`CREATE INDEX IF NOT EXISTS zen_players_score_idx ON zen_players (score DESC)`;
