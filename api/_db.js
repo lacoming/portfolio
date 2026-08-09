@@ -98,3 +98,39 @@ export function ensureLeadsSchema() {
   });
   return _leadsSchema;
 }
+
+// Таблица лидеров мини-игры «Космический дзен-сад». Раньше жила в отдельном
+// проекте Supabase, который перестал существовать вместе со всем топом; теперь
+// здесь же, где аналитика и заявки — одна база, один деплой, нечему разъехаться.
+let _zenSchema = null;
+
+export function ensureZenSchema() {
+  if (_zenSchema) return _zenSchema;
+  _zenSchema = (async () => {
+    const sql = db();
+    await sql`
+      CREATE TABLE IF NOT EXISTS zen_players (
+        player_id  TEXT PRIMARY KEY,
+        nickname   TEXT NOT NULL,
+        nick_key   TEXT NOT NULL,
+        score      BIGINT  NOT NULL DEFAULT 0,
+        harvests   INTEGER NOT NULL DEFAULT 0,
+        best_rank  TEXT    NOT NULL DEFAULT 'common',
+        ip_hash    TEXT,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+      )`;
+    // Колонка добавлена позже таблицы — на уже созданной базе CREATE TABLE
+    // молчит, поэтому досыпаем отдельно.
+    await sql`ALTER TABLE zen_players ADD COLUMN IF NOT EXISTS ip_hash TEXT`;
+    // Бронь имени: два садовника с одним ником в топе жить не могут.
+    await sql`CREATE UNIQUE INDEX IF NOT EXISTS zen_players_nick_key_idx ON zen_players (nick_key)`;
+    await sql`CREATE INDEX IF NOT EXISTS zen_players_score_idx ON zen_players (score DESC)`;
+    // Частота бронирований считается по ip_hash за последний час — как в leads.
+    await sql`CREATE INDEX IF NOT EXISTS zen_players_ip_created_idx ON zen_players (ip_hash, created_at DESC)`;
+  })().catch((e) => {
+    _zenSchema = null;
+    throw e;
+  });
+  return _zenSchema;
+}
