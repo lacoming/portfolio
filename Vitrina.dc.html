@@ -25,6 +25,11 @@ a{text-decoration:none}
 .vz-win{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:#0D0D14;cursor:pointer;flex:none;transition:border-color .25s,transform .25s,box-shadow .25s}
 .vz-win>img.vz-prev{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;pointer-events:none}
 .vz-win>img.vz-sphere{position:absolute;left:57.55%;top:22.02%;width:36.72%;height:auto;animation:vzBob 5s ease-in-out infinite;will-change:transform;pointer-events:none}
+/* окно кейса «1С и автоматизация»: превью бывает картинкой, собственной
+   раскладкой (логотипы, скриншот с плашкой) или схематичной меткой */
+.vz-win>.vz-case{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#0D0D14;pointer-events:none}
+.vz-win>.vz-case>img{width:100%;height:100%;object-fit:cover;display:block}
+.vz-win>.vz-case .vz-mark{font-family:'JetBrains Mono',monospace;font-size:26px;letter-spacing:.1em;color:rgba(255,255,255,.26)}
 .vz-win>.vz-lbl{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:8px;padding:9px 13px;background:linear-gradient(transparent,rgba(6,6,9,.9) 40%);opacity:0;transition:opacity .25s;pointer-events:none}
 .vz-win.vz-hot{border-color:var(--acc,#B7524A);transform:scale(1.025);box-shadow:0 14px 44px rgba(var(--acc-rgb,183,82,74),.22)}
 .vz-win.vz-hot>.vz-lbl{opacity:1}
@@ -44,7 +49,36 @@ a{text-decoration:none}
    и «×6». Отступ у сетки симметричный, поэтому центр колонки совпадает
    с центром заголовка. */
 .vz-works-head{text-align:center}
-#vzGrid{padding:0 56px}
+#vzGrid,#vzGrid2{padding:0 56px}
+/* Переключатель блоков «Работ»: два названия, активное белое с линией акцента.
+   Сетки лежат в горизонтальном слайдере — между ними можно перетащиться
+   мышью или пальцем, клик по названию довозит анимированно. */
+.vz-wtab{position:relative;background:none;border:none;padding:0 2px 11px;cursor:pointer;font-family:'Unbounded',sans-serif;font-weight:400;font-size:17px;letter-spacing:.01em;color:#6E7387;transition:color .25s}
+.vz-wtab:hover{color:#B9BDCC}
+.vz-wtab[aria-selected=true]{color:#F2F2F7}
+.vz-wtab::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--acc,#B7524A),rgba(var(--acc-rgb,183,82,74),.25));opacity:0;transition:opacity .25s}
+.vz-wtab[aria-selected=true]::after{opacity:1}
+/* touch-action:pan-y — вертикальный скролл страницы остаётся за браузером,
+   горизонтальное движение забирает слайдер */
+#vzSlider{overflow:hidden;touch-action:pan-y;cursor:grab;margin:-8px 0 -34px}
+#vzSlider.vz-sliding{cursor:grabbing}
+#vzTrack{display:flex;align-items:flex-start;transition:transform .55s cubic-bezier(.22,.8,.28,1);will-change:transform}
+#vzTrack.vz-drag{transition:none}
+.vz-pane{flex:0 0 100%;min-width:0;padding:8px 0 34px}
+/* Модалка проекта второго блока: сайта нет, поэтому вместо окна-браузера —
+   текстовая карточка: задача, как сделано, место под скриншоты. */
+#vzDetail{display:none;position:fixed;inset:0;z-index:100;background:rgba(4,4,7,.82);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:34px}
+#vzDetailBox{position:relative;width:min(720px,94vw);max-height:88vh;overflow:auto;background:#0D0D14;border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:36px 40px 40px;box-shadow:0 40px 120px rgba(0,0,0,.6)}
+#vzDetailClose{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#F2F2F7;font-size:15px;cursor:pointer;transition:background .2s,color .2s}
+#vzDetailClose:hover{background:var(--acc,#B7524A);color:var(--acc-ink,#fff)}
+#vzDetailTitle{margin:0 0 10px;font-family:'Unbounded',sans-serif;font-weight:500;font-size:22px;line-height:1.25;padding-right:36px;color:#F2F2F7}
+#vzDetailTags{margin:0 0 20px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.03em;color:#8E93A8}
+#vzDetailTask{margin:0 0 18px;font-size:14.5px;line-height:1.65;color:#CDD2E0}
+#vzDetailList{margin:0 0 26px;padding:0;list-style:none;display:grid;gap:9px}
+#vzDetailList li{position:relative;padding-left:18px;font-size:13.5px;line-height:1.6;color:#B9BDCC}
+#vzDetailList li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:2px;background:var(--det-acc,var(--acc,#B7524A))}
+#vzDetailShots{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.vz-shot{aspect-ratio:16/9;border:1px dashed rgba(255,255,255,.16);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:#6E7387;background:rgba(255,255,255,.02)}
 
 /* ---------- форма обратной связи ---------- */
 /* Живёт внутри CTA-блока, под кнопками контактов: человеку, который не хочет
@@ -92,13 +126,36 @@ a{text-decoration:none}
 #vzMenu>a:active{color:var(--acc,#B7524A)}
 #vzMenuFoot{margin-top:30px;display:flex;align-items:center;gap:16px}
 #vzLangM{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.06em;color:#F2F2F7;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:11px 18px;cursor:pointer}
+/* ── Флип планеты: клик переворачивает картинку, на обороте — мини-игра
+   «Космический сад» (sites/zen-garden, отдельная статическая сборка).
+   Пока не перевёрнуто, оборот выключен из хит-теста: скрытая backface
+   в части браузеров всё равно ловит клики. ── */
+#vzFlip{cursor:pointer}
+#vzFlipInner{position:relative;transform-style:preserve-3d;transition:transform 1.05s cubic-bezier(.3,.7,.25,1)}
+#vzFlip.flipped{cursor:default}
+#vzFlip.flipped #vzFlipInner{transform:rotateY(180deg)}
+/* Наведение — планета чуть подрастает и подсвечивается: понятно, что кликабельно.
+   Поворот приберегли для самого клика, иначе жест уходит впустую. */
+#vzFlip:not(.flipped):hover #vzFlipInner{transform:scale(1.035)}
+#vzFlipFront{backface-visibility:hidden;-webkit-backface-visibility:hidden}
+#vzPlanetImg{transition:filter .35s ease}
+#vzFlip:not(.flipped):hover #vzPlanetImg{filter:brightness(1.08) drop-shadow(0 0 32px rgba(140,190,255,.32))}
+#vzFlip.flipped #vzFlipFront{pointer-events:none}
+#vzFlipHint{position:absolute;left:50%;bottom:5.5%;transform:translateX(-50%);white-space:nowrap;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:#B9BDCC;background:rgba(6,6,9,.62);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:8px 16px;backdrop-filter:blur(8px);transition:color .2s,border-color .2s}
+#vzFlip:not(.flipped):hover #vzFlipHint{color:#fff;border-color:rgba(255,255,255,.3)}
+#vzFlipBack{position:absolute;inset:1.5%;transform:rotateY(180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:26px;overflow:hidden;background:#03030a;border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 90px rgba(0,0,0,.65);pointer-events:none}
+#vzFlip.flipped #vzFlipBack{pointer-events:auto}
+#vzFlipGameBox{position:absolute;inset:0}
+#vzFlipGameBox iframe{display:block;width:100%;height:100%;border:0;background:#03030a}
+#vzFlipClose{position:absolute;top:10px;right:10px;z-index:2;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(6,6,9,.7);color:#F2F2F7;font-size:14px;cursor:pointer;transition:background .2s,border-color .2s}
+#vzFlipClose:hover{background:rgba(var(--acc-rgb,183,82,74),.35);border-color:#fff}
 @media (max-width:1120px){
 #vzHero{grid-template-columns:1fr !important;min-height:0 !important;padding-top:24px !important}
 #vzHeroText{padding-left:0 !important}
 /* хиро схлопывается в одну колонку, «Работы» теряют свои 56px — барабану
    тоже нечего сдвигать, он снова во всю ширину секции */
 #vzMarquee{height:54vh !important;min-height:380px !important;right:0 !important}
-#vzGrid{grid-template-columns:repeat(2,1fr) !important;padding:0 !important}
+#vzGrid,#vzGrid2{grid-template-columns:repeat(2,1fr) !important;padding:0 !important}
 #vzAboutGrid{grid-template-columns:1fr !important;gap:36px !important}
 /* Ниже 1120px навигация отъедает у логотипа ширину, и девиз ломается в три
    строки. Оставляем эмблему со словом — линия акцента тогда заканчивается
@@ -135,7 +192,9 @@ a{text-decoration:none}
 .vz-col{gap:12px !important}
 #works{padding:52px 25px 8px !important}
 #vzWorksTitle{font-size:28px !important}
-#vzGrid{grid-template-columns:1fr !important;gap:16px !important;padding:0 !important}
+#vzGrid,#vzGrid2{grid-template-columns:1fr !important;gap:16px !important;padding:0 !important}
+#vzWorksTabs{gap:22px !important}
+.vz-wtab{font-size:14.5px !important}
 #about{padding:56px 25px !important}
 #vzAboutTitle{font-size:25px !important}
 #vzFacts{flex-direction:column !important;gap:16px !important}
@@ -146,6 +205,8 @@ a{text-decoration:none}
 #vzCtaBtns a{text-align:center}
 #vzModal{padding:0 !important}
 #vzModalBox{width:100% !important;height:100vh !important;height:100dvh !important;border-radius:0 !important;border:none !important}
+#vzDetail{padding:0 !important}
+#vzDetailBox{width:100% !important;max-height:none !important;height:100vh !important;height:100dvh !important;border-radius:0 !important;border:none !important;padding:30px 25px 40px !important}
 #vzModalTitle{display:none !important}
 #vzModalExt{display:none !important}
 }
@@ -208,29 +269,14 @@ a{text-decoration:none}
     </div>
 
     <div id="vzMarquee" style="align-self:start;position:relative;right:56px;height:76vh;min-height:540px;overflow:hidden;border-radius:20px;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent 100%)">
+      <!-- Карточки обеих колонок собираются из тех же данных, что и блок
+           «Работы»: левая — веб-сайты (SITES), правая — кейсы 1С и
+           автоматизации (OTHERS). Руками их не дублируем: барабан считает
+           уникальным набором первую половину детей колонки, и при ручной
+           разметке список пришлось бы держать в двух местах и вдвойне. -->
       <div id="vzMarqueeGrid" style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:0 4px">
-        <div class="vz-col" style="display:flex;flex-direction:column;gap:18px;will-change:transform">
-          <div class="vz-win" data-open-site="sites/rentsale-altay/index.html" data-site-title="Недвижимость Горного Алтая" data-site-url="rentsale-altay.ru"></div>
-          <div class="vz-win" data-open-site="https://web-landscape-2-d.vercel.app/" data-site-key="flexpath" data-site-live="1" data-site-title="Radius Step — конструктор дорожек" data-site-url="radius-step.ru"></div>
-          <div class="vz-win" data-open-site="sites/bastard-world/index.html" data-site-title="Бастард" data-site-url="bastard.world"></div>
-          <div class="vz-win" data-open-site="sites/concepts/gastro.dc.html" data-site-title="Ресторан «Сад»" data-site-url="sad-garden.ru"></div>
-          <div class="vz-win" data-open-site="sites/rentsale-altay/index.html" data-site-title="Недвижимость Горного Алтая" data-site-url="rentsale-altay.ru"></div>
-          <div class="vz-win" data-open-site="https://web-landscape-2-d.vercel.app/" data-site-key="flexpath" data-site-live="1" data-site-title="Radius Step — конструктор дорожек" data-site-url="radius-step.ru"></div>
-          <div class="vz-win" data-open-site="sites/bastard-world/index.html" data-site-title="Бастард" data-site-url="bastard.world"></div>
-          <div class="vz-win" data-open-site="sites/concepts/gastro.dc.html" data-site-title="Ресторан «Сад»" data-site-url="sad-garden.ru"></div>
-        </div>
-        <div class="vz-col" style="display:flex;flex-direction:column;gap:18px;will-change:transform">
-          <div class="vz-win" data-open-site="sites/concepts/atelier.dc.html" data-site-title="Ателье «Форма»" data-site-url="forma-atelier.ru"></div>
-          <div class="vz-win" data-open-site="sites/concepts/termy.dc.html" data-site-title="Термы «Пар»" data-site-url="par-termy.ru"></div>
-          <div class="vz-win" data-open-site="sites/tokeon/index.html" data-site-title="Токеон" data-site-url="tokeon.ru" data-site-live="1"></div>
-          <div class="vz-win" data-open-site="sites/univer-zakupok/glavnaya.dc.html" data-site-title="Университет закупок" data-site-url="u-gz.ru"></div>
-          <div class="vz-win" data-open-site="sites/tersk/index.dc.html" data-site-title="Терский конный завод" data-site-url="terskarabian.com"></div>
-          <div class="vz-win" data-open-site="sites/concepts/atelier.dc.html" data-site-title="Ателье «Форма»" data-site-url="forma-atelier.ru"></div>
-          <div class="vz-win" data-open-site="sites/concepts/termy.dc.html" data-site-title="Термы «Пар»" data-site-url="par-termy.ru"></div>
-          <div class="vz-win" data-open-site="sites/tokeon/index.html" data-site-title="Токеон" data-site-url="tokeon.ru" data-site-live="1"></div>
-          <div class="vz-win" data-open-site="sites/univer-zakupok/glavnaya.dc.html" data-site-title="Университет закупок" data-site-url="u-gz.ru"></div>
-          <div class="vz-win" data-open-site="sites/tersk/index.dc.html" data-site-title="Терский конный завод" data-site-url="terskarabian.com"></div>
-        </div>
+        <div class="vz-col" style="display:flex;flex-direction:column;gap:18px;will-change:transform"></div>
+        <div class="vz-col" style="display:flex;flex-direction:column;gap:18px;will-change:transform"></div>
       </div>
     </div>
   </section>
@@ -239,15 +285,36 @@ a{text-decoration:none}
     <div class="vz-works-head" style="display:flex;justify-content:center;align-items:baseline;gap:18px;margin-bottom:18px;flex-wrap:wrap">
       <h2 id="vzWorksTitle" data-l10n="worksTitle" style="margin:0;font-family:'Unbounded',sans-serif;font-weight:500;font-size:38px">Работы</h2>
     </div>
-    <p class="vz-works-head" data-l10n="worksNote" style="margin:0 auto 54px;font-size:13.5px;color:#8E93A8;max-width:640px">От финтеха и недвижимости до гастрономии и фэшна — каждый сайт открывается живьём прямо внутри витрины.</p>
-    <div id="vzGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:30px"></div>
+    <div id="vzWorksTabs" role="tablist" style="display:flex;justify-content:center;gap:34px;margin:0 0 18px">
+      <button class="vz-wtab" type="button" role="tab" data-tab="0" aria-selected="true" data-l10n="worksTab1">Веб-сайты</button>
+      <button class="vz-wtab" type="button" role="tab" data-tab="1" aria-selected="false" data-l10n="worksTab2">1С и автоматизация</button>
+    </div>
+    <p class="vz-works-head vz-wnote" data-l10n="worksNote" style="margin:0 auto 54px;font-size:13.5px;color:#8E93A8;max-width:640px">От финтеха и недвижимости до гастрономии и фэшна — каждый сайт открывается живьём прямо внутри витрины.</p>
+    <p class="vz-works-head vz-wnote" data-l10n="worksNote2" style="display:none;margin:0 auto 54px;font-size:13.5px;color:#8E93A8;max-width:640px">1С-расширения, рекламные кампании в Директе и ВК, парсеры и автоматизация процессов. Заказы 2025–2026 годов, у каждой карточки есть подробности — кликните.</p>
+    <div id="vzSlider">
+      <div id="vzTrack">
+        <div class="vz-pane"><div id="vzGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:30px"></div></div>
+        <div class="vz-pane"><div id="vzGrid2" style="display:grid;grid-template-columns:repeat(3,1fr);gap:30px"></div></div>
+      </div>
+    </div>
   </section>
 
   <section id="about" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:80px 67px;scroll-margin-top:20px">
     <div id="vzAboutGrid" style="display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start">
       <div style="position:relative">
         <div style="position:absolute;inset:-24%;background:radial-gradient(50% 50% at 50% 50%,rgba(16,28,58,.42),rgba(10,18,40,.18) 55%,transparent 76%);pointer-events:none"></div>
-        <img id="vzPlanetImg" src="uploads/planet-cosmos.png" alt="Маленький принц на автоматизированной планете" style="position:relative;display:block;width:116%;margin:-8%">
+        <div id="vzFlip" style="position:relative;width:116%;margin:-8%;perspective:1600px">
+          <div id="vzFlipInner">
+            <div id="vzFlipFront">
+              <img id="vzPlanetImg" src="uploads/planet-cosmos.png" alt="Маленький принц на автоматизированной планете" style="display:block;width:100%">
+              <div id="vzFlipHint" data-l10n="flipHint">на обороте планеты — космический сад</div>
+            </div>
+            <div id="vzFlipBack">
+              <div id="vzFlipGameBox"></div>
+              <button id="vzFlipClose" type="button" aria-label="Вернуться к планете">✕</button>
+            </div>
+          </div>
+        </div>
       </div>
       <div style="position:relative">
         <div style="position:absolute;z-index:-1;inset:-18px -28px;background:rgba(6,6,9,.58);border-radius:36px;box-shadow:0 0 72px 48px rgba(6,6,9,.58);pointer-events:none"></div>
@@ -342,6 +409,21 @@ a{text-decoration:none}
       <iframe id="vzModalFrame" title="Просмотр сайта" style="flex:1;width:100%;border:none;background:#fff"></iframe>
     </div>
   </div>
+
+  <div id="vzDetail">
+    <div id="vzDetailBox">
+      <button id="vzDetailClose" aria-label="Закрыть">✕</button>
+      <h3 id="vzDetailTitle"></h3>
+      <p id="vzDetailTags"></p>
+      <p id="vzDetailTask"></p>
+      <ul id="vzDetailList"></ul>
+      <div id="vzDetailShots">
+        <div class="vz-shot">место под скриншот</div>
+        <div class="vz-shot">место под скриншот</div>
+      </div>
+      <a id="vzDetailCta" href="#contact" data-l10n="detailCta" style="display:inline-block;margin-top:26px;font-size:14px;font-weight:600;color:var(--acc,#B7524A)">Обсудить похожую задачу →</a>
+    </div>
+  </div>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#C8232B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Стиль&quot;,&quot;options&quot;:[&quot;#C8232B&quot;,&quot;#D2B183&quot;,&quot;#C97355&quot;,&quot;#C36250&quot;,&quot;#B7524A&quot;,&quot;#B87333&quot;,&quot;#E0A458&quot;,&quot;#D4A745&quot;,&quot;#C65D57&quot;,&quot;#8E3B46&quot;,&quot;#B76E79&quot;,&quot;#C98A97&quot;,&quot;#915F6D&quot;,&quot;#A48BD8&quot;,&quot;#8D7BB8&quot;,&quot;#7A8CC9&quot;,&quot;#4F74C9&quot;,&quot;#6C8EBF&quot;,&quot;#56A3A6&quot;,&quot;#4E8D7C&quot;,&quot;#7FA08C&quot;,&quot;#A3B18A&quot;,&quot;#8A9A5B&quot;,&quot;#708090&quot;,&quot;#C9C5BD&quot;,&quot;#E8E4DC&quot;]},&quot;starDensity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2.2,&quot;min&quot;:0.3,&quot;max&quot;:2.2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;haloRadius&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2,&quot;min&quot;:0.5,&quot;max&quot;:2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;twinkle&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;constellations&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;meteors&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Космос&quot;}}">
@@ -358,7 +440,7 @@ class Component extends DCLogic {
       { src: 'sites/concepts/atelier.dc.html', title: 'Ателье «Форма»', url: 'forma-atelier.ru', tags: 'Фэшн · editorial', desc: 'Модный лукбук-лендинг: гигантская типографика, марквиз, ч/б.', accent: '#141414' },
       { src: 'sites/concepts/termy.dc.html', title: 'Термы «Пар»', url: 'par-termy.ru', tags: 'Wellness · городские термы', desc: 'Светлый концепт городских терм: четыре зоны тепла, парения с мастерами, тарифы.', accent: '#A6845A' },
       { src: 'sites/tokeon/index.html', title: 'Токеон', url: 'tokeon.ru', tags: 'Финтех · платформа ЦФА', desc: 'Платформа цифровых финансовых активов (ЦФА): выпуск и покупка токенов. Копия главной страницы.', accent: '#00A24A', live: true },
-      { src: 'sites/univer-zakupok/glavnaya.dc.html', title: 'Университет закупок', url: 'u-gz.ru', tags: 'WordPress FSE · 13 страниц · SEO', desc: 'Каталог курсов по госзакупкам для учебного центра: 44-ФЗ, 223-ФЗ, ГОЗ.', accent: '#D4A745' },
+      { src: 'https://ug-z.ru/', key: 'univer-zakupok', title: 'Университет закупок', url: 'ug-z.ru', tags: 'WordPress FSE · 13 страниц · SEO', desc: 'Каталог курсов по госзакупкам для учебного центра: 44-ФЗ, 223-ФЗ, ГОЗ.', accent: '#D4A745', live: true },
       { src: 'sites/tersk/index.dc.html', title: 'Терский конный завод', url: 'terskarabian.com', tags: 'Nuxt 3 · Directus · RU/EN', desc: 'Сайт старейшего конезавода России (1889): интерактивный хиро, события, новости.', accent: '#87CEFA' },
       // LAST SIGNAL временно снят с витрины — сайт переделывается. Копия лежит
       // в sites/last-signal/, превью — previews/last-signal.jpg.
@@ -380,6 +462,56 @@ class Component extends DCLogic {
     const track = (type, target, context, value) => {
       if (window.vzTrack) window.vzTrack(type, target, context, value);
     };
+    // Запирание скролла для модалок и меню. overflow:hidden прячет скроллбар,
+    // и контент становится шире на его толщину: ResizeObserver звёзд видел
+    // новую ширину и пересобирал небо через долю секунды после каждого
+    // закрытия модалки, а страница заметно сдвигалась. Паддинг ровно в ширину
+    // скроллбара держит контент на месте (меряем по факту: на тачах и в
+    // браузерах с overlay-скроллбаром компенсировать нечего).
+    const lockScroll = (on) => {
+      const de = document.documentElement;
+      if (on) {
+        // ширина скроллбара бывает дробной (масштаб страницы) — clientWidth
+        // округляет, и от целого паддинга контент дёргался бы на доли пикселя
+        const w = window.innerWidth - de.getBoundingClientRect().width;
+        de.style.overflow = 'hidden';
+        de.style.paddingRight = w > 0.1 ? w.toFixed(2) + 'px' : '';
+      } else {
+        de.style.overflow = '';
+        de.style.paddingRight = '';
+      }
+    };
+    // Подпись окна: слева название, справа адрес или короткая метка стека.
+    const winLabel = (title, right) => {
+      const label = document.createElement('div');
+      label.className = 'vz-lbl';
+      label.innerHTML = '<span style="font-size:12px;font-weight:600;color:#fff">' + title + '</span><span style="margin-left:auto;font-family:JetBrains Mono,monospace;font-size:10px;color:#B9BDCC">' + right + '</span>';
+      return label;
+    };
+    // Окно кейса «1С и автоматизация»: сайта за ним нет, поэтому превью берём
+    // из данных карточки, а клик ведёт туда же, куда в блоке «Работы» —
+    // в демо, во внешнюю вкладку или в модалку с подробностями.
+    const decorateCase = (win, s) => {
+      const media = document.createElement('div');
+      media.className = 'vz-case';
+      media.innerHTML = s.img
+        ? '<img src="' + s.img + '" alt="' + s.title + '" loading="lazy" draggable="false">'
+        : (s.preview || '<span class="vz-mark">' + s.mark + '</span>');
+      win.appendChild(media);
+      win.appendChild(winLabel(s.title, s.tags.split(' · ')[0]));
+      win.addEventListener('click', () => {
+        if (this._drum && this._drum.suppress) return;
+        if (s.demo) {
+          track('project_open', s.key, 'drum');
+          openModal(s.demo, s.title, s.demoUrl || 'демо', !!s.live, s.key);
+        } else if (s.link) {
+          track('external_open', s.key, 'drum');
+          window.open(s.link, '_blank', 'noopener');
+        } else {
+          openDetail(s, 'drum');
+        }
+      });
+    };
     // Оформление окна витрины. Вынесено в функцию: барабан доклонирует карточки
     // под высоту вьюпорта, и клонам нужны те же превью и обработчики.
     // Подсветка и hover живут в CSS (класс .vz-hot) — барабан включает её сам,
@@ -387,6 +519,12 @@ class Component extends DCLogic {
     const decorate = (win) => {
       if (win.dataset.vzReady) return;
       win.dataset.vzReady = '1';
+      const caseKey = win.getAttribute('data-case');
+      if (caseKey) {
+        const s = OTHERS.find((o) => o.key === caseKey);
+        if (s) decorateCase(win, s);
+        return;
+      }
       const src = win.getAttribute('data-open-site');
       const title = win.getAttribute('data-site-title');
       const url = win.getAttribute('data-site-url');
@@ -407,10 +545,7 @@ class Component extends DCLogic {
         sphere.draggable = false;
         win.appendChild(sphere);
       }
-      const label = document.createElement('div');
-      label.className = 'vz-lbl';
-      label.innerHTML = '<span style="font-size:12px;font-weight:600;color:#fff">' + title + '</span><span style="margin-left:auto;font-family:JetBrains Mono,monospace;font-size:10px;color:#B9BDCC">' + url + '</span>';
-      win.appendChild(label);
+      win.appendChild(winLabel(title, url));
       win.addEventListener('click', () => {
         if (this._drum && this._drum.suppress) return;
         track('project_open', key, 'drum');
@@ -418,7 +553,6 @@ class Component extends DCLogic {
       });
     };
     this._decorateWin = decorate;
-    document.querySelectorAll('.vz-win').forEach(decorate);
 
     // ---------- грид работ ----------
     const grid = $('vzGrid');
@@ -444,6 +578,213 @@ class Component extends DCLogic {
       grid.appendChild(card);
     });
 
+    // ---------- второй блок: 1С и автоматизация ----------
+    // Реальные кейсы из D:\cody\Freelance, раскладка 3×3: ряд 1С, ряд рекламных
+    // кампаний, ряд парсеры/автоматизация. Превью: img — картинка на всю плашку,
+    // preview — свой HTML, иначе схематичная плашка с меткой mark.
+    const OTHERS = [
+      { mark: '1С', key: '1c-autoservice', img: 'previews/1c-autoservice.jpg', title: 'Автоматизация сети автосервисов', tags: '1С:УНФ · расширение · Bitrix24 · TG-бот', desc: 'Три подразделения на одной базе 1С:УНФ: заказ-наряды, склад, зарплата механиков, отчёты. Переезд с «Автодилера»: 2612 заказ-нарядов перенесены и сверены до копейки.', accent: '#E8B33D',
+        task: 'Сеть автосервисов из трёх подразделений переезжала со старой учётной программы «Автодилер» на 1С:УНФ. Условие — сохранить всю историю работ.',
+        points: ['Вся логика в расширении .cfe: типовая конфигурация не меняется, обновления 1С ставятся штатно', 'Заказ-наряды с воронкой этапов, своей для каждого подразделения', 'Склад, расчёт зарплаты механиков, 7 управленческих отчётов, печатные формы', 'Обмен с Bitrix24 и телеграм-бот приёмщика', 'Перенос данных: 2612 заказ-нарядов, 1270 контрагентов, 1812 позиций каталога, сверка сумм до копейки', 'Развёртывание на сервере клиента, обучение сотрудников через веб-портал'] },
+      { mark: '1С', key: '1c-sv-webhook', preview:
+          '<div style="position:absolute;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;gap:3%;padding:5% 6%">' +
+          '<img src="previews/1c-unf-logo.jpg" alt="1С:УНФ" style="max-height:74%;max-width:38%;object-fit:contain">' +
+          '<span style="font-family:JetBrains Mono,monospace;font-size:clamp(18px,2.2vw,28px);font-weight:700;color:#C9302C;flex:none">&#8644;</span>' +
+          '<img src="previews/1c-messengers.jpg" alt="Telegram, WhatsApp, MAX" style="max-width:42%;object-fit:contain">' +
+          '</div>',
+        title: 'Переписка с клиентами из телеграма внутри 1С', tags: '1С:УНФ · HTTP-сервисы · n8n', desc: 'Расширение 1С:УНФ: сообщения из телеграм-ботов попадают в штатную Систему взаимодействия 1С, ответ менеджера уходит обратно клиенту.', accent: '#D4A745',
+        task: 'Компания вела поддержку клиентов через телеграм-ботов, а всю историю переписки нужно было хранить в 1С — в штатной Системе взаимодействия.',
+        points: ['Расширение 1С:УНФ (.cfe) с собственным HTTP-сервисом', 'Двусторонний обмен с n8n по вебхукам, авторизация по токену в обе стороны', 'Описанный формат сообщений (JSON) для каждой стороны', 'Сообщение из бота появляется в Системе взаимодействия 1С, ответ менеджера уходит клиенту в телеграм', 'При сдаче сверены все 90 требований технического задания'] },
+      { mark: '1С', key: '1c-kpi-kanban', img: 'previews/1c-kpi-kanban.jpg', demo: 'sites/1c-kanban-demo/index.html', demoUrl: '192.168.0.15/kanban · демо', title: 'Экран показателей и канбан для автосервиса', tags: '1С HTTP-сервисы · vanilla JS', desc: 'Два экрана поверх HTTP-сервисов 1С: телевизор с показателями и доска заказ-нарядов с перетаскиванием карточек. Работают в локальной сети, интернет не нужен.', accent: '#C9A24B',
+        task: 'Офису автосервиса нужны были два экрана: телевизор с ключевыми показателями и рабочая доска заказ-нарядов.',
+        points: ['Дашборд для телевизора: 5 виджетов — выручка, план, разрезы по подразделениям', 'Канбан: колонки повторяют этапы воронки, этап меняется перетаскиванием карточки', 'Подсветка просроченных сроков (SLA), фильтры, автообновление раз в 30 секунд', 'HTML/CSS/JS без сборки и внешних библиотек: страница открывается в браузере на любой машине сети', 'Данные приходят напрямую из 1С по HTTP-сервисам'] },
+      { mark: 'РК', key: 'vk-beauty', link: 'https://vk.com/sobeautynsk', preview:
+          '<div style="position:absolute;inset:0;background:#7d9b4d">' +
+          '<img src="previews/vk-resnichki.jpg" alt="Реснички - студия твоего взгляда" loading="lazy" style="position:absolute;left:50%;top:0;height:100%;transform:translateX(-50%)">' +
+          '<span style="position:absolute;right:4.5%;top:7%;display:inline-flex;align-items:center;gap:8px;background:#dfdbd2;border-radius:12px;padding:6px 12px;box-shadow:0 4px 14px rgba(0,0,0,.3)">' +
+          '<svg viewBox="0 0 48 48" style="width:22px;height:22px;flex:none"><rect width="48" height="48" rx="13" fill="#07f"/><circle cx="22" cy="26" r="13" fill="#fff"/><circle cx="22" cy="26" r="5.5" fill="#0b0b0b"/><path d="M22 26 L34 14" stroke="#0b0b0b" stroke-width="4.6" stroke-linecap="round"/><path d="M31.5 10.5l7-.7-.7 7" fill="none" stroke="#0b0b0b" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"/></svg>' +
+          '<span style="font-weight:700;font-size:14px;color:#0b0b0b;white-space:nowrap">VK Реклама</span>' +
+          '</span></div>',
+        title: 'VK Реклама · бьюти-студия', tags: 'VK Реклама · ведение · отчёты', desc: 'Рекламный кабинет студии наращивания ресниц: запуски циклами с фиксированным бюджетом, разбор статистики кабинета и сообщества, отчёт после каждого цикла.', accent: '#2787F5',
+        task: 'Студии наращивания ресниц нужны заявки из ВКонтакте. Веду рекламный кабинет циклами: запуск, разбор статистики, решение по следующему шагу.',
+        points: ['Структура кампании и группы объявлений под локальную аудиторию', 'Креативы и тексты объявлений', 'Запуски циклами с фиксированным дневным бюджетом', 'После каждого цикла — разбор статистики кабинета и сообщества', 'Отчёт клиенту: цифры цикла и решение по следующему запуску'] },
+      { mark: 'РК', key: 'direct-altay', img: 'previews/ya-direct.png', title: 'Яндекс.Директ · настройка и ведение', tags: 'Директ · Метрика · ОРД · отчёты', desc: 'Реклама в Директе под ключ: анализ ниши и прогноз бюджета, кампании на поиске и в РСЯ, маркировка через ОРД, ведение по статистике и ежемесячный отчёт с графиками.', accent: '#FC3F1D',
+        task: 'Беру рекламу в Яндекс.Директе под ключ: от анализа ниши и медиаплана до регулярного ведения с отчётами, в которых видно, куда ушёл каждый рубль.',
+        points: ['Анализ ниши и конкурентов, спрос по Вордстату, медиаплан с прогнозом бюджета', 'Семантика, объявления, быстрые ссылки: кампании на поиске и в РСЯ', 'Связка с Яндекс.Метрикой: цели, сегменты, электронная торговля', 'Маркировка объявлений через ОРД: реклама легальна с первого показа', 'Ведение: ставки, минус-слова, чистка площадок, корректировки по накопленной статистике', 'Ежемесячный отчёт: цифры, графики, рекомендации и план на следующий месяц'] },
+      { mark: 'РК', key: 'direct-dresses', img: 'previews/katya-dorogina.jpg', demo: 'https://katyadorogina.ru/', demoUrl: 'katyadorogina.ru', live: true, title: 'Аналитика и Директ для интернет-магазина', tags: 'Метрика · Директ · WooCommerce', desc: 'Магазин авторских платьев: аудит сайта и аналитики на 15 страниц, настройка целей, Вебвизора и электронной торговли, месяц ведения Директа.', accent: '#B76E79',
+        task: 'Магазину авторских платьев нужно было понять, где теряются покупатели, и запустить рекламу с понятной отчётностью.',
+        points: ['Входной аудит сайта и аналитики на 15 страниц', 'В аудите нашёлся поп-ап, который закрывали без клика: 3434 посетителя из 3435', 'Яндекс.Метрика: цели, Вебвизор, электронная торговля для WooCommerce', 'Кампании в Директе, включая AI-объявления', 'Месяц ведения, по каждому решению — отчёт клиенту'] },
+      { mark: 'PY', key: 'parser-bets', img: 'previews/parser.png', title: 'Парсеры и сбор данных', tags: 'Python · Excel · Telegram', desc: 'Программы для сбора открытых данных с сайтов: парсинг источников, обработка по правилам под задачу, выгрузка в Excel, уведомления в Telegram. Только в рамках закона РФ.', accent: '#3776AB',
+        task: 'Делаю парсеры под задачу: программа сама обходит источники, собирает открытые данные, применяет правила клиента и отдаёт результат в удобном виде. Работаю в рамках закона РФ.',
+        points: ['Сбор открытых данных с сайтов и из API: каталоги, цены, статистика, объявления', 'Обработка по правилам клиента: фильтры, условия, расчёты', 'Результат в удобном виде: Excel, база данных, уведомления в Telegram', 'Готовое Windows-приложение одним exe-файлом меньше 10 МБ, без установки окружения', 'Работа по расписанию без участия человека', 'Только легальный сбор: открытые данные, без обхода защит и персональных данных'] },
+      { mark: 'N8N', key: 'n8n-orchestrator', img: 'previews/n8n.webp', title: 'ИИ-агент бронирования на n8n', tags: 'n8n · PostgreSQL · AI-агент', desc: 'Два сценария n8n для телеграм-агента бронирования: запрос обычной фразой приходит по вебхуку, в ответ уходят подобранные варианты в готовом для бота виде.', accent: '#EA4B71',
+        task: 'Телеграм-агенту бронирования ресторанов нужен был серверный контур: человек пишет обычной фразой, система возвращает подобранные варианты.',
+        points: ['Два сценария в n8n: оркестратор и поисковый воркер', 'Приём запроса по вебхуку', 'Состояние диалога хранится в PostgreSQL', 'Согласованный JSON между узлами, проверка ответа и повтор при сбое', 'Логирование каждого шага для разбора сбоев'] },
+      { mark: 'PY', key: 'scanner-odds', img: 'previews/scanner.jpg', title: 'Сканер живых матчей и сигналы в Telegram', tags: 'Python · aiogram · SQLite', desc: 'Сканер в реальном времени: ловит резкие падения коэффициента, снимает статистику матча на нужной минуте, шлёт сигнал в Telegram. Покрыт 603 автотестами.', accent: '#5A9FD4',
+        task: 'Второй проект для того же клиента: следить за живыми матчами и ловить моменты, когда коэффициент резко падает.',
+        points: ['Обход сохранённых в сканере шаблонов и сбор живых матчей', 'Отлов «прогрузов» — резких падений коэффициентов П1/П2', 'Статистика матча на заданной минуте: удары, владение, угловые', 'Условия по каждой лиге задаются в Excel-файле клиента', 'Сигналы в Telegram, помесячные отчёты в Excel', '603 автотеста; сбор данных переведён с браузерной автоматизации на HTTP API'] },
+    ];
+    const grid2 = $('vzGrid2');
+    OTHERS.forEach((s) => {
+      const card = document.createElement('div');
+      card.style.cssText = 'position:relative;border:1px solid rgba(255,255,255,.1);border-radius:16px;background:rgba(255,255,255,.025);overflow:hidden;cursor:pointer;transition:border-color .25s,transform .25s,box-shadow .25s';
+      card.innerHTML =
+        '<div style="position:relative;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;background:#0D0D14;border-bottom:1px solid rgba(255,255,255,.08)">' +
+        (s.img
+          ? '<img src="' + s.img + '" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">'
+          : s.preview ||
+            '<div style="position:absolute;inset:12px;border:1px dashed rgba(255,255,255,.13);border-radius:10px"></div>' +
+            '<span style="font-family:JetBrains Mono,monospace;font-size:32px;letter-spacing:.1em;color:rgba(255,255,255,.26)">' + s.mark + '</span>') +
+        '</div>' +
+        '<div style="padding:20px 22px 22px">' +
+        '<div style="display:flex;align-items:center;gap:10px"><span style="width:9px;height:9px;border-radius:3px;background:' + s.accent + ';flex:none"></span><span style="font-weight:600;font-size:15.5px;color:#F2F2F7">' + s.title + '</span></div>' +
+        '<p style="margin:12px 0 16px;font-size:13px;line-height:1.6;color:#B9BDCC">' + s.desc + '</p>' +
+        '<div style="font-family:JetBrains Mono,monospace;font-size:10.5px;letter-spacing:.03em;color:#8E93A8">' + s.tags + '</div>' +
+        '</div>';
+      card.addEventListener('mouseenter', () => { card.style.borderColor = 'var(--acc)'; card.style.transform = 'translateY(-5px)'; card.style.boxShadow = '0 22px 54px rgba(0,0,0,.5)'; });
+      card.addEventListener('mouseleave', () => { card.style.borderColor = 'rgba(255,255,255,.1)'; card.style.transform = 'none'; card.style.boxShadow = 'none'; });
+      card.addEventListener('click', () => {
+        // Проекты с интерактивным демо открываются как сайты - живой страницей в модалке;
+        // с link - внешней вкладкой (ВК запрещает встраивание в iframe).
+        if (s.demo) {
+          track('project_open', s.key, 'grid2');
+          openModal(s.demo, s.title, s.demoUrl || 'демо', !!s.live, s.key);
+        } else if (s.link) {
+          track('external_open', s.key, 'grid2');
+          window.open(s.link, '_blank', 'noopener');
+        } else {
+          openDetail(s);
+        }
+      });
+      grid2.appendChild(card);
+    });
+
+    // ---------- окна барабана ----------
+    // Левая колонка — сайты, правая — кейсы 1С и автоматизации: те же данные,
+    // что и в блоке «Работы», ручного списка в разметке нет. Каждый набор
+    // кладём дважды: барабан считает уникальным набором первую половину детей
+    // колонки, а недостающие копии доклонирует сам под высоту окна.
+    const drumCols = document.querySelectorAll('#vzMarqueeGrid .vz-col');
+    if (drumCols.length === 2) {
+      const siteWin = (s) => {
+        const w = document.createElement('div');
+        w.className = 'vz-win';
+        w.setAttribute('data-open-site', s.src);
+        if (s.key) w.setAttribute('data-site-key', s.key);
+        if (s.live) w.setAttribute('data-site-live', '1');
+        w.setAttribute('data-site-title', s.title);
+        w.setAttribute('data-site-url', s.url);
+        return w;
+      };
+      const caseWin = (s) => {
+        const w = document.createElement('div');
+        w.className = 'vz-win';
+        w.setAttribute('data-case', s.key);
+        return w;
+      };
+      [[SITES, siteWin], [OTHERS, caseWin]].forEach((pair, i) => {
+        const col = drumCols[i];
+        for (let n = 0; n < 2; n++) pair[0].forEach((s) => col.appendChild(pair[1](s)));
+      });
+    }
+    document.querySelectorAll('.vz-win').forEach(decorate);
+
+    // ---------- модалка проекта без сайта ----------
+    const detail = $('vzDetail');
+    const openDetail = (s, ctx) => {
+      $('vzDetailTitle').textContent = s.title;
+      $('vzDetailTags').textContent = s.tags;
+      $('vzDetailTask').textContent = s.task;
+      const ul = $('vzDetailList');
+      ul.innerHTML = '';
+      s.points.forEach((p) => {
+        const li = document.createElement('li');
+        li.textContent = p;
+        ul.appendChild(li);
+      });
+      $('vzDetailBox').style.setProperty('--det-acc', s.accent);
+      $('vzDetailBox').scrollTop = 0;
+      detail.style.display = 'flex';
+      lockScroll(true);
+      track('project_open', s.key, ctx || 'grid2');
+    };
+    const closeDetail = () => {
+      detail.style.display = 'none';
+      lockScroll(false);
+    };
+    $('vzDetailClose').addEventListener('click', closeDetail);
+    $('vzDetailCta').addEventListener('click', closeDetail);
+    detail.addEventListener('click', (e) => { if (e.target === detail) closeDetail(); });
+    this._escDetail = (e) => { if (e.key === 'Escape') closeDetail(); };
+    window.addEventListener('keydown', this._escDetail);
+
+    // ---------- слайдер блоков «Работ» ----------
+    // Два способа навигации: перетащить сетку мышью/пальцем или кликнуть по
+    // названию блока. Порог захвата 9px отделяет перетаскивание от клика по
+    // карточке; клик, пришедший следом за перетаскиванием, гасится в capture,
+    // чтобы не открыть модалку.
+    const slider = $('vzSlider'), sTrack = $('vzTrack');
+    const wTabs = Array.from(document.querySelectorAll('#vzWorksTabs .vz-wtab'));
+    const wNotes = Array.from(document.querySelectorAll('.vz-wnote'));
+    const sl = this._slider = { idx: 0, drag: null, suppress: false };
+    const setTab = (i, src) => {
+      i = Math.max(0, Math.min(wTabs.length - 1, i));
+      if (i !== sl.idx && src) track('works_tab', i === 0 ? 'sites' : 'other', src);
+      sl.idx = i;
+      sTrack.style.transform = 'translateX(' + (-i * 100) + '%)';
+      wTabs.forEach((b, k) => b.setAttribute('aria-selected', String(k === i)));
+      wNotes.forEach((n, k) => { n.style.display = k === i ? '' : 'none'; });
+    };
+    setTab(0);
+    wTabs.forEach((b, k) => b.addEventListener('click', () => setTab(k, 'tab')));
+    slider.addEventListener('pointerdown', (e) => {
+      if (sl.drag || (e.pointerType === 'mouse' && e.button !== 0)) return;
+      sl.suppress = false;
+      sl.drag = { id: e.pointerId, x: e.clientX, y: e.clientY, dx: 0, captured: false };
+    });
+    slider.addEventListener('pointermove', (e) => {
+      const g = sl.drag;
+      if (!g || e.pointerId !== g.id) return;
+      g.dx = e.clientX - g.x;
+      if (!g.captured) {
+        // вертикальное движение — это скролл страницы, его не забираем
+        if (Math.abs(g.dx) < 9 || Math.abs(g.dx) < Math.abs(e.clientY - g.y)) return;
+        g.captured = true;
+        sTrack.classList.add('vz-drag');
+        slider.classList.add('vz-sliding');
+        try { slider.setPointerCapture(e.pointerId); } catch (_) {}
+      }
+      const w = slider.clientWidth || 1;
+      let off = -sl.idx * w + g.dx;
+      // за краями — резиновое сопротивление
+      const min = -(wTabs.length - 1) * w;
+      if (off > 0) off /= 3;
+      else if (off < min) off = min + (off - min) / 3;
+      sTrack.style.transform = 'translateX(' + off.toFixed(1) + 'px)';
+    });
+    const sRelease = (e) => {
+      const g = sl.drag;
+      if (!g || e.pointerId !== g.id) return;
+      sl.drag = null;
+      if (!g.captured) return;
+      sTrack.classList.remove('vz-drag');
+      slider.classList.remove('vz-sliding');
+      sl.suppress = true;
+      const w = slider.clientWidth || 1;
+      const step = g.dx < -w * 0.16 ? 1 : g.dx > w * 0.16 ? -1 : 0;
+      const next = Math.max(0, Math.min(wTabs.length - 1, sl.idx + step));
+      if (next !== sl.idx) setTab(next, 'swipe');
+      else setTab(sl.idx); // откат недотянутого перетаскивания
+    };
+    slider.addEventListener('pointerup', sRelease);
+    slider.addEventListener('pointercancel', sRelease);
+    slider.addEventListener('click', (e) => {
+      if (!sl.suppress) return;
+      sl.suppress = false;
+      e.stopPropagation();
+      e.preventDefault();
+    }, true);
+
     // ---------- модалка ----------
     const modal = $('vzModal'), frame = $('vzModalFrame');
     let openedKey = null, openedAt = 0;
@@ -453,7 +794,7 @@ class Component extends DCLogic {
       $('vzModalUrl').textContent = url;
       $('vzModalExt').setAttribute('href', src);
       modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
+      lockScroll(true);
       openedKey = keyFor(src, key);
       openedAt = Date.now();
       // пока внутри модалки грузится целый сайт, барабану и звёздам делать нечего
@@ -462,7 +803,7 @@ class Component extends DCLogic {
     const closeModal = () => {
       modal.style.display = 'none';
       frame.src = 'about:blank';
-      document.body.style.overflow = '';
+      lockScroll(false);
       // сколько секунд реально смотрели сайт — главный признак интереса к работе
       if (openedKey && openedAt) {
         track('modal_time', openedKey, null, Math.round((Date.now() - openedAt) / 1000));
@@ -489,10 +830,14 @@ class Component extends DCLogic {
         stat1: 'живых проектов в витрине', stat2: 'быстрее с AI-пайплайнами', stat3: 'двуязычные продукты',
         worksTitle: 'Работы', worksHint: 'кликните карточку — сайт откроется внутри витрины',
         worksNote: 'От финтеха и недвижимости до гастрономии и фэшна — каждый сайт открывается живьём прямо внутри витрины.',
+        worksTab1: 'Веб-сайты', worksTab2: '1С и автоматизация',
+        worksNote2: '1С-расширения, рекламные кампании в Директе и ВК, парсеры и автоматизация процессов. Заказы 2025–2026 годов, у каждой карточки есть подробности — кликните.',
+        detailCta: 'Обсудить похожую задачу →',
         aboutTitle: '«Есть время любоваться прекрасным»',
         aboutP1: 'Маленький принц вернулся на свою планету и полностью её автоматизировал: вулканы очищают роботы, баобабы ликвидируют ещё в зачатке команда агентов — а принц теперь круглые сутки любуется и ухаживает за своей прекрасной Розой.',
         aboutP2: 'Вдохновившись его примером, я автоматизировал все процессы разработки приложений и сайтов: AI-агенты берут рутину, я отвечаю за архитектуру, качество и результат.',
         aboutWho: 'Кто я такой?',
+        flipHint: 'на обороте планеты — космический сад',
         aboutEdu: 'По образованию — программист с математическим уклоном (НГТУ — ФПМИ):',
         tl2008: 'первый язык C++, начинал с алгоритмов и работы с памятью',
         tl2019: 'курс по Java/Kotlin',
@@ -526,10 +871,14 @@ class Component extends DCLogic {
         stat1: 'live projects in this gallery', stat2: 'faster with AI pipelines', stat3: 'bilingual products',
         worksTitle: 'Work', worksHint: 'click a card — the site opens right here',
         worksNote: 'From fintech and real estate to gastronomy and fashion — every site opens live right inside the gallery.',
+        worksTab1: 'Websites', worksTab2: '1C & automation',
+        worksNote2: '1C extensions, ad campaigns in Yandex Direct and VK Ads, parsers and process automation. Client work from 2025–2026 — click a card for details.',
+        detailCta: 'Discuss a similar task →',
         aboutTitle: '“There is time to admire the beautiful”',
         aboutP1: 'The Little Prince returned to his planet and automated it completely: robots clean the volcanoes, a team of agents eliminates baobabs while they are still sprouts — and now the prince spends his days admiring and caring for his beautiful Rose.',
         aboutP2: 'Inspired by his example, I automated the whole process of building websites and apps: AI agents take the routine, I own architecture, quality and outcome.',
         aboutWho: 'Who am I?',
+        flipHint: 'the far side of the planet hides a cosmic garden',
         aboutEdu: 'By education — a programmer with a mathematical focus (NSTU — Applied Mathematics and Informatics):',
         tl2008: 'first language C++, starting with algorithms and memory management',
         tl2019: 'Java/Kotlin course',
@@ -742,7 +1091,7 @@ class Component extends DCLogic {
       menu.hidden = !open;
       burger.setAttribute('aria-expanded', String(open));
       burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Меню');
-      document.body.style.overflow = open ? 'hidden' : '';
+      lockScroll(open);
       // ссылки не должны залезать под шапку, а её высота зависит от вёрстки
       if (open) menu.style.paddingTop = (header.getBoundingClientRect().height + 18) + 'px';
     };
@@ -1398,6 +1747,7 @@ class Component extends DCLogic {
   }
   componentWillUnmount() {
     window.removeEventListener('keydown', this._esc);
+    window.removeEventListener('keydown', this._escDetail);
     if (this._raf) cancelAnimationFrame(this._raf);
     if (this._ro) this._ro.disconnect();
     if (this._drumRaf) cancelAnimationFrame(this._drumRaf);
@@ -1409,6 +1759,36 @@ class Component extends DCLogic {
   }
   renderVals() { return {}; }
 }
+</script>
+<script>
+// ---------- флип планеты: мини-игра «Космический сад» ----------
+// Игра — отдельная статическая сборка (sites/zen-garden), грузится в iframe
+// лениво, при первом перевороте: до клика человек не платит ни байта.
+// Слушатель делегирован на document: DC-рантайм пересобирает DOM после
+// загрузки, и обработчик, повешенный на сам узел, пропадает вместе с ним.
+(function () {
+  var track = function (type, target) { if (window.vzTrack) window.vzTrack(type, target); };
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest) return;
+    var flip = e.target.closest('#vzFlip');
+    if (!flip) return;
+    if (e.target.closest('#vzFlipClose')) {
+      flip.classList.remove('flipped');
+      track('game_flip', 'close');
+      return;
+    }
+    if (flip.classList.contains('flipped')) return;
+    var box = flip.querySelector('#vzFlipGameBox');
+    if (box && !box.firstChild) {
+      var f = document.createElement('iframe');
+      f.src = 'sites/zen-garden/index.html?lang=' + (window.vzLocale || 'ru');
+      f.title = 'Космический дзен-сад';
+      box.appendChild(f);
+    }
+    flip.classList.add('flipped');
+    track('game_flip', 'open');
+  });
+})();
 </script>
 </body>
 </html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Канбан заказ-нарядов - демо</title>
+<script>
+// Тема до первой отрисовки, чтобы не мигало. По умолчанию - светлая (цвета 1С).
+document.documentElement.setAttribute('data-theme',
+  (function () { try { return localStorage.getItem('kanban-demo-theme') || 'light'; } catch (e) { return 'light'; } })());
+</script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header id="header">
+  <div class="header-left">
+    <h1>Канбан заказ-нарядов</h1>
+    <nav id="branch-tabs" class="branch-tabs"></nav>
+  </div>
+  <div class="header-right">
+    <label class="filter">Приёмщик
+      <select id="filter-receiver"><option value="">все</option></select>
+    </label>
+    <label class="filter">с
+      <input type="date" id="filter-date-from">
+    </label>
+    <label class="filter">по
+      <input type="date" id="filter-date-to">
+    </label>
+    <button id="filter-reset" class="btn-reset" type="button">сброс</button>
+    <span id="data-time" class="data-time">данные на --:--:--</span>
+  </div>
+  <button id="theme-toggle" class="theme-switch" type="button" role="switch" aria-checked="false" aria-label="Переключить тему">
+    <svg class="ts-icon ts-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"/></svg>
+    <svg class="ts-icon ts-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.6 14.2A8.6 8.6 0 0 1 9.8 3.4a8.6 8.6 0 1 0 10.8 10.8z"/></svg>
+    <span class="ts-knob"></span>
+  </button>
+</header>
+
+<div class="demo-note">Демо-прототип: фирма и заказ-наряды вымышлены. Карточки можно перетаскивать между этапами.</div>
+
+<div id="offline-banner" class="offline-banner hidden"></div>
+<div id="toast" class="toast hidden"></div>
+
+<main id="board" class="board"></main>
+
+<script src="render.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
