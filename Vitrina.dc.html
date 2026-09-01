@@ -277,6 +277,8 @@ a{text-decoration:none}
 #vzHero{padding:14px 25px 44px !important;gap:30px !important}
 #vzH1{font-size:29px !important}
 #vzSub{font-size:15px !important}
+#vzHeroNote{margin-top:34px !important;gap:12px !important}
+#vzHeroNote span:last-child{font-size:16px !important}
 #vzHeroBtns a{flex:1 1 auto;text-align:center}
 #vzMarquee{height:46vh !important;min-height:330px !important;border-radius:14px !important}
 #vzMarqueeGrid{gap:12px !important}
@@ -418,12 +420,13 @@ a{text-decoration:none}
         <a href="#about" data-l10n="btnAbout" style="border:1px solid rgba(255,255,255,.18);color:#F2F2F7;font-weight:500;font-size:14.5px;padding:15px 30px;border-radius:999px;transition:border-color .2s,background .2s" style-hover="border-color:var(--acc,#B7524A);background:rgba(var(--acc-rgb,183,82,74),.08)">Кто я такой</a>
       </div>
       <!-- Строка под кнопками: срок запуска. Раньше стоял лидом в абзаце над
-           кнопками и терялся в описании, здесь он закрывает пустоту под ними
-           и читается отдельным обещанием. Точка акцента дышит той же
-           анимацией, что и подсветка хиро. -->
-      <div id="vzHeroNote" style="display:flex;align-items:center;gap:10px;margin-top:20px">
-        <span style="flex:none;width:6px;height:6px;border-radius:50%;background:var(--acc,#B7524A);box-shadow:0 0 11px 2px rgba(var(--acc-rgb,183,82,74),.5);animation:vzGlow 2.8s ease-in-out infinite"></span>
-        <span data-l10n="subLead" style="font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.04em;color:#B9BDCC">От идеи до запуска за 7–14 дней</span>
+           кнопками и терялся в описании — здесь он звучит отдельным принципом,
+           а не мелкой сноской: тот же Unbounded, что у заголовков, и воздух
+           сверху, чтобы строка не липла к кнопкам. Линия слева — приём
+           логотипа: акцент, тающий вправо. -->
+      <div id="vzHeroNote" style="display:flex;align-items:flex-start;gap:15px;margin-top:46px">
+        <span style="flex:none;width:36px;height:1px;margin-top:13px;background:linear-gradient(90deg,var(--acc,#B7524A),rgba(var(--acc-rgb,183,82,74),0))"></span>
+        <span data-l10n="subLead" style="font-family:'Unbounded',sans-serif;font-weight:400;font-size:clamp(15.5px,1.34vw,19px);line-height:1.4;letter-spacing:.005em;color:#E4E6EF">От идеи до запуска за 7–⁠14 дней</span>
       </div>
     </div>
 
@@ -1201,7 +1204,7 @@ class Component extends DCLogic {
         role: 'FULLSTACK · AI-ИНЖЕНЕРИЯ', slogan: '«Есть время любоваться прекрасным»', navWorks: 'Работы', navAbout: 'Обо мне', navContact: 'Контакты', cta: 'Обсудить проект',
         badge: 'ОТКРЫТ К ЗАКАЗАМ · 2026',
         h1: 'Сайт, веб-сервис или автоматизация {под вашу задачу}',
-        subLead: 'От идеи до запуска за 7–14 дней',
+        subLead: 'От идеи до запуска за 7–⁠14 дней',
         sub: 'Разбираюсь в задаче, проектирую решение и довожу его до запуска — дизайн, разработка, backend, интеграции и всё необходимое для работы продукта.',
         btnWorks: 'Смотреть работы', btnAbout: 'Кто я такой',
         needsTitle: 'С чем ко мне приходят',
@@ -1249,7 +1252,7 @@ class Component extends DCLogic {
         role: 'FULLSTACK · AI ENGINEERING', slogan: '“There is time to admire the beautiful”', navWorks: 'Work', navAbout: 'About', navContact: 'Contact', cta: 'Start a project',
         badge: 'OPEN FOR PROJECTS · 2026',
         h1: 'A website, web service or automation {for your task}',
-        subLead: 'From idea to launch in 7–14 days',
+        subLead: 'From idea to launch in 7–⁠14 days',
         sub: 'I dig into the task, design the solution and carry it through to launch — design, development, backend, integrations and everything the product needs to run.',
         btnWorks: 'View work', btnAbout: 'Who I am',
         needsTitle: 'What people come to me with',
