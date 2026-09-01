@@ -36,6 +36,40 @@ a{text-decoration:none}
 .vz-win>.vz-lbl{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:8px;padding:9px 13px;background:linear-gradient(transparent,rgba(6,6,9,.9) 40%);opacity:0;transition:opacity .25s;pointer-events:none}
 .vz-win.vz-hot{border-color:var(--acc,#B7524A);transform:scale(1.025);box-shadow:0 14px 44px rgba(var(--acc-rgb,183,82,74),.22)}
 .vz-win.vz-hot>.vz-lbl{opacity:1}
+/* Подсказка о проекте: одна панель на всю страницу, ходит за курсором и
+   наполняется данными той карточки, на которую навели. Отдельным узлом, а не
+   внутри карточки: окна барабана клонируются под высоту экрана, и подсказка
+   размножалась бы вместе с ними, а в блоке «Работы» её обрезал бы overflow. */
+.vz-tip{position:fixed;left:0;top:0;z-index:120;width:max-content;max-width:300px;padding:16px 18px 15px;border-radius:16px;background:radial-gradient(38% 34% at 2% 0%,rgba(255,255,255,.16),rgba(255,255,255,0) 60%),linear-gradient(158deg,rgba(255,255,255,.07),rgba(255,255,255,.015) 22%,rgba(255,255,255,0) 42%),linear-gradient(180deg,rgba(20,20,30,.66),rgba(9,9,15,.76));-webkit-backdrop-filter:blur(26px) saturate(175%);backdrop-filter:blur(26px) saturate(175%);box-shadow:0 30px 70px rgba(0,0,0,.62),0 4px 14px rgba(0,0,0,.38),0 16px 46px rgba(var(--acc-rgb,200,35,43),.18),inset 0 1px 0 rgba(255,255,255,.26),inset 0 7px 10px -8px rgba(255,255,255,.3),inset 0 -6px 9px -7px rgba(255,255,255,.11),inset 0 -1px 0 rgba(255,255,255,.06);pointer-events:none;opacity:0;transform:translateY(6px) scale(.985);transition:opacity .2s,transform .2s;overflow:hidden}
+/* Грань стекла. У самых краёв фон под панелью размыт сильнее и чуть светлее —
+   стекло как бы набирает толщину к рамке и преломляет то, что за ним. Полоса
+   держится маской по периметру, центр под текстом остаётся спокойным. */
+.vz-tip::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;-webkit-backdrop-filter:blur(11px) saturate(210%) brightness(1.5);backdrop-filter:blur(11px) saturate(210%) brightness(1.5);-webkit-mask-image:linear-gradient(90deg,#000,transparent 5px,transparent calc(100% - 5px),#000),linear-gradient(180deg,#000,transparent 4px,transparent calc(100% - 4px),#000);mask-image:linear-gradient(90deg,#000,transparent 5px,transparent calc(100% - 5px),#000),linear-gradient(180deg,#000,transparent 4px,transparent calc(100% - 4px),#000);mask-composite:add}
+/* Ободок в один пиксель — тот же акцентный контур, что загорается у карточки
+   под курсором, поэтому плашка и карточка читаются как одна пара. Конический
+   градиент ведёт по нему два белых блика: контур остаётся красным, но живёт
+   как грань стекла, а не как ровная рамка. */
+.vz-tip::after{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:conic-gradient(from 200deg at 50% 50%,rgba(255,255,255,.92),rgba(var(--acc-rgb,200,35,43),.88) 9%,rgba(var(--acc-rgb,200,35,43),.7) 26%,rgba(255,255,255,.74) 40%,rgba(var(--acc-rgb,200,35,43),.9) 54%,rgba(var(--acc-rgb,200,35,43),.68) 72%,rgba(255,255,255,.82) 86%,rgba(255,255,255,.92));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
+/* Где backdrop-filter не поддержан, стекло становится плотной панелью:
+   читаемость текста важнее эффекта. */
+@supports not ((backdrop-filter:blur(4px)) or (-webkit-backdrop-filter:blur(4px))){.vz-tip{background:linear-gradient(180deg,rgba(21,21,31,.97),rgba(10,10,16,.98))}}
+.vz-tip.vz-tip-on{opacity:1;transform:none}
+.vz-tip .vz-tip-t{font-family:'Unbounded',sans-serif;font-size:13.5px;font-weight:500;line-height:1.35;color:#F4F5FA;text-shadow:0 1px 3px rgba(0,0,0,.45)}
+.vz-tip .vz-tip-s{margin-top:7px;font-size:12.5px;line-height:1.5;color:#C2C6D4;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.vz-tip .vz-tip-f{margin-top:12px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.vz-tip .vz-tip-d{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.04em;color:#DCDFEA;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.17);border-radius:999px;padding:4px 10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
+/* Пометка «образец на продажу» — единственное цветное пятно в плашке, берёт
+   акцент витрины. Текст осветляем от акцента, чтобы читался на тёмном стекле;
+   первая строка color — запасная для браузеров без color-mix. */
+.vz-tip .vz-tip-note{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.04em;color:#EFC4C6;color:color-mix(in srgb,var(--acc,#C8232B) 52%,#fff);background:rgba(var(--acc-rgb,200,35,43),.2);border:1px solid rgba(var(--acc-rgb,200,35,43),.48);border-radius:999px;padding:4px 10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
+.vz-tip .vz-tip-note:empty{display:none}
+#vzNeeds{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.vz-need{display:flex;flex-direction:column;padding:24px 22px 22px;border:1px solid rgba(255,255,255,.1);border-radius:16px;background:rgba(255,255,255,.025);transition:border-color .25s,transform .25s,box-shadow .25s,background .25s}
+.vz-need:hover{border-color:var(--acc,#B7524A);background:rgba(var(--acc-rgb,183,82,74),.06);transform:translateY(-5px);box-shadow:0 22px 54px rgba(0,0,0,.5)}
+.vz-need-t{font-weight:600;font-size:16px;line-height:1.3;color:#F2F2F7}
+.vz-need-s{margin:11px 0 20px;font-size:13px;line-height:1.6;color:#B9BDCC}
+/* цена прижата к низу карточки: подписи разной длины, иначе цены встают лесенкой */
+.vz-need-p{margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.02em;color:var(--acc,#B7524A)}
 /* Логотип. Широкая разрядка даёт слову ширину, сопоставимую с эмблемой,
    а тонкая линия акцента под ним тянется во всю колонку: начинается у первой
    буквы и растворяется к последним буквам девиза, связывая обе строки в один
@@ -152,8 +186,20 @@ a{text-decoration:none}
 #vzMenu{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;padding:25px;background:rgba(6,6,9,.97);backdrop-filter:blur(12px);animation:vzFade .25s ease-out both}
 #vzMenu>a{font-family:'Unbounded',sans-serif;font-weight:400;font-size:22px;color:#F2F2F7;padding:18px 2px;border-bottom:1px solid rgba(255,255,255,.08);transition:color .2s}
 #vzMenu>a:active{color:var(--acc,#B7524A)}
+/* Переключатель языка: бегунок переезжает под выбранную надпись, обе надписи
+   видны всегда — так понятно, что языка два, а не что кнопка «сделать EN».
+   Размер сегмента задан переменными: в бургер-меню тумблер крупнее. */
+.vz-lang{--lw:36px;--lh:24px;position:relative;display:inline-flex;align-items:center;padding:3px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;line-height:1;transition:border-color .25s,background .25s}
+.vz-lang:hover{border-color:var(--acc,#B7524A);background:rgba(var(--acc-rgb,183,82,74),.1)}
+.vz-lang-thumb{position:absolute;left:3px;top:3px;width:var(--lw);height:var(--lh);border-radius:999px;background:#F2F2F7;box-shadow:0 2px 10px rgba(0,0,0,.35);transition:transform .38s cubic-bezier(.34,1.4,.5,1)}
+.vz-lang.is-en .vz-lang-thumb{transform:translateX(100%)}
+.vz-lang-o{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:var(--lw);height:var(--lh);color:#8E93A8;transition:color .3s}
+.vz-lang .vz-lang-o[data-l="ru"]{color:#060609}
+.vz-lang.is-en .vz-lang-o[data-l="ru"]{color:#8E93A8}
+.vz-lang.is-en .vz-lang-o[data-l="en"]{color:#060609}
+@media (prefers-reduced-motion:reduce){.vz-lang-thumb{transition:none}}
 #vzMenuFoot{margin-top:30px;display:flex;align-items:center;gap:16px}
-#vzLangM{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.06em;color:#F2F2F7;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:11px 18px;cursor:pointer}
+#vzLangM{--lw:44px;--lh:30px;font-size:13px}
 /* ── Флип планеты: клик переворачивает картинку, на обороте — мини-игра
    «Космический сад» (sites/zen-garden, отдельная статическая сборка).
    Пока не перевёрнуто, оборот выключен из хит-теста: скрытая backface
@@ -201,6 +247,7 @@ a{text-decoration:none}
    тоже нечего сдвигать, он снова во всю ширину секции */
 #vzMarquee{height:54vh !important;min-height:380px !important;right:0 !important}
 #vzGrid,#vzGrid2{grid-template-columns:repeat(2,1fr) !important;padding:0 !important}
+#vzNeeds{grid-template-columns:repeat(2,1fr) !important}
 #vzAboutGrid{grid-template-columns:1fr !important;gap:36px !important}
 /* Ниже 1120px навигация отъедает у логотипа ширину, и девиз ломается в три
    строки. Оставляем эмблему со словом — линия акцента тогда заканчивается
@@ -228,16 +275,18 @@ a{text-decoration:none}
 #vzHeadCta{display:none !important}
 #vzBurger{display:flex;margin-left:auto;flex:none}
 #vzHero{padding:14px 25px 44px !important;gap:30px !important}
-#vzH1{font-size:32px !important}
+#vzH1{font-size:29px !important}
 #vzSub{font-size:15px !important}
 #vzHeroBtns a{flex:1 1 auto;text-align:center}
-#vzStats{gap:20px !important;margin-top:34px !important}
 #vzMarquee{height:46vh !important;min-height:330px !important;border-radius:14px !important}
 #vzMarqueeGrid{gap:12px !important}
 .vz-col{gap:12px !important}
 #works{padding:52px 25px 8px !important}
 #vzWorksTitle{font-size:28px !important}
 #vzGrid,#vzGrid2{grid-template-columns:1fr !important;gap:16px !important;padding:0 !important}
+#needs{padding:18px 25px 0 !important}
+#vzNeedsTitle{font-size:28px !important;margin-bottom:24px !important}
+#vzNeeds{grid-template-columns:1fr !important;gap:14px !important}
 #vzWorksTabs{gap:22px !important}
 .vz-wtab{font-size:14.5px !important}
 #about{padding:56px 25px !important}
@@ -342,7 +391,7 @@ a{text-decoration:none}
       <a href="#about" data-l10n="navAbout" style="color:#B9BDCC;transition:color .2s" style-hover="color:#fff">Обо мне</a>
       <a href="#contact" data-l10n="navContact" style="color:#B9BDCC;transition:color .2s" style-hover="color:#fff">Контакты</a>
     </nav>
-    <button id="vzLang" style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:#F2F2F7;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:8px 14px;cursor:pointer;transition:border-color .2s" style-hover="border-color:var(--acc,#B7524A)">RU / <span style="color:#8E93A8">EN</span></button>
+    <button id="vzLang" class="vz-lang" type="button" aria-label="Язык: русский"><span class="vz-lang-thumb"></span><span class="vz-lang-o" data-l="ru">RU</span><span class="vz-lang-o" data-l="en">EN</span></button>
     <!-- Отступ справа ровно тот, на который сдвинут барабан в хиро: правый край
          кнопки встаёт на одну линию с правым краем барабана. Сдвигаем кнопку, а не
          паддинг шапки: паддинг менял бы общую ширину шапки, и она переставала бы
@@ -356,22 +405,25 @@ a{text-decoration:none}
     <a href="#about" data-l10n="navAbout">Обо мне</a>
     <a href="#contact" data-l10n="navContact">Контакты</a>
     <div id="vzMenuFoot">
-      <button id="vzLangM">RU / <span style="color:#8E93A8">EN</span></button>
+      <button id="vzLangM" class="vz-lang" type="button" aria-label="Язык: русский"><span class="vz-lang-thumb"></span><span class="vz-lang-o" data-l="ru">RU</span><span class="vz-lang-o" data-l="en">EN</span></button>
     </div>
   </div>
 
   <section id="vzHero" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:48px 67px 40px;display:grid;grid-template-columns:0.92fr 1.08fr;gap:40px;align-items:center;min-height:78vh">
     <div id="vzHeroText" style="align-self:start;animation:vzFade .8s ease-out both;padding-left:56px">
-      <h1 id="vzH1" data-l10n="h1" style="margin:0 0 22px;font-family:'Unbounded',sans-serif;font-weight:400;font-size:47px;line-height:1.12;letter-spacing:-.01em;text-wrap:balance">Сайты и сервисы под ключ — <span style="color:var(--acc,#B7524A)">в короткие сроки</span></h1>
-      <p id="vzSub" data-l10n="sub" style="margin:0 0 32px;font-size:16.5px;line-height:1.65;color:#B9BDCC;max-width:470px;text-wrap:pretty">Fullstack-разработка, усиленная AI-агентами: от идеи до продакшена за дни, а не месяцы. Каждое окно справа — реальный проект. Наведите и кликните — сайт откроется, его можно полистать.</p>
+      <h1 id="vzH1" data-l10n="h1" style="margin:0 0 14px;font-family:'Unbounded',sans-serif;font-weight:400;font-size:40px;line-height:1.26;letter-spacing:-.01em;text-wrap:balance">Сайт, веб-сервис или автоматизация <span style="color:var(--acc,#B7524A)">под вашу задачу</span></h1>
+      <p id="vzSub" data-l10n="sub" style="margin:0 0 32px;font-size:16.5px;line-height:1.65;color:#B9BDCC;max-width:505px;text-wrap:pretty">Разбираюсь в задаче, проектирую решение и довожу его до запуска — дизайн, разработка, backend, интеграции и всё необходимое для работы продукта.</p>
       <div id="vzHeroBtns" style="display:flex;gap:12px;flex-wrap:wrap">
         <a href="#works" data-l10n="btnWorks" style="background:var(--acc,#B7524A);color:var(--acc-ink,#fff);font-weight:600;font-size:14.5px;padding:15px 30px;border-radius:999px;box-shadow:0 10px 34px rgba(var(--acc-rgb,183,82,74),.25);transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 16px 44px rgba(var(--acc-rgb,183,82,74),.38)">Смотреть работы</a>
         <a href="#about" data-l10n="btnAbout" style="border:1px solid rgba(255,255,255,.18);color:#F2F2F7;font-weight:500;font-size:14.5px;padding:15px 30px;border-radius:999px;transition:border-color .2s,background .2s" style-hover="border-color:var(--acc,#B7524A);background:rgba(var(--acc-rgb,183,82,74),.08)">Кто я такой</a>
       </div>
-      <div id="vzStats" style="display:flex;gap:34px;margin-top:44px">
-        <div><div style="font-family:'Unbounded',sans-serif;font-size:24px;font-weight:500">×6</div><div data-l10n="stat2" style="font-size:12px;color:#8E93A8;margin-top:4px">быстрее с AI-пайплайнами</div></div>
-        <div style="width:1px;background:rgba(255,255,255,.1)"></div>
-        <div><div style="font-family:'Unbounded',sans-serif;font-size:24px;font-weight:500">RU/EN</div><div data-l10n="stat3" style="font-size:12px;color:#8E93A8;margin-top:4px">двуязычные продукты</div></div>
+      <!-- Строка под кнопками: срок запуска. Раньше стоял лидом в абзаце над
+           кнопками и терялся в описании, здесь он закрывает пустоту под ними
+           и читается отдельным обещанием. Точка акцента дышит той же
+           анимацией, что и подсветка хиро. -->
+      <div id="vzHeroNote" style="display:flex;align-items:center;gap:10px;margin-top:20px">
+        <span style="flex:none;width:6px;height:6px;border-radius:50%;background:var(--acc,#B7524A);box-shadow:0 0 11px 2px rgba(var(--acc-rgb,183,82,74),.5);animation:vzGlow 2.8s ease-in-out infinite"></span>
+        <span data-l10n="subLead" style="font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.04em;color:#B9BDCC">От идеи до запуска за 7–14 дней</span>
       </div>
     </div>
 
@@ -386,6 +438,38 @@ a{text-decoration:none}
         <div class="vz-col" style="display:flex;flex-direction:column;gap:18px;will-change:transform"></div>
       </div>
     </div>
+  </section>
+
+
+  <!-- «С чем ко мне приходят»: первый шаг после хиро — человек находит свою
+       задачу словами, которыми сам её называет, и сразу видит порядок цены.
+       Карточка целиком ведёт к форме: блок с ценами без действия рядом
+       заставлял бы искать контакты в конце страницы. -->
+  <section id="needs" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:26px 67px 6px;scroll-margin-top:20px">
+    <h2 id="vzNeedsTitle" data-l10n="needsTitle" style="margin:0 0 34px;text-align:center;font-family:'Unbounded',sans-serif;font-weight:500;font-size:38px">С чем ко мне приходят</h2>
+    <div id="vzNeeds">
+      <a class="vz-need" href="#contact">
+        <div class="vz-need-t" data-l10n="need1t">Нужен новый сайт</div>
+        <div class="vz-need-s" data-l10n="need1s">Корпоративный сайт, landing или сайт продукта.</div>
+        <div class="vz-need-p" data-l10n="need1p">от 120 000 ₽</div>
+      </a>
+      <a class="vz-need" href="#contact">
+        <div class="vz-need-t" data-l10n="need2t">Нужно переделать старый</div>
+        <div class="vz-need-s" data-l10n="need2s">Редизайн, новая архитектура, мобильная версия, конверсия.</div>
+        <div class="vz-need-p" data-l10n="need2p">от 100 000 ₽</div>
+      </a>
+      <a class="vz-need" href="#contact">
+        <div class="vz-need-t" data-l10n="need3t">Нужно автоматизировать рутину</div>
+        <div class="vz-need-s" data-l10n="need3s">1С, Excel, CRM, Telegram, парсинг, n8n, интеграции.</div>
+        <div class="vz-need-p" data-l10n="need3p">от 80 000 ₽</div>
+      </a>
+      <a class="vz-need" href="#contact">
+        <div class="vz-need-t" data-l10n="need4t">Нужен нестандартный сервис</div>
+        <div class="vz-need-s" data-l10n="need4s">Личный кабинет, калькулятор, внутренний инструмент, MVP, SaaS.</div>
+        <div class="vz-need-p" data-l10n="need4p">от 200 000 ₽</div>
+      </a>
+    </div>
+    <p id="vzNeedsFoot" style="margin:26px auto 0;text-align:center;font-size:13.5px;color:#8E93A8;max-width:640px"><span data-l10n="needsFoot">Не понимаете, что именно нужно? Опишите задачу — я предложу оптимальный вариант.</span> <a href="#contact" data-l10n="needsFootCta" style="color:var(--acc,#B7524A);white-space:nowrap">Обсудить задачу →</a></p>
   </section>
 
   <section id="works" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:72px 67px 30px;scroll-margin-top:20px">
@@ -443,15 +527,6 @@ a{text-decoration:none}
           <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#CDD2E0"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2026</span><span data-l10n="tl2026">15+ реальных проектов за полгода: от сайтов крупных фирм до 1С-расширений, от частных предпринимателей до крупных госзаказов. С частью работ можно ознакомиться на витрине выше</span></div>
         </div>
         <p data-l10n="aboutP4" style="margin:0 0 28px;font-size:15.5px;line-height:1.7;color:#CDD2E0;text-wrap:pretty">Берусь за задачи любой сложности, закрываю полный цикл: frontend + backend + deploy. Отдельно люблю нетривиальные кейсы, где готового решения нет.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:var(--acc,#B7524A);color:#fff">React / Next.js</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:var(--acc,#B7524A);color:#fff">Vue / Nuxt</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:var(--acc,#B7524A);color:#fff">TypeScript</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:var(--acc,#B7524A);color:#fff">Node.js · PostgreSQL</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:var(--acc,#B7524A);color:#fff">Python · FastAPI</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#B9BDCC;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 13px;transition:border-color .2s,color .2s" style-hover="border-color:var(--acc,#B7524A);color:#fff">WordPress</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--acc,#B7524A);border:1px solid rgba(var(--acc-rgb,183,82,74),.5);border-radius:999px;padding:7px 13px">n8n · Claude Code · AI-агенты</span>
-        </div>
         <div id="vzFacts" style="display:flex;gap:26px">
           <div><div data-l10n="fact1t" style="font-weight:600;font-size:14.5px">Индивидуально</div><div data-l10n="fact1s" style="font-size:12.5px;color:#8E93A8;margin-top:3px">никаких шаблонов — под задачу</div></div>
           <div><div data-l10n="fact2t" style="font-weight:600;font-size:14.5px">Быстро</div><div data-l10n="fact2s" style="font-size:12.5px;color:#8E93A8;margin-top:3px">прототип за дни, не недели</div></div>
@@ -540,6 +615,12 @@ a{text-decoration:none}
     <span id="vzZoomHint" class="vz-zhint" data-l10n="zoomHint">нажмите на снимок, чтобы рассмотреть</span>
     <span id="vzZoomBack" class="vz-zhint" data-l10n="zoomBack">нажмите ещё раз, чтобы увидеть целиком</span>
   </div>
+
+  <div id="vzTip" class="vz-tip" role="tooltip" aria-hidden="true">
+    <div class="vz-tip-t"></div>
+    <div class="vz-tip-s"></div>
+    <div class="vz-tip-f"><span class="vz-tip-d"></span><span class="vz-tip-note"></span></div>
+  </div>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#C8232B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Стиль&quot;,&quot;options&quot;:[&quot;#C8232B&quot;,&quot;#D2B183&quot;,&quot;#C97355&quot;,&quot;#C36250&quot;,&quot;#B7524A&quot;,&quot;#B87333&quot;,&quot;#E0A458&quot;,&quot;#D4A745&quot;,&quot;#C65D57&quot;,&quot;#8E3B46&quot;,&quot;#B76E79&quot;,&quot;#C98A97&quot;,&quot;#915F6D&quot;,&quot;#A48BD8&quot;,&quot;#8D7BB8&quot;,&quot;#7A8CC9&quot;,&quot;#4F74C9&quot;,&quot;#6C8EBF&quot;,&quot;#56A3A6&quot;,&quot;#4E8D7C&quot;,&quot;#7FA08C&quot;,&quot;#A3B18A&quot;,&quot;#8A9A5B&quot;,&quot;#708090&quot;,&quot;#C9C5BD&quot;,&quot;#E8E4DC&quot;]},&quot;starDensity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2.2,&quot;min&quot;:0.3,&quot;max&quot;:2.2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;haloRadius&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2,&quot;min&quot;:0.5,&quot;max&quot;:2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;twinkle&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;constellations&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Космос&quot;},&quot;meteors&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Космос&quot;}}">
@@ -564,6 +645,30 @@ class Component extends DCLogic {
 
     // ---------- марквиз ----------
     const SITE_KEYS = ['tokeon', 'rentsale-altay', 'flexpath', 'univer-zakupok', 'tersk', 'termy', 'bastard-world', 'gastro', 'atelier'];
+    // Подсказка на наведении: что за проект, из чего состояла работа и сколько
+    // заняла. Ключи те же, что у превью и событий аналитики. Третья строка —
+    // не всегда срок: у рекламных кабинетов работа идёт циклами, и там формат
+    // ведения честнее числа дней.
+    const HINTS = {
+      'rentsale-altay':   ['Лендинг-агрегатор для застройщика', 'Дизайн + разработка + Яндекс.Директ', '14 дней'],
+      'flexpath':         ['Лендинг с онлайн-конструктором', 'Дизайн + фронтенд + backend', '21 день'],
+      'bastard-world':    ['Интернет-магазин цифровых книг', 'Разработка + приём оплаты + выдача файлов', '10 дней'],
+      'gastro':           ['Концепт сайта ресторана', 'Дизайн + вёрстка', '1 день', 'образец на продажу'],
+      'atelier':          ['Концепт сайта ателье', 'Дизайн + вёрстка', '1 день', 'образец на продажу'],
+      'termy':            ['Концепт сайта городских терм', 'Дизайн + вёрстка', '1 день', 'образец на продажу'],
+      'tokeon':           ['Финтех-платформа ЦФА', 'Фронтенд в команде продукта', 'работа в штате'],
+      'univer-zakupok':   ['Сайт учебного центра, 13 страниц', 'Дизайн + WordPress + SEO', '18 дней'],
+      'tersk':            ['Корпоративный сайт с админкой', 'Дизайн + Nuxt + Directus + RU/EN', '24 дня'],
+      '1c-autoservice':   ['Учёт сети автосервисов в 1С', 'Расширение + перенос базы + интеграции', '30 дней'],
+      '1c-sv-webhook':    ['Переписка с клиентами внутри 1С', 'Расширение + HTTP-сервисы + n8n', '10 дней'],
+      '1c-kpi-kanban':    ['Экран показателей и канбан', 'HTTP-сервисы 1С + веб-интерфейс', '1 день'],
+      'vk-beauty':        ['Реклама бьюти-студии', 'VK Реклама: запуск, ведение, отчёты', 'ведение циклами'],
+      'direct-altay':     ['Яндекс.Директ под ключ', 'Кампании + ОРД + ежемесячный отчёт', 'ведение помесячно'],
+      'direct-dresses':   ['Аналитика и Директ для магазина', 'Аудит + Метрика + месяц ведения', 'аудит на 15 страниц'],
+      'parser-bets':      ['Сбор открытых данных с сайтов', 'Python-парсер + выгрузка в Excel', '5 дней'],
+      'n8n-orchestrator': ['ИИ-агент бронирования', 'n8n + PostgreSQL + Telegram', '1 день'],
+      'scanner-odds':     ['Сканер матчей с сигналами', 'Python + aiogram + 603 автотеста', '20 дней'],
+    };
     // Ключ проекта — им подписаны превью и события аналитики. Обычно выводится
     // из пути к копии, но у проектов, которые открываются с боевого адреса,
     // в пути ключа нет — для них он задаётся явно.
@@ -615,6 +720,7 @@ class Component extends DCLogic {
         : (s.preview || '<span class="vz-mark">' + s.mark + '</span>');
       win.appendChild(media);
       win.appendChild(winLabel(s.title, s.tags.split(' · ')[0]));
+      attachHint(win, s.key);
       win.addEventListener('click', () => {
         if (this._drum && this._drum.suppress) return;
         if (s.demo) {
@@ -628,6 +734,59 @@ class Component extends DCLogic {
         }
       });
     };
+    // Плашка встаёт под карточкой и стоит на месте: за курсором она мешала
+    // разглядывать само превью. Барабан под курсором останавливается
+    // (скорость гасится в d.hover), так что карточка из-под неё не уедет.
+    // Не помещается снизу — уходит наверх, по горизонтали держим в экране.
+    const tipBox = $('vzTip');
+    const tipHover = window.matchMedia('(hover:hover) and (pointer:fine)');
+    let tipOn = false;
+    const placeTip = (el) => {
+      const r = el.getBoundingClientRect();
+      const w = tipBox.offsetWidth, h = tipBox.offsetHeight, gap = 12, pad = 14;
+      const vw = window.innerWidth, vh = window.innerHeight;
+      const clamp = (v, max) => Math.min(Math.max(pad, v), Math.max(pad, max));
+      let x, y;
+      if (r.bottom + gap + h + pad <= vh) {          // под карточкой — основной случай
+        x = r.left + r.width / 2 - w / 2;
+        y = r.bottom + gap;
+      } else if (r.top - gap - h >= pad) {           // не влезло — над карточкой
+        x = r.left + r.width / 2 - w / 2;
+        y = r.top - h - gap;
+      } else {                                        // низкое окно: уводим вбок,
+        y = r.top + r.height / 2 - h / 2;             // чтобы не накрыть превью
+        x = r.right + gap + w + pad <= vw ? r.right + gap : r.left - w - gap;
+      }
+      tipBox.style.left = Math.round(clamp(x, vw - w - pad)) + 'px';
+      tipBox.style.top = Math.round(clamp(y, vh - h - pad)) + 'px';
+    };
+    const hideTip = () => {
+      if (!tipOn) return;
+      tipOn = false;
+      tipBox.classList.remove('vz-tip-on');
+      tipBox.setAttribute('aria-hidden', 'true');
+    };
+    const attachHint = (el, key) => {
+      const h = HINTS[key];
+      if (!h) return;
+      el.addEventListener('mouseenter', () => {
+        if (!tipHover.matches) return;
+        tipBox.querySelector('.vz-tip-t').textContent = h[0];
+        tipBox.querySelector('.vz-tip-s').textContent = h[1];
+        tipBox.querySelector('.vz-tip-d').textContent = h[2];
+        tipBox.querySelector('.vz-tip-note').textContent = h[3] || '';
+        tipOn = true;
+        tipBox.setAttribute('aria-hidden', 'false');
+        // размеры плашки нужны до показа: текст уже на месте, класс ещё нет
+        placeTip(el);
+        tipBox.classList.add('vz-tip-on');
+      });
+      el.addEventListener('mouseleave', hideTip);
+      // Перетаскивание барабана и открытие проекта — подсказка тут лишняя.
+      el.addEventListener('pointerdown', hideTip);
+    };
+    window.addEventListener('scroll', hideTip, { passive: true });
+
     // Оформление окна витрины. Вынесено в функцию: барабан доклонирует карточки
     // под высоту вьюпорта, и клонам нужны те же превью и обработчики.
     // Подсветка и hover живут в CSS (класс .vz-hot) — барабан включает её сам,
@@ -662,6 +821,7 @@ class Component extends DCLogic {
         win.appendChild(sphere);
       }
       win.appendChild(winLabel(title, url));
+      attachHint(win, key);
       win.addEventListener('click', () => {
         if (this._drum && this._drum.suppress) return;
         track('project_open', key, 'drum');
@@ -687,6 +847,7 @@ class Component extends DCLogic {
         '</div>';
       card.addEventListener('mouseenter', () => { card.style.borderColor = 'var(--acc)'; card.style.transform = 'translateY(-5px)'; card.style.boxShadow = '0 22px 54px rgba(0,0,0,.5)'; });
       card.addEventListener('mouseleave', () => { card.style.borderColor = 'rgba(255,255,255,.1)'; card.style.transform = 'none'; card.style.boxShadow = 'none'; });
+      attachHint(card, keyFor(s.src, s.key));
       card.addEventListener('click', () => {
         track('project_open', keyFor(s.src, s.key), 'grid');
         openModal(s.src, s.title, s.url, !!s.live, keyFor(s.src, s.key));
@@ -775,6 +936,7 @@ class Component extends DCLogic {
         '</div>';
       card.addEventListener('mouseenter', () => { card.style.borderColor = 'var(--acc)'; card.style.transform = 'translateY(-5px)'; card.style.boxShadow = '0 22px 54px rgba(0,0,0,.5)'; });
       card.addEventListener('mouseleave', () => { card.style.borderColor = 'rgba(255,255,255,.1)'; card.style.transform = 'none'; card.style.boxShadow = 'none'; });
+      attachHint(card, s.key);
       card.addEventListener('click', () => {
         // Проекты с интерактивным демо открываются как сайты - живой страницей в модалке;
         // с link - внешней вкладкой (ВК запрещает встраивание в iframe).
@@ -1038,10 +1200,16 @@ class Component extends DCLogic {
       ru: {
         role: 'FULLSTACK · AI-ИНЖЕНЕРИЯ', slogan: '«Есть время любоваться прекрасным»', navWorks: 'Работы', navAbout: 'Обо мне', navContact: 'Контакты', cta: 'Обсудить проект',
         badge: 'ОТКРЫТ К ЗАКАЗАМ · 2026',
-        h1: 'Сайты и сервисы под ключ — {в короткие сроки}',
-        sub: 'Fullstack-разработка, усиленная AI-агентами: от идеи до продакшена за дни, а не месяцы. Каждое окно справа — реальный проект. Наведите и кликните — сайт откроется, его можно полистать.',
+        h1: 'Сайт, веб-сервис или автоматизация {под вашу задачу}',
+        subLead: 'От идеи до запуска за 7–14 дней',
+        sub: 'Разбираюсь в задаче, проектирую решение и довожу его до запуска — дизайн, разработка, backend, интеграции и всё необходимое для работы продукта.',
         btnWorks: 'Смотреть работы', btnAbout: 'Кто я такой',
-        stat1: 'живых проектов в витрине', stat2: 'быстрее с AI-пайплайнами', stat3: 'двуязычные продукты',
+        needsTitle: 'С чем ко мне приходят',
+        need1t: 'Нужен новый сайт', need1s: 'Корпоративный сайт, landing или сайт продукта.', need1p: 'от 120 000 ₽',
+        need2t: 'Нужно переделать старый', need2s: 'Редизайн, новая архитектура, мобильная версия, конверсия.', need2p: 'от 100 000 ₽',
+        need3t: 'Нужно автоматизировать рутину', need3s: '1С, Excel, CRM, Telegram, парсинг, n8n, интеграции.', need3p: 'от 80 000 ₽',
+        need4t: 'Нужен нестандартный сервис', need4s: 'Личный кабинет, калькулятор, внутренний инструмент, MVP, SaaS.', need4p: 'от 200 000 ₽',
+        needsFoot: 'Не понимаете, что именно нужно? Опишите задачу — я предложу оптимальный вариант.', needsFootCta: 'Обсудить задачу →',
         worksTitle: 'Работы', worksHint: 'кликните карточку — сайт откроется внутри витрины',
         worksNote: 'От финтеха и недвижимости до гастрономии и фэшна — каждый сайт открывается живьём прямо внутри витрины.',
         worksTab1: 'Веб-сайты', worksTab2: '1С и автоматизация',
@@ -1080,10 +1248,16 @@ class Component extends DCLogic {
       en: {
         role: 'FULLSTACK · AI ENGINEERING', slogan: '“There is time to admire the beautiful”', navWorks: 'Work', navAbout: 'About', navContact: 'Contact', cta: 'Start a project',
         badge: 'OPEN FOR PROJECTS · 2026',
-        h1: 'Turn-key websites and services — {on tight deadlines}',
-        sub: 'Fullstack development boosted by AI agents: idea to production in days, not months. Every window on the right is a real project. Hover and click — the site opens and you can browse it.',
+        h1: 'A website, web service or automation {for your task}',
+        subLead: 'From idea to launch in 7–14 days',
+        sub: 'I dig into the task, design the solution and carry it through to launch — design, development, backend, integrations and everything the product needs to run.',
         btnWorks: 'View work', btnAbout: 'Who I am',
-        stat1: 'live projects in this gallery', stat2: 'faster with AI pipelines', stat3: 'bilingual products',
+        needsTitle: 'What people come to me with',
+        need1t: 'I need a new website', need1s: 'Corporate site, landing page or product site.', need1p: 'from 120 000 ₽',
+        need2t: 'I need to rebuild an old one', need2s: 'Redesign, new architecture, mobile version, conversion.', need2p: 'from 100 000 ₽',
+        need3t: 'I need to automate routine work', need3s: '1C, Excel, CRM, Telegram, parsing, n8n, integrations.', need3p: 'from 80 000 ₽',
+        need4t: 'I need a custom service', need4s: 'Client portal, calculator, internal tool, MVP, SaaS.', need4p: 'from 200 000 ₽',
+        needsFoot: 'Not sure what exactly you need? Describe the task — I will suggest the best option.', needsFootCta: 'Discuss the task →',
         worksTitle: 'Work', worksHint: 'click a card — the site opens right here',
         worksNote: 'From fintech and real estate to gastronomy and fashion — every site opens live right inside the gallery.',
         worksTab1: 'Websites', worksTab2: '1C & automation',
@@ -1159,10 +1333,11 @@ class Component extends DCLogic {
     // иначе после переключения в меню кнопка в шапке показывала бы старое.
     const langBtns = [$('vzLang'), $('vzLangM')].filter(Boolean);
     const paintLang = () => {
-      const html = this.locale === 'ru'
-        ? 'RU / <span style="color:#8E93A8">EN</span>'
-        : '<span style="color:#8E93A8">RU</span> / EN';
-      langBtns.forEach((b) => { b.innerHTML = html; });
+      const en = this.locale === 'en';
+      langBtns.forEach((b) => {
+        b.classList.toggle('is-en', en);
+        b.setAttribute('aria-label', en ? 'Language: English' : 'Язык: русский');
+      });
     };
     const switchLang = () => {
       this.locale = this.locale === 'ru' ? 'en' : 'ru';
