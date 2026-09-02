@@ -40,29 +40,32 @@ a{text-decoration:none}
    наполняется данными той карточки, на которую навели. Отдельным узлом, а не
    внутри карточки: окна барабана клонируются под высоту экрана, и подсказка
    размножалась бы вместе с ними, а в блоке «Работы» её обрезал бы overflow. */
-.vz-tip{position:fixed;left:0;top:0;z-index:120;width:max-content;max-width:300px;padding:16px 18px 15px;border-radius:16px;background:radial-gradient(38% 34% at 2% 0%,rgba(255,255,255,.16),rgba(255,255,255,0) 60%),linear-gradient(158deg,rgba(255,255,255,.07),rgba(255,255,255,.015) 22%,rgba(255,255,255,0) 42%),linear-gradient(180deg,rgba(20,20,30,.66),rgba(9,9,15,.76));-webkit-backdrop-filter:blur(26px) saturate(175%);backdrop-filter:blur(26px) saturate(175%);box-shadow:0 30px 70px rgba(0,0,0,.62),0 4px 14px rgba(0,0,0,.38),0 16px 46px rgba(var(--acc-rgb,200,35,43),.18),inset 0 1px 0 rgba(255,255,255,.26),inset 0 7px 10px -8px rgba(255,255,255,.3),inset 0 -6px 9px -7px rgba(255,255,255,.11),inset 0 -1px 0 rgba(255,255,255,.06);pointer-events:none;opacity:0;transform:translateY(6px) scale(.985);transition:opacity .2s,transform .2s;overflow:hidden}
-/* Грань стекла. У самых краёв фон под панелью размыт сильнее и чуть светлее —
-   стекло как бы набирает толщину к рамке и преломляет то, что за ним. Полоса
-   держится маской по периметру, центр под текстом остаётся спокойным. */
-.vz-tip::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;-webkit-backdrop-filter:blur(11px) saturate(210%) brightness(1.5);backdrop-filter:blur(11px) saturate(210%) brightness(1.5);-webkit-mask-image:linear-gradient(90deg,#000,transparent 5px,transparent calc(100% - 5px),#000),linear-gradient(180deg,#000,transparent 4px,transparent calc(100% - 4px),#000);mask-image:linear-gradient(90deg,#000,transparent 5px,transparent calc(100% - 5px),#000),linear-gradient(180deg,#000,transparent 4px,transparent calc(100% - 4px),#000);mask-composite:add}
-/* Ободок в один пиксель — тот же акцентный контур, что загорается у карточки
+/* Мерцание звёзд в плашке: слой дышит целиком, амплитуда небольшая, чтобы
+   рябь не спорила с текстом. */
+@keyframes vzTipStars{0%,100%{opacity:.5}50%{opacity:1}}
+.vz-tip{position:fixed;left:0;top:0;z-index:120;width:max-content;max-width:300px;padding:16px 18px 15px;border-radius:16px;background:radial-gradient(2.0px 2.0px at 8% 24%,rgba(255,255,255,0.95),rgba(255,255,255,0.475) 30%,rgba(255,255,255,0) 100%),radial-gradient(2.6px 2.6px at 26% 10%,rgba(255,255,255,1),rgba(255,255,255,0.5) 30%,rgba(255,255,255,0) 100%),radial-gradient(1.8px 1.8px at 47% 31%,rgba(191,208,255,0.8),rgba(191,208,255,0.4) 30%,rgba(191,208,255,0) 100%),radial-gradient(2.1px 2.1px at 68% 14%,rgba(255,255,255,0.85),rgba(255,255,255,0.425) 30%,rgba(255,255,255,0) 100%),radial-gradient(1.9px 1.9px at 88% 33%,rgba(255,221,176,0.72),rgba(255,221,176,0.36) 30%,rgba(255,221,176,0) 100%),radial-gradient(1.8px 1.8px at 16% 63%,rgba(255,255,255,0.7),rgba(255,255,255,0.35) 30%,rgba(255,255,255,0) 100%),radial-gradient(2.0px 2.0px at 55% 80%,rgba(203,168,255,0.7),rgba(203,168,255,0.35) 30%,rgba(203,168,255,0) 100%),radial-gradient(1.9px 1.9px at 34% 93%,rgba(255,255,255,0.66),rgba(255,255,255,0.33) 30%,rgba(255,255,255,0) 100%),radial-gradient(1.7px 1.7px at 95% 58%,rgba(255,255,255,0.6),rgba(255,255,255,0.3) 30%,rgba(255,255,255,0) 100%),radial-gradient(128% 92% at 10% -12%,rgba(74,62,142,.3),rgba(74,62,142,0) 62%),radial-gradient(96% 78% at 104% 116%,rgba(var(--acc-rgb,200,35,43),.17),rgba(var(--acc-rgb,200,35,43),0) 60%),linear-gradient(168deg,#0A0A13,#05050B 56%,#08070E);box-shadow:0 30px 70px rgba(0,0,0,.62),0 4px 14px rgba(0,0,0,.38),0 16px 46px rgba(var(--acc-rgb,200,35,43),.18),inset 0 1px 0 rgba(255,255,255,.1);pointer-events:none;opacity:0;transform:translateY(6px) scale(.985);transition:opacity .2s,transform .2s;overflow:hidden}
+/* Второй горсткой звёзд занят псевдоэлемент: анимировать слой фона отдельно
+   от остальных нельзя, а тут opacity ходит сам по себе, и небо оживает. */
+.vz-tip::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(2.4px 2.4px at 13% 44%,rgba(255,255,255,1),rgba(255,255,255,0.5) 30%,rgba(255,255,255,0) 100%),radial-gradient(1.9px 1.9px at 61% 55%,rgba(191,208,255,0.88),rgba(191,208,255,0.44) 30%,rgba(191,208,255,0) 100%),radial-gradient(2.0px 2.0px at 39% 68%,rgba(255,255,255,0.76),rgba(255,255,255,0.38) 30%,rgba(255,255,255,0) 100%),radial-gradient(2.4px 2.4px at 74% 27%,rgba(255,221,176,0.82),rgba(255,221,176,0.41) 30%,rgba(255,221,176,0) 100%),radial-gradient(1.9px 1.9px at 5% 86%,rgba(255,255,255,0.68),rgba(255,255,255,0.34) 30%,rgba(255,255,255,0) 100%);animation:vzTipStars 5.5s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.vz-tip::before{animation:none}}
+/* Ободок в один пиксель: тот же акцентный контур, что загорается у карточки
    под курсором, поэтому плашка и карточка читаются как одна пара. Конический
-   градиент ведёт по нему два белых блика: контур остаётся красным, но живёт
-   как грань стекла, а не как ровная рамка. */
+   градиент ведёт по нему два белых блика, контур остаётся красным, но живёт
+   как грань, а не как ровная рамка. */
 .vz-tip::after{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:conic-gradient(from 200deg at 50% 50%,rgba(255,255,255,.92),rgba(var(--acc-rgb,200,35,43),.88) 9%,rgba(var(--acc-rgb,200,35,43),.7) 26%,rgba(255,255,255,.74) 40%,rgba(var(--acc-rgb,200,35,43),.9) 54%,rgba(var(--acc-rgb,200,35,43),.68) 72%,rgba(255,255,255,.82) 86%,rgba(255,255,255,.92));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
-/* Где backdrop-filter не поддержан, стекло становится плотной панелью:
-   читаемость текста важнее эффекта. */
-@supports not ((backdrop-filter:blur(4px)) or (-webkit-backdrop-filter:blur(4px))){.vz-tip{background:linear-gradient(180deg,rgba(21,21,31,.97),rgba(10,10,16,.98))}}
 .vz-tip.vz-tip-on{opacity:1;transform:none}
 .vz-tip .vz-tip-t{font-family:'Unbounded',sans-serif;font-size:13.5px;font-weight:500;line-height:1.35;color:#F4F5FA;text-shadow:0 1px 3px rgba(0,0,0,.45)}
 .vz-tip .vz-tip-s{margin-top:7px;font-size:12.5px;line-height:1.5;color:#C2C6D4;text-shadow:0 1px 3px rgba(0,0,0,.4)}
-.vz-tip .vz-tip-f{margin-top:12px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.vz-tip .vz-tip-f{margin-top:12px;padding-right:47px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
 .vz-tip .vz-tip-d{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.04em;color:#DCDFEA;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.17);border-radius:999px;padding:4px 10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
 /* Пометка «образец на продажу» — единственное цветное пятно в плашке, берёт
    акцент витрины. Текст осветляем от акцента, чтобы читался на тёмном стекле;
    первая строка color — запасная для браузеров без color-mix. */
 .vz-tip .vz-tip-note{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.04em;color:#EFC4C6;color:color-mix(in srgb,var(--acc,#C8232B) 52%,#fff);background:rgba(var(--acc-rgb,200,35,43),.2);border:1px solid rgba(var(--acc-rgb,200,35,43),.48);border-radius:999px;padding:4px 10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
 .vz-tip .vz-tip-note:empty{display:none}
+/* Знак офиса в правом нижнем углу: подпись под небом, поэтому вполсилы,
+   рядом с пилюлями, а не поверх них: под него в строке оставлен паддинг. */
+.vz-tip .vz-tip-logo{position:absolute;right:13px;bottom:10px;width:35px;height:auto;opacity:.82;filter:drop-shadow(0 1px 4px rgba(0,0,0,.6))}
 #vzNeeds{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
 .vz-need{display:flex;flex-direction:column;padding:24px 22px 22px;border:1px solid rgba(255,255,255,.1);border-radius:16px;background:rgba(255,255,255,.025);transition:border-color .25s,transform .25s,box-shadow .25s,background .25s}
 .vz-need:hover{border-color:var(--acc,#B7524A);background:rgba(var(--acc-rgb,183,82,74),.06);transform:translateY(-5px);box-shadow:0 22px 54px rgba(0,0,0,.5)}
@@ -70,6 +73,28 @@ a{text-decoration:none}
 .vz-need-s{margin:11px 0 20px;font-size:13px;line-height:1.6;color:#B9BDCC}
 /* цена прижата к низу карточки: подписи разной длины, иначе цены встают лесенкой */
 .vz-need-p{margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.02em;color:var(--acc,#B7524A)}
+/* «Кому я полезен». Плашки стоят на самом звёздном участке фона, поэтому
+   к полупрозрачной подложке добавлено размытие: звёзды за стеклом гаснут и не бьют
+   по тексту. Клика у плашек нет: блок про узнавание себя, действие ждёт ниже. */
+#vzFit{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.vz-fit-t{font-weight:600;font-size:16px;line-height:1.3;color:#F2F2F7}
+.vz-fit-s{margin-top:10px;font-size:13px;line-height:1.6;color:#B9BDCC}
+/* «Как проходит работа». Плашки те же, что в «Кому я полезен»: оба
+   блока стоят на звёздах и держатся на одном стекле. Вокруг тройки шагов
+   идёт дорожка, по которой бесконечно бежит импульс: от первого шага к третьему
+   и сразу снова к первому - процесс в офисе не останавливается. */
+.vz-fit,.vz-step{padding:22px;border:1px solid rgba(var(--acc-rgb,183,82,74),.55);border-radius:16px;background:rgba(9,10,16,.5);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+#vzHowTrack{position:relative;max-width:1116px;margin:0 auto;padding:18px;border:1px solid rgba(var(--acc-rgb,183,82,74),.14);border-radius:26px}
+/* Комета по контуру рисуется на канвасе тем же приёмом, что метеоры
+   на фоне: след гаснет непрерывно. Отдельные штрихи тут не годятся -
+   они читаются как змейка из частей, а градиент в SVG идёт по коробке фигуры,
+   а не вдоль пути. Канвас шире дорожки на 14px с каждой стороны -
+   иначе обрезало бы ореол ядра на границах. */
+#vzHowComet{position:absolute;inset:-14px;width:calc(100% + 28px);height:calc(100% + 28px);pointer-events:none}
+#vzHow{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.vz-step-n{font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.08em;color:var(--acc,#B7524A)}
+.vz-step-t{margin:12px 0 8px;font-weight:600;font-size:17px;line-height:1.3;color:#F2F2F7}
+.vz-step-s{font-size:13.5px;line-height:1.6;color:#8E93A8}
 /* Логотип. Широкая разрядка даёт слову ширину, сопоставимую с эмблемой,
    а тонкая линия акцента под ним тянется во всю колонку: начинается у первой
    буквы и растворяется к последним буквам девиза, связывая обе строки в один
@@ -78,6 +103,32 @@ a{text-decoration:none}
 #vzMark::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;
   background:linear-gradient(90deg,var(--acc,#B7524A) 0%,rgba(var(--acc-rgb,183,82,74),.92) 46%,rgba(var(--acc-rgb,183,82,74),0) 100%)}
 #vzBrand:hover #vzMark{text-shadow:0 0 18px rgba(var(--acc-rgb,183,82,74),.45)}
+/* Срок запуска под кнопками. Линия подчёркивания цитирует линию под
+   логотипом: акцент, тающий вправо. По ней изредка проходит светлый блик —
+   тот же рисунок, что у метеоров на фоне: пролёт около секунды, потом
+   долгая пауза. Блик — второй слой фона той же линии, поэтому едет
+   ровно по ней и не требует лишнего узла. */
+#vzHeroNoteU{position:relative;display:inline-block;padding-bottom:12px}
+/* Псевдоэлемент выше самой линии: в шестнадцати пикселях помещается и
+   подчёркивание у нижнего края, и ореол метеора над ним. Слои снизу вверх:
+   линия, ядро блика на ней, ореол. Ширина у ореола и ядра одна - так их
+   центры совпадают на всём пролёте: background-position в процентах
+   отсчитывается от свободного места, и слои разной ширины разъезжались бы
+   к краям. Концы ядра гаснут плавно с обеих сторон, иначе блик читается
+   светящимся прямоугольником. */
+#vzHeroNoteU::after{content:'';position:absolute;left:0;right:0;bottom:0;height:16px;pointer-events:none;
+  background:radial-gradient(ellipse 36% 78% at 58% 100%,rgba(216,232,255,.55),rgba(210,228,255,.22) 40%,rgba(205,225,255,0) 74%),
+             linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 34%,rgba(198,218,255,.18) 48%,rgba(232,242,255,.6) 70%,rgba(255,255,255,.95) 86%,rgba(228,240,255,.3) 95%,rgba(255,255,255,0) 100%),
+             linear-gradient(90deg,var(--acc,#B7524A) 0%,rgba(var(--acc-rgb,183,82,74),.92) 46%,rgba(var(--acc-rgb,183,82,74),0) 100%);
+  background-size:20% 16px,20% 1px,100% 1px;
+  background-repeat:no-repeat;
+  background-position:-70% 100%,-70% 100%,0 100%;
+  animation:vzNoteBeam 13s linear infinite}
+/* 88% периода метеор стоит за левым краем строки, оставшиеся 12% (около
+   полутора секунд) проходит её насквозь - тот же рисунок, что у метеоров
+   на фоне: короткий пролёт, долгая пауза. */
+@keyframes vzNoteBeam{0%,88%{background-position:-70% 100%,-70% 100%,0 100%}100%{background-position:170% 100%,170% 100%,0 100%}}
+@media (prefers-reduced-motion:reduce){#vzHeroNoteU::after{animation:none}}
 /* Раздел «Работы» повторяет геометрию хиро: та же max-width и те же 67px
    по бокам. За счёт этого секции одинаково центруются на любой ширине,
    и левый край страницы остаётся одной линией.
@@ -248,6 +299,7 @@ a{text-decoration:none}
 #vzMarquee{height:54vh !important;min-height:380px !important;right:0 !important}
 #vzGrid,#vzGrid2{grid-template-columns:repeat(2,1fr) !important;padding:0 !important}
 #vzNeeds{grid-template-columns:repeat(2,1fr) !important}
+#vzFit{grid-template-columns:repeat(2,1fr) !important}
 #vzAboutGrid{grid-template-columns:1fr !important;gap:36px !important}
 /* Ниже 1120px навигация отъедает у логотипа ширину, и девиз ломается в три
    строки. Оставляем эмблему со словом — линия акцента тогда заканчивается
@@ -289,6 +341,13 @@ a{text-decoration:none}
 #needs{padding:18px 25px 0 !important}
 #vzNeedsTitle{font-size:28px !important;margin-bottom:24px !important}
 #vzNeeds{grid-template-columns:1fr !important;gap:14px !important}
+#fit{padding:56px 25px 18px !important}
+#vzFitTitle{font-size:28px !important;margin-bottom:24px !important}
+#vzFit{grid-template-columns:1fr !important;gap:14px !important}
+#how{padding:0 25px 38px !important}
+#vzHowTitle{font-size:28px !important;margin-bottom:26px !important}
+#vzHow{grid-template-columns:1fr !important;gap:22px !important}
+#vzHowTrack{padding:14px !important}
 #vzWorksTabs{gap:22px !important}
 .vz-wtab{font-size:14.5px !important}
 #about{padding:56px 25px !important}
@@ -424,9 +483,8 @@ a{text-decoration:none}
            а не мелкой сноской: тот же Unbounded, что у заголовков, и воздух
            сверху, чтобы строка не липла к кнопкам. Линия слева — приём
            логотипа: акцент, тающий вправо. -->
-      <div id="vzHeroNote" style="display:flex;align-items:flex-start;gap:15px;margin-top:46px">
-        <span style="flex:none;width:36px;height:1px;margin-top:13px;background:linear-gradient(90deg,var(--acc,#B7524A),rgba(var(--acc-rgb,183,82,74),0))"></span>
-        <span data-l10n="subLead" style="font-family:'Unbounded',sans-serif;font-weight:400;font-size:clamp(15.5px,1.34vw,19px);line-height:1.4;letter-spacing:.005em;color:#E4E6EF">От идеи до запуска за 7–⁠14 дней</span>
+      <div id="vzHeroNote" style="margin-top:46px">
+        <span id="vzHeroNoteU"><span data-l10n="subLead" style="font-family:'Unbounded',sans-serif;font-weight:400;font-size:clamp(15.5px,1.34vw,19px);line-height:1.4;letter-spacing:.005em;color:#E4E6EF">От идеи до запуска за 7–⁠14 дней</span></span>
       </div>
     </div>
 
@@ -493,6 +551,33 @@ a{text-decoration:none}
     </div>
   </section>
 
+  <!-- «Кому я полезен»: после работ человек уже видел, что я делаю, и ищет
+       себя. Четыре типа заказчиков словами, какими они описывают себя в
+       первом письме. Карточки здесь не ссылки: блок про узнавание, а кнопка
+       в нём спорила бы с ценником в «С чем ко мне приходят». -->
+  <section id="fit" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:96px 67px 34px;scroll-margin-top:20px">
+    <h2 id="vzFitTitle" data-l10n="fitTitle" style="margin:0 0 34px;text-align:center;font-family:'Unbounded',sans-serif;font-weight:500;font-size:38px">Кому я полезен</h2>
+    <div id="vzFit">
+      <div class="vz-fit">
+        <div class="vz-fit-t" data-l10n="fit1t">Собственникам</div>
+        <div class="vz-fit-s" data-l10n="fit1s">Если нужен новый digital-продукт или автоматизация.</div>
+      </div>
+      <div class="vz-fit">
+        <div class="vz-fit-t" data-l10n="fit2t">Отделам продаж</div>
+        <div class="vz-fit-s" data-l10n="fit2s">Если заявки и данные приходится переносить руками.</div>
+      </div>
+      <div class="vz-fit">
+        <div class="vz-fit-t" data-l10n="fit3t">Маркетинговым агентствам</div>
+        <div class="vz-fit-s" data-l10n="fit3s">Если нужен внешний разработчик под проекты.</div>
+      </div>
+      <div class="vz-fit">
+        <div class="vz-fit-t" data-l10n="fit4t">IT-командам</div>
+        <div class="vz-fit-s" data-l10n="fit4s">Если нужно быстро закрыть часть разработки.</div>
+      </div>
+    </div>
+    <p id="vzFitFoot" style="margin:26px auto 0;text-align:center;font-size:13.5px;color:#8E93A8;max-width:640px"><span data-l10n="fitFoot">Не нашли себя в списке? Опишите задачу — скажу, чем могу быть полезен.</span> <a href="#contact" data-l10n="fitFootCta" style="color:var(--acc,#B7524A);white-space:nowrap">Обсудить задачу →</a></p>
+  </section>
+
   <section id="about" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:80px 67px;scroll-margin-top:20px">
     <div id="vzAboutGrid" style="display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start">
       <div style="position:relative">
@@ -514,10 +599,7 @@ a{text-decoration:none}
       </div>
       <div style="position:relative">
         <div style="position:absolute;z-index:-1;inset:-18px -28px;background:rgba(6,6,9,.58);border-radius:36px;box-shadow:0 0 72px 48px rgba(6,6,9,.58);pointer-events:none"></div>
-        <h2 id="vzAboutTitle" data-l10n="aboutTitle" style="margin:0 0 20px;font-family:'Unbounded',sans-serif;font-weight:500;font-size:34px;line-height:1.2;text-wrap:balance">«Есть время любоваться прекрасным»</h2>
-        <p data-l10n="aboutP1" style="margin:0 0 16px;font-size:15.5px;line-height:1.7;color:#CDD2E0;text-wrap:pretty">Маленький принц вернулся на свою планету и полностью её автоматизировал: вулканы очищают роботы, баобабы ликвидируют ещё в зачатке команда агентов — а принц теперь круглые сутки любуется и ухаживает за своей прекрасной Розой.</p>
-        <p data-l10n="aboutP2" style="margin:0 0 16px;font-size:15.5px;line-height:1.7;color:#CDD2E0;text-wrap:pretty">Вдохновившись его примером, я автоматизировал все процессы разработки приложений и сайтов: AI-агенты берут рутину, я отвечаю за архитектуру, качество и результат.</p>
-        <h3 data-l10n="aboutWho" style="margin:26px 0 14px;font-family:'Unbounded',sans-serif;font-weight:500;font-size:20px;line-height:1.3">Кто я такой?</h3>
+        <h2 id="vzAboutTitle" data-l10n="aboutWho" style="margin:0 0 20px;font-family:'Unbounded',sans-serif;font-weight:500;font-size:34px;line-height:1.2;text-wrap:balance">Кто я такой?</h2>
         <p data-l10n="aboutEdu" style="margin:0 0 12px;font-size:15.5px;line-height:1.7;color:#CDD2E0;text-wrap:pretty">По образованию — программист с математическим уклоном (НГТУ — ФПМИ):</p>
         <div style="display:flex;flex-direction:column;gap:9px;margin:0 0 16px">
           <div style="display:flex;gap:14px;font-size:14.5px;line-height:1.6;color:#CDD2E0"><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--acc,#B7524A);flex:none;padding-top:2px">2008</span><span data-l10n="tl2008">первый язык C++, начинал с алгоритмов и работы с памятью</span></div>
@@ -534,6 +616,35 @@ a{text-decoration:none}
           <div><div data-l10n="fact1t" style="font-weight:600;font-size:14.5px">Индивидуально</div><div data-l10n="fact1s" style="font-size:12.5px;color:#8E93A8;margin-top:3px">никаких шаблонов — под задачу</div></div>
           <div><div data-l10n="fact2t" style="font-weight:600;font-size:14.5px">Быстро</div><div data-l10n="fact2s" style="font-size:12.5px;color:#8E93A8;margin-top:3px">прототип за дни, не недели</div></div>
           <div><div data-l10n="fact3t" style="font-weight:600;font-size:14.5px">Под ключ</div><div data-l10n="fact3s" style="font-size:12.5px;color:#8E93A8;margin-top:3px">дизайн → код → деплой → поддержка</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- «Как проходит работа»: последний блок перед формой. Человек уже решил,
+       что задача моя, и остаётся вопрос, во что он ввязывается. Поэтому здесь
+       только сроки: сколько идёт разговор, когда придёт смета, когда будет
+       что показать. Шаги связаны короткой акцентной линией - той же, что
+       под логотипом, растворяющейся к правому краю. -->
+  <section id="how" style="position:relative;z-index:10;max-width:1440px;margin:0 auto;padding:0 67px 54px;scroll-margin-top:20px">
+    <h2 id="vzHowTitle" data-l10n="howTitle" style="margin:0 0 38px;text-align:center;font-family:'Unbounded',sans-serif;font-weight:500;font-size:38px">Как проходит работа</h2>
+    <div id="vzHowTrack">
+      <canvas id="vzHowComet" aria-hidden="true"></canvas>
+      <div id="vzHow">
+        <div class="vz-step">
+          <div class="vz-step-n">01</div>
+          <div class="vz-step-t" data-l10n="step1t">Обсуждаем задачу</div>
+          <div class="vz-step-s" data-l10n="step1s">15–30 минут</div>
+        </div>
+        <div class="vz-step">
+          <div class="vz-step-n">02</div>
+          <div class="vz-step-t" data-l10n="step2t">Получаете план и смету</div>
+          <div class="vz-step-s" data-l10n="step2s">В течение одного рабочего дня</div>
+        </div>
+        <div class="vz-step">
+          <div class="vz-step-n">03</div>
+          <div class="vz-step-t" data-l10n="step3t">Запускаем</div>
+          <div class="vz-step-s" data-l10n="step3s">Первые результаты через несколько дней</div>
         </div>
       </div>
     </div>
@@ -623,6 +734,7 @@ a{text-decoration:none}
     <div class="vz-tip-t"></div>
     <div class="vz-tip-s"></div>
     <div class="vz-tip-f"><span class="vz-tip-d"></span><span class="vz-tip-note"></span></div>
+    <img class="vz-tip-logo" src="uploads/logo-prince-emblem.png" alt="" aria-hidden="true">
   </div>
 </div>
 </x-dc>
@@ -1216,12 +1328,19 @@ class Component extends DCLogic {
         worksTitle: 'Работы', worksHint: 'кликните карточку — сайт откроется внутри витрины',
         worksNote: 'От финтеха и недвижимости до гастрономии и фэшна — каждый сайт открывается живьём прямо внутри витрины.',
         worksTab1: 'Веб-сайты', worksTab2: '1С и автоматизация',
+        fitTitle: 'Кому я полезен',
+        fit1t: 'Собственникам', fit1s: 'Если нужен новый digital-продукт или автоматизация.',
+        fit2t: 'Отделам продаж', fit2s: 'Если заявки и данные приходится переносить руками.',
+        fit3t: 'Маркетинговым агентствам', fit3s: 'Если нужен внешний разработчик под проекты.',
+        fit4t: 'IT-командам', fit4s: 'Если нужно быстро закрыть часть разработки.',
+        fitFoot: 'Не нашли себя в списке? Опишите задачу — скажу, чем могу быть полезен.', fitFootCta: 'Обсудить задачу →',
+        howTitle: 'Как проходит работа',
+        step1t: 'Обсуждаем задачу', step1s: '15–30 минут',
+        step2t: 'Получаете план и смету', step2s: 'В течение одного рабочего дня',
+        step3t: 'Запускаем', step3s: 'Первые результаты через несколько дней',
         worksNote2: '1С-расширения, рекламные кампании в Директе и ВК, парсеры и автоматизация процессов. Заказы 2025–2026 годов, у каждой карточки есть подробности — кликните.',
         detailCta: 'Обсудить похожую задачу →',
         zoomHint: 'нажмите на снимок, чтобы рассмотреть', zoomBack: 'нажмите ещё раз, чтобы увидеть целиком',
-        aboutTitle: '«Есть время любоваться прекрасным»',
-        aboutP1: 'Маленький принц вернулся на свою планету и полностью её автоматизировал: вулканы очищают роботы, баобабы ликвидируют ещё в зачатке команда агентов — а принц теперь круглые сутки любуется и ухаживает за своей прекрасной Розой.',
-        aboutP2: 'Вдохновившись его примером, я автоматизировал все процессы разработки приложений и сайтов: AI-агенты берут рутину, я отвечаю за архитектуру, качество и результат.',
         aboutWho: 'Кто я такой?',
         flipHint: 'на обороте планеты — космический сад',
         aboutEdu: 'По образованию — программист с математическим уклоном (НГТУ — ФПМИ):',
@@ -1264,12 +1383,19 @@ class Component extends DCLogic {
         worksTitle: 'Work', worksHint: 'click a card — the site opens right here',
         worksNote: 'From fintech and real estate to gastronomy and fashion — every site opens live right inside the gallery.',
         worksTab1: 'Websites', worksTab2: '1C & automation',
+        fitTitle: 'Who I help',
+        fit1t: 'Business owners', fit1s: 'When you need a new digital product or automation.',
+        fit2t: 'Sales teams', fit2s: 'When leads and data are moved around by hand.',
+        fit3t: 'Marketing agencies', fit3s: 'When you need an outside developer for client projects.',
+        fit4t: 'In-house IT teams', fit4s: 'When part of the development has to be closed fast.',
+        fitFoot: 'Do not see your case here? Describe the task — I will tell you how I can help.', fitFootCta: 'Discuss the task →',
+        howTitle: 'How we work',
+        step1t: 'We discuss the task', step1s: '15–30 minutes',
+        step2t: 'You get a plan and an estimate', step2s: 'Within one business day',
+        step3t: 'We start', step3s: 'First results within a few days',
         worksNote2: '1C extensions, ad campaigns in Yandex Direct and VK Ads, parsers and process automation. Client work from 2025–2026 — click a card for details.',
         detailCta: 'Discuss a similar task →',
         zoomHint: 'tap the image to zoom in', zoomBack: 'tap again to fit the screen',
-        aboutTitle: '“There is time to admire the beautiful”',
-        aboutP1: 'The Little Prince returned to his planet and automated it completely: robots clean the volcanoes, a team of agents eliminates baobabs while they are still sprouts — and now the prince spends his days admiring and caring for his beautiful Rose.',
-        aboutP2: 'Inspired by his example, I automated the whole process of building websites and apps: AI agents take the routine, I own architecture, quality and outcome.',
         aboutWho: 'Who am I?',
         flipHint: 'the far side of the planet hides a cosmic garden',
         aboutEdu: 'By education — a programmer with a mathematical focus (NSTU — Applied Mathematics and Informatics):',
@@ -2212,6 +2338,105 @@ class Component extends DCLogic {
     flip.classList.add('flipped');
     track('game_flip', 'open');
   });
+})();
+
+/* ============ КОМЕТА ПО ДОРОЖКЕ «КАК ПРОХОДИТ РАБОТА» ============
+   След рисуем короткими отрезками вдоль контура: у каждого своя прозрачность
+   и толщина, поэтому хвост гаснет плавно и не рассыпается на поворотах.
+   Одним градиентом так не выйдет - в канвасе он линейный, а путь заворачивает
+   четыре раза.
+   Узлы ищем на каждом кадре: DC-рантайм пересобирает DOM после загрузки, и
+   канвас, найденный один раз при старте, остался бы отсоединённым - рисовали
+   бы в никуда. Кадр вне экрана и на скрытой вкладке уходит в пустую проверку
+   прямоугольника, ничего не считая. */
+(function () {
+  const PAD = 14;        // запас канваса под ореол ядра
+  const RAD = 26;        // скругление дорожки, повторяет border-radius
+  const PERIOD = 13000;  // полный круг по контуру
+  const TAIL = 0.19;     // длина хвоста в долях периметра
+  const STEP = 4;        // шаг отрезка следа, px
+
+  const rmq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let cv = null, ctx = null, W = 0, H = 0, r = 0, len = 0, parts = [], acc = '183,82,74';
+
+  const build = (node, box) => {
+    cv = node;
+    ctx = node.getContext('2d');
+    W = Math.round(box.width); H = Math.round(box.height);
+    r = Math.min(RAD, W / 2, H / 2);
+    const hx = W - 2 * r, vy = H - 2 * r, q = Math.PI / 2 * r;
+    parts = [
+      { l: hx, x1: r, y1: 0, x2: W - r, y2: 0 },
+      { l: q, cx: W - r, cy: r, a0: -Math.PI / 2 },
+      { l: vy, x1: W, y1: r, x2: W, y2: H - r },
+      { l: q, cx: W - r, cy: H - r, a0: 0 },
+      { l: hx, x1: W - r, y1: H, x2: r, y2: H },
+      { l: q, cx: r, cy: H - r, a0: Math.PI / 2 },
+      { l: vy, x1: 0, y1: H - r, x2: 0, y2: r },
+      { l: q, cx: r, cy: r, a0: Math.PI },
+    ];
+    len = parts.reduce((s, p) => s + p.l, 0);
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    cv.width = Math.round((W + PAD * 2) * dpr);
+    cv.height = Math.round((H + PAD * 2) * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const v = getComputedStyle(document.documentElement).getPropertyValue('--acc-rgb').trim();
+    if (v) acc = v;
+  };
+
+  // точка на контуре по пройденной длине
+  const at = (d) => {
+    d = ((d % len) + len) % len;
+    for (let i = 0; i < parts.length; i++) {
+      const p = parts[i];
+      if (d > p.l) { d -= p.l; continue; }
+      const k = p.l ? d / p.l : 0;
+      if (p.x1 !== undefined) return [p.x1 + (p.x2 - p.x1) * k, p.y1 + (p.y2 - p.y1) * k];
+      const a = p.a0 + (Math.PI / 2) * k;
+      return [p.cx + Math.cos(a) * r, p.cy + Math.sin(a) * r];
+    }
+    return [0, 0];
+  };
+
+  const frame = (t) => {
+    requestAnimationFrame(frame);
+    if (document.hidden || rmq.matches) return;
+    const track = document.getElementById('vzHowTrack');
+    const node = document.getElementById('vzHowComet');
+    if (!track || !node || !node.getContext) return;
+    const box = track.getBoundingClientRect();
+    if (!box.width || box.bottom < -120 || box.top > window.innerHeight + 120) return;
+    if (node !== cv || Math.round(box.width) !== W || Math.round(box.height) !== H) build(node, box);
+
+    ctx.clearRect(0, 0, W + PAD * 2, H + PAD * 2);
+    const head = (t % PERIOD) / PERIOD * len;
+    const tail = len * TAIL;
+    ctx.lineCap = 'round';
+    for (let d = 0; d < tail; d += STEP) {
+      const k = d / tail;
+      const a = Math.pow(1 - k, 2.2) * 0.9;
+      if (a < 0.012) break;
+      const p1 = at(head - d), p2 = at(head - d - STEP);
+      ctx.strokeStyle = 'rgba(' + acc + ',' + a.toFixed(3) + ')';
+      ctx.lineWidth = 0.85 + 1.75 * (1 - k);
+      ctx.beginPath();
+      ctx.moveTo(p1[0] + PAD, p1[1] + PAD);
+      ctx.lineTo(p2[0] + PAD, p2[1] + PAD);
+      ctx.stroke();
+    }
+    // ядро с ореолом - тот же рисунок, что у метеоров на фоне
+    const h = at(head), hx = h[0] + PAD, hy = h[1] + PAD;
+    const g = ctx.createRadialGradient(hx, hy, 0, hx, hy, 13);
+    g.addColorStop(0, 'rgba(' + acc + ',.7)');
+    g.addColorStop(0.4, 'rgba(' + acc + ',.24)');
+    g.addColorStop(1, 'rgba(' + acc + ',0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(hx, hy, 13, 0, 6.283); ctx.fill();
+    ctx.fillStyle = 'rgba(255,205,198,.95)';
+    ctx.beginPath(); ctx.arc(hx, hy, 1.8, 0, 6.283); ctx.fill();
+  };
+
+  requestAnimationFrame(frame);
 })();
 </script>
 </body>
